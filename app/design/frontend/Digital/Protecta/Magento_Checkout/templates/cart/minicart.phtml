@@ -1,0 +1,74 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Magento\Checkout\Block\Cart\Sidebar */
+?>
+
+<div data-block="minicart" class="minicart-wrapper">
+    <a class="action showcart" title="<?php echo __('Shopping Cart'); ?>" href="<?= /* @escapeNotVerified */ $block->getShoppingCartUrl() ?>"
+       data-bind="scope: 'minicart_content'">
+        <span class="cart_icon">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                 width="24px" height="20px" viewBox="0 0 24 20" enable-background="new 0 0 24 20" xml:space="preserve">
+            <g>
+                <path fill="#FFFFFF" d="M21.065,13.143l2.828-8.464c0.143-0.407,0.035-0.652-0.079-0.813c-0.294-0.413-0.896-0.417-1.014-0.417
+                    L6.817,3.445L6.391,1.421C6.275,0.943,5.935,0.488,5.25,0.488H0.757c-0.466,0-0.719,0.218-0.719,0.653v1.168
+                    c0,0.421,0.252,0.531,0.735,0.531h3.793l2.902,12.324c-0.46,0.488-0.711,1.201-0.711,1.863c0,1.463,1.163,2.809,2.649,2.809
+                    c1.404,0,2.457-1.314,2.627-2.098h5.654c0.171,0.783,1.023,2.131,2.626,2.131c1.46,0,2.648-1.266,2.648-2.725
+                    c0-1.451-0.882-2.738-2.634-2.738c-0.728,0-1.593,0.391-1.994,0.979h-6.946c-0.504-0.783-1.193-1.025-1.889-1.055l-0.097-0.512
+                    h10.569C20.768,13.818,20.924,13.527,21.065,13.143z M20.332,16.115c0.55,0,0.997,0.447,0.997,0.996
+                    c0,0.551-0.447,0.996-0.997,0.996c-0.549,0-0.996-0.445-0.996-0.996C19.337,16.563,19.783,16.115,20.332,16.115z M10.393,17.111
+                    c0,0.557-0.452,1.01-1.006,1.01c-0.556-0.002-1.009-0.453-1.009-1.01s0.453-1.008,1.009-1.008
+                    C9.94,16.104,10.393,16.555,10.393,17.111z"/>
+            </g>
+            </svg>
+        </span>
+        <span class="text"><?= /* @escapeNotVerified */ __('My Cart bjhbhjb') ?></span>
+        <span class="counter qty empty"
+              data-bind="css: { empty: !!getCartParam('summary_count') == false }, blockLoader: isLoading">
+            <span class="counter-number"><!-- ko text: getCartParam('summary_count') --><!-- /ko --></span>
+            <span class="counter-label">
+            <!-- ko if: getCartParam('summary_count') -->
+                <!-- ko text: getCartParam('summary_count') --><!-- /ko -->
+                <!-- ko i18n: 'items' --><!-- /ko -->
+            <!-- /ko -->
+            </span>
+        </span>
+    </a>
+    <?php if ($block->getIsNeedToDisplaySideBar()): ?>
+        <div class="block block-minicart"
+             data-role="dropdownDialog"
+             data-mage-init='{"dropdownDialog":{
+                "appendTo":"[data-block=minicart]",
+                "triggerTarget":".showcart",
+                "timeout": "2000",
+                "closeOnMouseLeave": false,
+                "closeOnEscape": true,
+                "triggerClass":"active",
+                "parentClass":"active",
+                "buttons":[]}}'>
+            <div id="minicart-content-wrapper" data-bind="scope: 'minicart_content'">
+                <!-- ko template: getTemplate() --><!-- /ko -->
+            </div>
+            <?= $block->getChildHtml('minicart.addons') ?>
+        </div>
+    <?php endif ?>
+    <script>
+        window.checkout = <?= /* @escapeNotVerified */ $block->getSerializedConfig() ?>;
+    </script>
+    <script type="text/x-magento-init">
+    {
+        "[data-block='minicart']": {
+            "Magento_Ui/js/core/app": <?= /* @escapeNotVerified */ $block->getJsLayout() ?>
+        },
+        "*": {
+            "Magento_Ui/js/block-loader": "<?= /* @escapeNotVerified */ $block->getViewFileUrl('images/loader-1.gif') ?>"
+        }
+    }
+    </script>
+</div>

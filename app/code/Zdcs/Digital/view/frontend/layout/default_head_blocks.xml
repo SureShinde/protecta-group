@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../vendor/magento/framework/Module/etc/module.xsd">
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1, user-scalable=no" />
+		<meta name="format-detection" content="telephone=no" />
+				
+		<css src="Zdcs_Digital::css/owl.carousel.css"/>		
+		<script src="Zdcs_Digital::js/functionlocator.js"/>		
+		<!-- <remove src="mage/calendar.css"/> -->
+		<remove src="css/print.css"/>
+		
+	</head>
+	<body>
+		<referenceContainer name="before.body.end">
+			<block class="Magento\Framework\View\Element\Template" template="Magento_Theme::js.phtml" name="footerjscss" cacheable="false"/>
+		</referenceContainer>		
+	</body>
+</page>

@@ -1,0 +1,13 @@
+<script type="text/javascript">	
+require(['jquery'],function($) {
+		jQuery(function () {
+		var url = window.location.pathname,
+			urlRegExp = new RegExp(url.replace(/\/$/, '') + "$");
+			jQuery('.sidebar.sidebar-additional ul li a ').each(function () {
+				if (urlRegExp.test(this.pathname.replace(/\/$/, ''))) {
+					jQuery(this).parents('li').addClass('current');
+				}
+			});
+		});	
+	});
+</script>

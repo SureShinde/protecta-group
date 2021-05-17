@@ -1,0 +1,195 @@
+<?php
+$routeName = $this->getRequest()->getRouteName();
+$actionName = $this->getRequest()->getActionName();
+if ($block->isEnabledModule() && $routeName!='contactus' && $actionName!='create' && $routeName!='updateaccount' && $routeName!='checkout') { ?>
+<?php
+	 
+
+	$helper = $this->getHelper();
+	$sitekey = $helper->Sitekey();
+	
+	$home_helper = $this->helper('Digital\Homebanner\Helper\Data');
+	
+?>
+<?php if($home_helper->checkDevice()!=1){ ?>
+ <div id="sliderslider" class="sticky-form">
+ <div class="sidebar_contact_form_section">
+	
+    <a href="javascript:void(0);" title="<?php echo __('Close'); ?>" class="close-sticky-form">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+             width="31px" height="31px" viewBox="0 0 31 31" enable-background="new 0 0 31 31" xml:space="preserve">
+        <g>
+            <path fill="#FFFFFF" d="M18.25,15.506L30.446,3.311c0.757-0.757,0.757-1.985,0-2.742c-0.758-0.758-1.985-0.758-2.743,0
+                L15.507,12.764L3.311,0.568c-0.757-0.758-1.984-0.758-2.742,0c-0.758,0.757-0.758,1.985,0,2.742l12.196,12.196L0.568,27.703
+                c-0.758,0.757-0.758,1.985,0,2.742c0.378,0.378,0.875,0.567,1.371,0.567c0.496,0,0.992-0.189,1.371-0.568l12.197-12.195
+                l12.196,12.195c0.379,0.379,0.876,0.568,1.371,0.568c0.496,0,0.993-0.189,1.372-0.568c0.757-0.757,0.757-1.984,0-2.742
+                L18.25,15.506z"/>
+        </g>
+        </svg>
+    </a>
+	   <div id="sidebarslider" class="stickyform-btn">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                 width="12.09px" height="19px" viewBox="0 0 12.09 19" enable-background="new 0 0 12.09 19" xml:space="preserve">
+            <g transform="matrix(1.25 0 0 -1.25 0 45)">
+                <g>
+                    <g>
+                        <path fill="#FFFFFF" d="M4.145,24.485c-0.763,0-1.382,0.619-1.382,1.382v1.842c0,0.763,0.618,1.382,1.382,1.382
+                            c0.278,0.002,2.764,0.46,2.764,2.302c0,0.921-0.922,1.843-2.304,1.843c-1.125,0-1.843-0.921-1.843-1.382
+                            c0-0.763-0.618-1.382-1.382-1.382S0,31.091,0,31.854C0,34.102,2.11,36,4.606,36c3.685,0,5.066-2.755,5.066-5.067
+                            c0-1.909-1.048-3.369-2.953-4.109c-0.414-0.162-0.825-0.27-1.192-0.345v-0.612C5.527,25.104,4.909,24.485,4.145,24.485"/>
+                        <path fill="#FFFFFF" d="M5.527,22.182c0-0.763-0.619-1.382-1.382-1.382s-1.382,0.619-1.382,1.382
+                            c0,0.763,0.618,1.382,1.382,1.382S5.527,22.945,5.527,22.182"/>
+                    </g>
+                </g>
+            </g>
+            </svg>
+           <span class="text_box"><?php echo __('Quick Enquiry'); ?></span>		   
+        </div>
+<div class="sidebar_contact_blocks">
+      <h2><?php echo __('Quick Enquiry'); ?></h2>      
+</div>
+<div class="enquiry-submit-message"></div>
+<div class="sidebar-contact-form-wrap">
+  <div class="container">    	  
+    <form class="form sidebar-contact_us"
+      action="<?php echo $this->getBaseUrl().'contact-us/index/sidebarpost';?>"
+      id="sidebar_contact_form"
+      method="post"
+      data-mage-init='{"validation":{}}'>
+      <fieldset class="fieldset">
+        <div class="sidebar-contact-box">
+          <div class="field name required">
+            <div class="field-inner">
+              <?php /*?><label class="label" for="name"><span><?= $block->escapeHtml(__('First Name')) ?><sup>*</sup></span></label><?php */?>
+              <div class="control">
+                <input name="cont_name" id="cont_name" title="<?= $block->escapeHtmlAttr(__('Name')) ?>" value="<?= $block->getFullname(); ?>" class="input-text effect-2" type="text" data-validate="{required:true}" maxlength="100" placeholder="NAME*"/>
+              </div>
+            </div>
+          </div>
+          
+          <div class="field email required">
+            <div class="field-inner">
+              <?php /*?><label class="label" for="email"><span><?= $block->escapeHtml(__('Email')) ?><sup>*</sup></span></label><?php */?>
+              <div class="control">
+                <input name="cont_email" id="cont_email" title="<?= $block->escapeHtmlAttr(__('Email')) ?>" value="<?= $block->getEmailaddress(); ?>" class="input-text effect-2" type="email" data-validate="{required:true, 'validate-email':true}" maxlength="75" placeholder="EMAIL*"/>
+              </div>
+            </div>
+          </div>
+          <div class="field phone">
+            <div class="field-inner">
+              <?php /*?><label class="label" for="phone"><span><?= $block->escapeHtml(__('Contact No.')) ?></span></label><?php */?>
+              <div class="control">
+                <input name="cont_phone" id="cont_phone" title="<?= $block->escapeHtmlAttr(__('Phone No.')) ?>" value="" class="input-text effect-2" type="text" maxlength="20" placeholder="PHONE NO."/>
+              </div>
+            </div>
+          </div>
+          
+          <div class="field company">
+            <div class="field-inner">
+              <?php /*?><label class="label" for="company"><span><?= $block->escapeHtml(__('Occasion')) ?></span></label><?php */?>
+              <div class="control">
+                <input name="cont_company" id="cont_company" title="<?= $block->escapeHtmlAttr(__('Company')) ?>" value="" class="input-text effect-2" type="text" maxlength="100" placeholder="COMPANY"/>
+              </div>
+            </div>
+          </div>
+          <div class="field comment required">
+            <div class="field-inner">
+              <?php /*?><label class="label" for="message"><span><?= $block->escapeHtml(__('Comment')) ?></span></label><?php */?>
+              <div class="control">
+                <textarea name="cont_message" id="cont_message" title="<?= $block->escapeHtmlAttr(__('Message')) ?>" class="input-text" cols="5" rows="3" maxlength="1000" placeholder="MESSAGE"></textarea>
+              </div>
+            </div>
+          </div>
+          
+          <div class="field captcha">
+            <div class="gcaptcha_wrap">
+              <div class="g-recaptcha" data-sitekey="<?php echo $sitekey; ?>"></div>
+              <div class="recaptcha-error-message validation-advice" style="display:none;" >
+                <?php /* @escapeNotVerified */ echo __('Please verify that you are not a robot.') ?>
+              </div>
+            </div>
+          </div>
+          <div class="field required">
+            <div class="field-inner">
+              <div class="primary">                
+                <input type="hidden" name="hideit" id="hideit" value="" />
+				  <button title="<?= $block->escapeHtmlAttr(__('Send Enquiry')) ?>" class="action submit primary send_enquiry_button">
+					  <span><?= $block->escapeHtml(__('Send Enquiry')) ?></span>
+				  </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</div>	
+<script type="text/javascript">
+ require([
+		'jquery',
+	 	'mage/mage',
+	], function($) {	 
+	 	var dataForm = $('#sidebar_contact_form');
+    	dataForm.mage('validation', {});	 
+		jQuery(document).ready(function() {
+			jQuery("#sidebar_contact_form").submit(function(event) {
+				var response = grecaptcha.getResponse();
+				if (response.length == 0) {
+					jQuery('.recaptcha-error-message').show();
+					return false;
+				} else {					
+					jQuery('.recaptcha-error-message').hide();					
+					//if (dataForm.validation('isValid')) {						
+					jQuery('.send_enquiry_button').prop('disabled', true);
+					jQuery('.sidebar_contact_form_section').addClass('enq-show-loader');						
+					var name = $('#cont_name').val();
+					var email = $('#cont_email').val();	
+					var phone = $('#cont_phone').val();	
+					var company = $('#cont_company').val();	
+					var message = $('#cont_message').val();					
+					var sidebarcontactUrl = "<?php echo $this->getBaseUrl().'contact-us/index/sidebarpost';?>";
+					var param = {'name': name, 'email': email, 'phone': phone, 'company': company, 'message': message};						
+						jQuery.ajax({
+							showLoader: false,
+							url: sidebarcontactUrl,
+							data: param,
+							type: "POST",
+							dataType: 'json'
+						}).done(function (data) {		
+							if(data.status=='success')
+							{
+								jQuery('#sidebar_contact_form')[0].reset();
+								jQuery('.send_enquiry_button').prop('disabled', false);
+								jQuery('.enquiry-submit-message').html(data.message);
+								jQuery('.enquiry-submit-message').show();
+								jQuery('.enquiry-submit-message').focus();
+								jQuery('.sidebar_contact_form_section').removeClass('enq-show-loader');
+								grecaptcha.reset();
+								setTimeout(function(){ jQuery('.enquiry-submit-message').html(''); jQuery('.enquiry-submit-message').hide(); }, 5000);		
+							}
+							else
+							{					
+								location.reload();
+							}
+						});						
+					return false;
+				//}					
+				}
+			});
+			var onSuccess = function(response) {
+				var errorDivs = document.getElementsByClassName("recaptcha-error");
+				if (errorDivs.length) {
+					errorDivs[0].className = "";
+				}
+				var errorMsgs = document.getElementsByClassName("recaptcha-error-message");
+				if (errorMsgs.length) {
+					errorMsgs[0].parentNode.removeChild(errorMsgs[0]);
+				}
+			};
+		});
+	});
+</script>
+</div>	
+</div>
+<?php } ?>
+<?php } ?>

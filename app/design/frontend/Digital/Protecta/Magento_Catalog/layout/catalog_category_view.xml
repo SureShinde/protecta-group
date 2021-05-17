@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <move element="category.description" destination="page.bottom" />
+
+
+		<referenceContainer name="page.top">
+		   <container name="header-bread-title-image" label="header-bread-title-image" as="header-bread-title-image" htmlTag="div" htmlClass="header-bread-title-image" after="header-top-info">
+			</container>
+
+		   <container name="section-title-bread" label="section-title-bread" as="section-title-bread" htmlTag="div" htmlClass="section-title-bread" after="header-top-info">
+		   </container>
+    	</referenceContainer>
+
+	   <move element="page.main.title" destination="section-title-bread" before="-"/>
+	   <move element="breadcrumbs" destination="section-title-bread" after="page.main.title"/>
+	   <move element="category.image" destination="header-bread-title-image" after="breadcrumbs"/>
+	   <move element="section-title-bread" destination="header-bread-title-image" before="breadcrumbs"/>
+		
+		
+    </body>
+</page>

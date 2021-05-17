@@ -1,0 +1,101 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+/**
+ * Top menu for store
+ *
+ * @var $block \Magento\Theme\Block\Html\Topmenu
+ */
+?>
+<?php 
+	$_helper = $this->helper('\Dcs\Megamenuimg\Helper\Data');
+	$columnsLimit = $block->getColumnsLimit() ?: 0;
+	$_menu = $block->getHtml('level-top', 'submenu', $columnsLimit);
+	$home_helper = $this->helper('Digital\Homebanner\Helper\Data');
+	$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+	$customerSession = $objectManager->create('Magento\Customer\Model\Session');
+?>
+<div class="menu-title cf">
+<span class="menu-title"><?php echo __("Menu");?></span><a class="menu-close-btn"></a>
+</div>
+<nav class="navigation main-top-category" data-action="navigation">
+    <ul data-mage-init='{"menu":{"responsive":true, "expanded":true, "position":{"my":"left top","at":"left bottom"}}}'>			
+			<?php /* @escapeNotVerified */ //echo $_menu; ?>        
+		
+        	<?php /* @escapeNotVerified */ echo $block->getChildHtml(); ?>        			
+		
+		<?php echo $this->getLayout()->createBlock("Dcs\Megamenuimg\Block\HeaderMenu")->setTemplate("Dcs_Megamenuimg::html/main_applications_menu.phtml")->toHtml(); ?>
+		<?php echo $this->getLayout()->createBlock("Dcs\Megamenuimg\Block\HeaderMenu")->setTemplate("Dcs_Megamenuimg::html/main_products_menu.phtml")->toHtml(); ?>
+		
+		<li class="level0 last level-top">
+				<a href="<?php echo $this->getBaseUrl()."why-protect"; ?>" class="level-top" title="<?php echo __("Why Protect");?>">
+					<span><?php echo __("Why Protect");?></span>
+				</a>
+		</li>
+		
+		<?php /*if($home_helper->checkDevice()==1){ */ //// For Mobile ?>
+						
+		<li class="level0 last level-top show-mobile">
+				<a href="<?php echo $this->getBaseUrl()."about-protecta-group"; ?>" class="level-top" title="<?php echo __("About Us");?>">
+					<span><?php echo __("About Us");?></span>
+				</a>
+				<span class="level0-ico-corner"></span>
+				<?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('about_us_sub_menu')->toHtml(); ?>	
+		</li>	
+		
+		
+		
+		<li class="level0 last level-top show-mobile">
+				<a href="<?php echo $this->getBaseUrl()."news.html"; ?>" class="level-top" title="<?php echo __("News");?>">
+					<span><?php echo __("News");?></span>
+				</a>
+		</li>
+		
+		<li class="level0 last level-top show-mobile">
+				<a href="<?php echo $this->getBaseUrl()."resources"; ?>" class="level-top" title="<?php echo __("Resources");?>">
+					<span><?php echo __("Resources");?></span>
+				</a>
+				<span class="level0-ico-corner"></span>
+				<?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('resources_sub_menu')->toHtml(); ?>
+		</li>		
+		
+		<li class="level0 last level-top show-mobile">
+				<a href="<?php echo $this->getBaseUrl()."contact-us"; ?>" class="level-top" title="<?php echo __("Contact Us");?>">
+					<span><?php echo __("Contact Us");?></span>
+				</a>
+		</li>
+		
+		<?php if($customerSession->isLoggedIn()) {?>
+		
+		<li class="level0 last level-top show-mobile">
+				<a href="<?php echo $this->getBaseUrl()."customer/account"; ?>" class="level-top" title="<?php echo __("My Account");?>">
+					<span><?php echo __("My Account");?></span>
+				</a>
+		</li>
+		<li class="level0 last level-top show-mobile">
+				<a href="<?php echo $this->getBaseUrl()."customer/account/logout"; ?>" class="level-top" title="<?php echo __("Logout");?>">
+					<span><?php echo __("Logout");?></span>
+				</a>
+		</li>
+		
+		<?php }else{ ?>
+		
+		<li class="level0 last level-top show-mobile">
+				<a href="<?php echo $this->getBaseUrl()."customer/account/login"; ?>" class="level-top" title="<?php echo __("Login");?>">
+					<span><?php echo __("Login");?></span>
+				</a>
+		</li>
+		<li class="level0 last level-top show-mobile">
+				<a href="<?php echo $this->getBaseUrl()."customer/account/create"; ?>" class="level-top" title="<?php echo __("Register");?>">
+					<span><?php echo __("Register");?></span>
+				</a>
+		</li>
+		
+		<?php } ?>	
+		
+		
+		
+	</ul>
+</nav>

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <contactus>
+            <view>
+                <enabled>1</enabled>
+            </view>
+        </contactus>
+		<view>
+			<recipient_email>
+                    <![CDATA[hello@example.com]]>
+            </recipient_email>
+			<email_template>contactus_view_email_template</email_template>
+			<admin_email>contactus_view_admin_email</admin_email>
+        </view>
+    </default>
+</config>

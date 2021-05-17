@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Digital\CustomAPI\Api\TestInterface" type="Digital\CustomAPI\Model\Test" />
+    <preference for="Digital\CustomAPI\Api\TestsetpriceInterface" type="Digital\CustomAPI\Model\Testsetprice" />
+    <preference for="Digital\CustomAPI\Api\ProductsettierpriceInterface" type="Digital\CustomAPI\Model\Productsettierprice" />
+    <preference for="Digital\CustomAPI\Api\ShippingwarehouseInterface" type="Digital\CustomAPI\Model\Shippingwarehouse" />
+    <preference for="Digital\CustomAPI\Api\ShippingzoneInterface" type="Digital\CustomAPI\Model\Shippingzone" />
+    <preference for="Digital\CustomAPI\Api\CustomerspecificproductsInterface" type="Digital\CustomAPI\Model\Customerspecificproducts" />
+	<preference for="Digital\CustomAPI\Api\SubAccountPermissionInterface" type="Digital\CustomAPI\Model\SubAccountPermission" />
+	<preference for="Digital\CustomAPI\Api\CustomerGroupInterface" type="Digital\CustomAPI\Model\CustomerGroup" />
+	<preference for="Digital\CustomAPI\Api\UpdateProductInterface" type="Digital\CustomAPI\Model\UpdateProduct" />
+	<preference for="Digital\CustomAPI\Api\UpdateCustomerInterface" type="Digital\CustomAPI\Model\UpdateCustomer" />
+
+    <type name="Magento\Checkout\Block\Checkout\AttributeMerger">
+        <plugin name="shippingAddress" type="Digital\CustomAPI\Block\Plugin\AttributeMerger\PlaceholderAttributeMerger"/>
+    </type>
+</config>

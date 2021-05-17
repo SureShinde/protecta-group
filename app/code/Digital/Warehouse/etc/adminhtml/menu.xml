@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">   
+
+	<menu>
+
+		<add
+
+			 id="Digital_Warehouse::parent" 
+
+			 title="Warehouses"
+
+			 module="Digital_Warehouse"
+
+			 sortOrder="20"
+
+			 resource="Digital_Homebanner::parent"
+
+			 parent="Zdcs_Digital::23Digital"
+
+		/>		
+
+		<add 
+
+			 id="Digital_Warehouse::warehouse_manage" 
+
+			 title="Manage Warehouses" module="Digital_Warehouse" 
+
+			 sortOrder="30" parent="Digital_Warehouse::parent" 
+
+			 action="warehouse/index/"
+
+			 resource="Digital_Warehouse::warehouse_manage"
+
+		/>
+
+		<add
+
+			 id="Digital_Warehouse::warehouse_settings" 
+
+			 title="QTY Status Configuration" module="Digital_Warehouse" 
+
+			 sortOrder="40" parent="Digital_Warehouse::parent" 
+
+			 action="adminhtml/system_config/edit/section/warehouse"
+
+			 resource="Digital_Warehouse::warehouse_settings"
+
+		/>
+
+	</menu>
+
+</config>
+

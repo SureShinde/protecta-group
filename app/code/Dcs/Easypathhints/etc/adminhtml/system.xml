@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="digital" translate="label" sortOrder="10" class="digital-tab">
+            <label>23 Digital Settings</label>
+        </tab> 
+        <section id="dcs_easypathhints"  showInDefault="1">
+            <tab>digital</tab>
+            <label>Easy Template Path Hints</label>
+            <resource>Dcs_Easypathhints::config</resource>
+            <group id="general"  showInDefault="1">
+                <label>Easy Template Path Hints</label>                
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[you can simply trigger template path hints by adding: <strong>?tp=1</strong>.]]></comment>
+                </field>                
+            </group>
+        </section>
+    </system>
+</config>

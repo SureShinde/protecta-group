@@ -1,0 +1,116 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<!--@subject {{trans "Welcome to %store_name" store_name=$store.getFrontendName()}} @-->
+<!--@vars {
+"var this.getUrl($store, 'customer/account/')":"Customer Account URL",
+"var customer.email":"Customer Email",
+"var customer.name":"Customer Name"
+} @-->
+
+{{template config_path="design/email/header_template"}}
+<table border="0" width="100%" cellpadding="20" cellspacing="0">
+    <tr>
+        <td>
+            <div class="top-info-sec">
+                <h5 style="font-size: 30px; margin: 0 0 25px; color: #606a71; font-weight: bold; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;" class="greeting">{{trans "%name," name=$customer.name}}</h5>
+                <p style="font-size: 16px; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #3d3d3d; margin-bottom: 15px;">{{trans "Welcome to %store_name." store_name=$store.getFrontendName()}}</p>
+                <p style="font-size: 16px; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #3d3d3d; margin-bottom: 15px;">
+                    {{trans
+                    'To sign in to our site, use these credentials during checkout or on the <b><u><a href="%customer_url">My Account</a></u></b> page:'
+
+                    customer_url=$this.getUrl($store,'customer/account/',[_nosid:1])
+                    |raw}}
+                </p>
+                <p style="font-size: 16px; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #3d3d3d; margin-bottom: 15px;">
+                    <span style="display: block; width: 100%; margin-bottom: 8px;"><strong style="font-weight: bold; color: #3d3d3d;">{{trans "Email:"}}</strong> <u>{{var customer.email}}</u></span><br>
+                <strong style="font-weight: bold;">{{trans "Password:"}}</strong> <em>{{trans "Password you set when creating account"}}</em></p>
+                <p style="font-size: 16px; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #3d3d3d; margin-bottom: 15px;">
+                    {{trans
+                    'Forgot your account password? <b><u><a href="%reset_url">Click here</a></u></b> to reset it.'
+
+                        reset_url="$this.getUrl($store,'customer/account/createPassword/',[_query:[id:$customer.id,token:$customer.rp_token],_nosid:1])"
+                    |raw}}
+                </p>
+            </div>
+        </td>
+    </tr>
+</table>
+<table border="0" width="100%" cellpadding="20" cellspacing="0" bgcolor="#f5f5f5" style="background: #f9f9f9; border-bottom: dashed 2px #eee; border-top: dashed 2px #eee;">
+    <tr>
+        <td>
+            <div class="info-box">
+                <h6 style="margin: 0 0 30px; padding: 0; font-size: 19px; font-weight: bold; color: #3d3d3d; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;">{{trans "When You Sign In To Your Account, You Will Be Able To:"}}</h6>
+                <div class="info-box-sec">
+                    <table border="0" width="630px" align="center">
+                        <tr>
+                            <td style="width: 50%; padding-bottom: 40px;">
+                                <table border="0" width="100%">
+                                    <tr>
+                                        <td style="font-size: 0; width: 75px;">
+                                            <div class="icon-box">
+                                                <img src="{{view url='Magento_Email/images/icon1.png'}}" width="72" height="83" alt="Proceed Through Checkout Faster" />
+                                            </div>
+                                        </td>
+                                        <td style="vertical-align: middle; padding-left: 20px; text-align: left;">
+                                            <h6 style="margin: 0; font-size: 16px; color: #3d3d3d; font-weight: bold; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; width: 137px; line-height: 1.5;">{{trans "Proceed Through Checkout Faster"}}</h6>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="width: 50%; padding-bottom: 40px;" >
+                                <table border="0" width="100%">
+                                    <tr>
+                                        <td style="font-size: 0; width: 75px;">
+                                            <div class="icon-box">
+                                                <img src="{{view url='Magento_Email/images/icon2.png'}}" width="72" height="83" alt="Check The Status Of Orders" />
+                                            </div>
+                                        </td>
+                                        <td style="vertical-align: middle;  padding-left: 20px; text-align: left;">
+                                            <h6 style="margin: 0; font-size: 16px; color: #3d3d3d; font-weight: bold; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; width: 137px; line-height: 1.5;">{{trans "Check The Status Of Orders"}}</h6>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 50%;">
+                                <table border="0" width="100%">
+                                    <tr>
+                                        <td style="font-size: 0; width: 75px;">
+                                            <div class="icon-box">
+                                                <img src="{{view url='Magento_Email/images/icon3.png'}}" width="72" height="83" alt="Store Alternative Addresses" />
+                                            </div>
+                                        </td>
+                                        <td style="vertical-align: middle;  padding-left: 20px; text-align: left;">
+                                            <h6 style="margin: 0; font-size: 16px; color: #3d3d3d; font-weight: bold; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; width: 137px; line-height: 1.5;">{{trans "Store Alternative Addresses"}}</h6>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="width: 50%;">
+                                <table border="0" width="100%">
+                                    <tr>
+                                        <td style="font-size: 0; width: 75px;">
+                                            <div class="icon-box">
+                                                <img src="{{view url='Magento_Email/images/icon4.png'}}" width="72" height="83" alt="View Past Orders" />
+                                            </div>
+                                        </td>
+                                        <td style="vertical-align: middle;  padding-left: 20px; text-align: left;">
+                                            <h6 style="font-size: 16px; color: #3d3d3d; font-weight: bold; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; width: 137px; margin: 0; line-height: 1.5;">{{trans "View Past Orders"}}</h6>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+{{template config_path="design/email/footer_template"}}

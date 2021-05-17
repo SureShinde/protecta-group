@@ -1,0 +1,34 @@
+<?php 	$product = $block->getProduct();
+		$warehouse_helper = $this->helper('Digital\Warehouse\Helper\Data');
+ ?>
+<div class="product-simple-sku-avail-section">
+	<div class="product-simple-sku-item">
+		<div class="product-simple-sku">	
+			<?php echo 'Code: #'.$block->escapeHtml($product->getsku()); ?>
+		</div>			
+	</div>	
+
+
+	<div class="product-simple-avail-item">
+		<div class="simple-prod-status">
+			<?php $status_qty_status = $warehouse_helper->getCurrentLocationQtyStatus($product);								
+				  $status_qty_message = $warehouse_helper->getCurrentLocationQtyMessage($product);
+				  $new_class = '';
+				  if($status_qty_status=='Available')
+				{
+					$new_class = 'available';
+				}
+				else
+				{
+					$new_class = 'low-in-stock';
+				}
+				 				
+			?>
+			<div class="prod-status-main <?php echo $new_class; ?>"><?php echo $status_qty_status.': '; ?></div>
+			<div class="prod-status-message"><?php echo $status_qty_message; ?></div>							
+		</div>
+	</div>	
+</div>
+<div class="product-info-price">
+	<?= /* @escapeNotVerified */ $block->getProductPrice($product) ?>
+</div>

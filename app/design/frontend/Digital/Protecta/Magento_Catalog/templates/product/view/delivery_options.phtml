@@ -1,0 +1,36 @@
+<?php
+	$product = $block->getProduct();
+	$delivery_options = array();
+	$delivery_options_new = array();
+	$delivery_options = $product->getAttributeText('pg_delivery_options');
+	if(is_array($delivery_options))
+	{
+		$delivery_options_new = $delivery_options;
+	}
+	else
+	{
+		
+		$delivery_options_new[] = $delivery_options;
+	}	
+	if(isset($delivery_options_new) && $delivery_options_new!='' && $delivery_options_new[0]!='')
+	{
+?>
+<div class="product-delivery-options-section">
+<div class="product-delivery-option-title">
+<?php echo __('Delivery Options'); ?>
+</div>
+    <div class="option-box">
+		<?php foreach($delivery_options_new as $delivery_option_item)
+		{
+			$del_class = str_replace(" ","_",strtolower($delivery_option_item));
+			echo '<div class="product-delivery-option-value"><div class="'.$del_class.'"><span>';
+			echo $delivery_option_item;
+			echo '</span></div></div>';
+		}
+		?>
+    </div>
+</div>		
+<?php } ?>
+
+
+

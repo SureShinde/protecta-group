@@ -1,0 +1,21 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var \Magento\Wishlist\Block\Customer\Wishlist\Button $block */
+?>
+<?php $warehouse_helper = $this->helper('Digital\Warehouse\Helper\Data');
+	  $customerSession = $warehouse_helper->getCustomerSession();
+	  $selected_location = $customerSession->getLocationSession();	
+?>
+<?php if ($block->getWishlist()->getItemsCount() && $block->getWishlist()->isSalable()): ?>
+	<?php if($selected_location!=''){ ?>
+    <button type="button" data-role="all-tocart" title="<?= $block->escapeHtmlAttr(__('Add to Cart')) ?>" class="action tocart btn-green wishlist-addtocart">
+        <span><?= $block->escapeHtml(__('Add to Cart')) ?></span>
+    </button>		
+	<?php } ?>
+<?php endif;?>

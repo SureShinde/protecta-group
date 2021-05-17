@@ -1,0 +1,86 @@
+<!--
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<!--@subject {{trans "New Request to update account Information at "}}{{config path="general/store_information/name"}} @-->
+<!--@vars {
+"var request_type":"Enquiry Type",
+} @-->
+
+{{template config_path="design/email/header_template"}}
+
+<table border="0" width="100%" cellpadding="20" cellspacing="0">
+    <tr>
+        <td>
+            <div class="top-info-sec">
+                <h5 style="font-size: 30px; margin: 0 0 25px; color: #606a71; font-weight: bold; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;" class="greeting">Hello Admin,</h5>
+                <div class="order-box">
+                    <table border="0" width="100%" style="margin: 20px 0;">
+                        <tr>
+                            <td style="250px; text-align: center; vertical-align: middle;">
+                                <div class="Contact Enquiry" style="padding: 0; text-align: center;"><img src="{{view url='Magento_Email/images/update-account.png'}}" width="120" height="120" alt="Update Account" /></div>
+                            </td>
+                            <td style="vertical-align: middle; width: 450px; padding-left: 20px;">
+                                <p style="font-size: 16px; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #3d3d3d; margin-bottom:0;">
+                                    New account update request has been received as below:</p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+<table border="0" width="100%" cellpadding="20" cellspacing="0" style="background: #f9f9f9; border-bottom: dashed 2px #eee; border-top: dashed 2px #eee;">
+    <tr>
+        <td>
+            <div class="order-summry">
+                <div class="top-head">
+                    <h6 style="margin: 0 0 20px; text-align: center; padding: 0; font-size: 24px; font-weight: bold; color: #606a71; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+                       {{trans 'Customer Information'}}
+                    </h6>
+                    <table class="inq-table" border="1" style="width:100%; text-align: left; border: solid 1px #ddd; background: #fff;" cellpadding="10" cellspacing="10">	
+                        {{if customer_name}}
+                            <tr>
+                                <td style="width:60px;"><b>Customer Name</b></td>
+                                <td style="width:250px;">{{var customer_name}}</td>
+                            </tr>
+                            {{/if}}
+                            {{if customer_company}}
+                            <tr>
+                                <td style="width:60px;"><b>Company Name</b></td>
+                                <td style="width:250px;">{{var customer_company}}</td>
+                            </tr>
+                            {{/if}}
+                            {{if customer_email}}
+                            <tr>
+                                <td style="width:60px;"><b>Customer Email</b></td>
+                                <td style="width:250px;">{{var customer_email}}</td>
+                            </tr>
+                            {{/if}}
+
+                            <!--{{if customer_code}}
+                            <tr>
+                                <td style="width:60px;"><b>Customer Code</b></td>
+                                <td style="width:250px;">{{var customer_code}}</td>
+                            </tr>
+                            {{/if}} -->
+
+                            <tr>
+                                <td style="width:60px;"><b>Enquiry Type</b></td>
+                                <td style="width:250px;">{{var request_type}}</td>
+                            </tr>
+
+                            <tr>
+                                <td style="width:60px;"><b>New Information</b></td>
+                                <td style="width:250px;">{{var request_content}}</td>
+                            </tr>		
+                    </table>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+{{template config_path="design/email/footer_template"}}

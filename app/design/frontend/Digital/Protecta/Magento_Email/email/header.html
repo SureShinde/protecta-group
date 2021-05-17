@@ -1,0 +1,87 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<!--@subject {{trans "Header"}} @-->
+<!--@vars {
+"var logo_height":"Email Logo Image Height",
+"var logo_width":"Email Logo Image Width",
+"var template_styles|raw":"Template CSS"
+} @-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <style type="text/css">
+        {{var template_styles|raw}}
+
+        {{css file="css/email.css"}}
+        a:hover{
+            text-decoration: none !important;
+        }
+    </style>
+</head>
+<body>
+{{inlinecss file="css/email-inline.css"}}
+
+<!-- Begin wrapper table -->
+<table bgcolor="#f7f7f7" class="wrapper" width="100%">
+    <tr>
+        <td class="wrapper-inner" align="center"> 
+            <table cellpadding="0" cellspacing="0" bgcolor="#fff" class="main" align="center" width="700" style="width: 700px !important; margin-top: 20px;"> 
+                <tr>
+                    <td colspan="2">
+                        <table border="0" width="100%" cellpadding="15" cellspacing="0" style="border-bottom: solid 2px #ddd; padding: 10px !important;" bgcolor="#fff">
+                            <tr>
+                                <td class="header" bgcolor="#fff" style="background-color:#fff !important; background-image: none !important; background:#fff !important; width: 50%; vertical-align: middle;">
+                                    <a class="logo" href="{{store url=""}}" style="display:block;">
+                                        <img
+                                            {{if logo_width}}
+                                                width="{{var logo_width}}"
+                                            {{else}}
+                                                width="190"
+                                            {{/if}}
+
+                                            {{if logo_height}}
+                                                height="{{var logo_height}}"
+                                            {{else}}
+                                                height="59"
+                                            {{/if}}
+
+                                            src="{{var logo_url}}"
+                                            alt="{{var logo_alt}}"
+                                            title="{{var logo_alt}}"
+                                            border="0"
+                                        />
+                                    </a>
+                                </td>
+                                <td valign="middle" align="left" class="header-right-bg" style="vertical-align:middle; text-align: left !important; background-color:#fff !important; background-image: none !important; background:#fff !important; width: 50%;">
+                                    <div class="header-right" style="float: right;">
+                                            <table border="0" cellpadding="0" cellspacing="0">
+                                                {{depend store_phone}}
+                                                <tr class="phone">
+                                                    <td style="font-size: 0; line-height: 0; padding-bottom: 10px !important;"><img src="{{view url='Magento_Email/images/phone-icon.jpg'}}" width="35" height="35" alt="Phone" /></td>
+                                                    <td style="vertical-align: middle; padding-left: 10px !important;">{{trans '<a href="tel:%store_phone" style="color:#3d3d3d; font-size: 16px; line-height: 1; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 600;">%store_phone</a>' store_phone=$store_phone |raw}}</td>
+                                                </tr>
+                                                {{/depend}}
+                                                {{depend store_email}}	
+                                                <tr class="email">
+                                                    <td style="font-size: 0; line-height: 0; "><img src="{{view url='Magento_Email/images/email-icon.jpg'}}" width="35" height="35" alt="Email" /></td>
+                                                    <td style="vertical-align: middle; padding-left: 10px !important;">{{trans '<a href="mailto:%store_email" style="color:#3d3d3d; font-size: 16px; line-height: 1; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 600;">%store_email</a>' store_email=$store_email |raw}}</td>
+                                                </tr>
+                                                {{/depend}} 
+                                            </table>
+                                    </div>
+                                </td>
+                            </tr>   
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="main-content" style="padding:0;" colspan="2">
+                    <!-- Begin Content -->

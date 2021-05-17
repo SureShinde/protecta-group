@@ -1,0 +1,291 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Magento\Catalog\Block\Product\View */
+?>
+<div id="product_enq_loader" class="prod-enquiry-loader"><span></span></div>
+<?php $_product = $block->getProduct(); ?>
+
+<div class="simple-price-qty-buttons-section">
+
+
+<?php
+$warehouse_helper = $this->helper('Digital\Warehouse\Helper\Data');
+$customer_group_id = $warehouse_helper->getCurrentCustomerIdForTierPrice();
+$_product->setCustomerGroupId($customer_group_id);
+$tier_price = $_product->getTierPrice();
+// print_r($tier_price);
+// print_r($_product->getData('group_price'));
+if(count($tier_price) > 0)
+{
+?>
+<div class="simple-prod-tier-section">
+    <div class="simple-tier-title"><?php echo __('Pricing'); ?></div>
+
+    <?php
+        // $final_price_format = $this->helper('Magento\Framework\Pricing\Helper\Data')->currency(number_format($_product->getFinalPrice(), 2), true, false);
+
+        // $new_tier_array = array();
+        // $new_final_array = array();
+        // $new_tier_array['qty'] = '1';
+        // $new_tier_array['price'] = $final_price_format;
+        // $new_final_array[] = $new_tier_array;
+
+
+        foreach ($tier_price as $tier_item) {
+
+            $new_tier_array['qty'] = (int)$tier_item['price_qty'] - 1;
+            $new_tier_array['price'] = $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($tier_item['price'], true, false);
+
+            $new_final_array[] = $new_tier_array;
+        }
+        // print_r($new_final_array);
+
+        $m=0;
+        foreach ($new_final_array as $final_item){
+            echo '<div class="simple-tier-item-qty-price">';
+            echo $final_item['qty'] + 1;
+            if($m == count($new_final_array) - 1) {
+                echo '+';
+            }
+            if(isset($new_final_array[$m+1]['qty'])) {
+                echo ' - ';
+                echo $new_final_array[$m+1]['qty'];
+            }
+            echo ' for ';
+            echo $final_item['price'];
+            echo '</div>';
+            $m++;
+        }
+
+    ?>
+
+    <?php /*foreach($tier_price as $pirces){
+            $tier_price = $this->helper('Magento\Framework\Pricing\Helper\Data')->currency(number_format($pirces['price'], 2), true, false);
+            $tier_qty = (int)$pirces['price_qty'];
+
+              echo '<div class="simple-tier-item-qty-price">'.$tier_qty.' for '.$tier_price.'</div>';
+
+     }*/
+     ?>
+
+     <div class="product-simple-bulk-text simple-tier-item-qty-price"><?php echo __('Call for bulk pricing'); ?></div>
+   </div>
+<?php } ?>
+
+
+
+<?php $buttonTitle = __('Add to Cart'); ?>
+<?php if ($_product->isSaleable() && $_product->getTypeId()=='simple'): ?>
+<div class="box-tocart simple-prod-qty-section">
+    <div class="fieldset">
+        <?php if ($block->shouldRenderQuantity()): ?>
+        <div class="field qty">
+            <label class="label" for="qty"><span><?= /* @escapeNotVerified */ __('Qty') ?></span></label>
+            <div class="control">
+              <a class="decrement_qty qty-btn qtyminus" onclick="javascript:qtyUpAndDown(jQuery(this),'-', true);" href="javascript:void(0)"><span>-</span></a>
+                <input type="number"
+                      name="qty"
+                      id="<?= $_product->getId(); ?>"
+                      value="<?= /* @escapeNotVerified */ $block->getProductDefaultQty() * 1 ?>"
+                      title="<?= /* @escapeNotVerified */ __('Qty') ?>"
+                      class="input-text product_qty_box qty simple_qty_<?= $_product->getId(); ?>"
+                      data-validate="<?= $block->escapeHtml(json_encode($block->getQuantityValidators())) ?>"
+                      data-parentid="<?= $_product->getId(); ?>"
+                      data-name="<?= $_product->getName(); ?>"
+                      data-parenturl="<?= $_product->getUrlModel()->getUrl($_product); ?>"
+                      data-sku="<?= $_product->getSku(); ?>"
+                      oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                      maxlength="4"
+                      onkeypress="return isNumberKey(event)" />
+                  <a class="increment_qty qty-btn qtyplus" onclick="javascript:qtyUpAndDown(jQuery(this) , '+');" href="javascript:void(0)"><span>+</span></a>
+            </div>
+        </div>
+        <?php endif; ?>
+
+    </div>
+</div>
+<?php endif; ?>
+
+<?php if($_product->getTypeId()=='simple'){ ?>
+<div class="simple-prod-buttons-section">
+    <?php if ($_product->isSaleable() && $_product->getTypeId()=='simple'): ?>
+    <div class="actions simple-prod-cart-button">
+                <button type="submit"
+                        title="<?= /* @escapeNotVerified */ $buttonTitle ?>"
+                        class="action primary tocart"
+                        id="product-addtocart-button">
+                    <div class="add_icon_cart">
+                        <svg x="0px" y="0px" width="24px" height="20px" viewBox="0 0 24 20">
+                        <g>
+                            <path fill="#FFFFFF" d="M21.065,13.143l2.828-8.464c0.143-0.407,0.035-0.652-0.079-0.813c-0.294-0.413-0.896-0.417-1.014-0.417
+                                L6.817,3.445L6.391,1.421C6.275,0.943,5.935,0.488,5.25,0.488H0.757c-0.466,0-0.719,0.218-0.719,0.653v1.168
+                                c0,0.421,0.252,0.531,0.735,0.531h3.793l2.902,12.324c-0.46,0.488-0.711,1.201-0.711,1.863c0,1.463,1.163,2.809,2.649,2.809
+                                c1.404,0,2.457-1.314,2.627-2.098h5.654c0.171,0.783,1.023,2.131,2.626,2.131c1.46,0,2.648-1.266,2.648-2.725
+                                c0-1.451-0.882-2.738-2.634-2.738c-0.728,0-1.593,0.391-1.994,0.979h-6.946c-0.504-0.783-1.193-1.025-1.889-1.055l-0.097-0.512
+                                h10.569C20.768,13.818,20.924,13.527,21.065,13.143z M20.332,16.115c0.55,0,0.997,0.447,0.997,0.996
+                                c0,0.551-0.447,0.996-0.997,0.996c-0.549,0-0.996-0.445-0.996-0.996C19.337,16.563,19.783,16.115,20.332,16.115z M10.393,17.111
+                                c0,0.557-0.452,1.01-1.006,1.01c-0.556-0.002-1.009-0.453-1.009-1.01s0.453-1.008,1.009-1.008
+                                C9.94,16.104,10.393,16.555,10.393,17.111z"></path>
+                        </g>
+                        </svg>
+                    </div>
+                    <span><?= /* @escapeNotVerified */ $buttonTitle ?></span>
+                </button>
+                <?= $block->getChildHtml('', true) ?>
+    </div>
+    <?php endif; ?>
+
+    <div class="simple-prod-projectlist-button">
+    <?php echo $this->getLayout()->createBlock("Magento\Wishlist\Block\Catalog\Product\View\AddTo\Wishlist")->setTemplate("Magento_Wishlist::catalog/product/view/addto/wishlist.phtml")->toHtml();?>
+    </div>
+
+    <div class="simple-prod-enquiry-button">
+      <a href="javascript:void(0);" onclick="addtoenquiry(this.id);" id="<?= $_product->getId(); ?>" class="simple-prod-add-to-enquiry btn-ligth-grey" title="<?php echo __('Add to Enquiry'); ?>">
+          <span class="enq-icon">
+              <svg x="0px" y="0px" width="24px" height="26px" viewBox="0 0 24 26">
+                <g>
+                    <path fill="#606A71" d="M11.671,1.5C15.868,1.5,20,3.333,20,7.715c0,4.041-4.885,5.595-5.935,7.056
+                        c-0.788,1.086-0.524,2.611-2.688,2.611c-1.411,0-2.099-1.088-2.099-2.082c0-3.7,5.736-4.538,5.736-7.585
+                        c0-1.677-1.178-2.672-3.146-2.672c-4.196,0-2.558,4.101-5.736,4.101C4.985,9.145,4,8.492,4,7.25C4,4.202,7.67,1.5,11.671,1.5z
+                         M11.508,19.4c1.474,0,2.689,1.15,2.689,2.551c0,1.398-1.214,2.549-2.689,2.549c-1.474,0-2.689-1.148-2.689-2.549
+                        S10.034,19.4,11.508,19.4z"/>
+                </g>
+                </svg>
+          </span>
+          <span><?php echo __('Add to Enquiry');?></span>
+        </a>
+    </div>
+
+</div>
+
+
+<script type="text/x-magento-init">
+    {
+        "#product_addtocart_form": {
+            "Magento_Catalog/js/validate-product": {}
+        }
+    }
+</script>
+
+<div id="prod_detail_popup_main" class="prod-detail-popup-main" style="display:none;">
+    <div class="custom-popup">
+        <div class="custom-popup-inner">
+            <div class="custom-popup-title">
+                <h3 class="prod-popup-title"></h3>
+                <a href="javascript:void(0);" title="Close" class="popup_close_detail"><?php echo __('Close'); ?></a>
+            </div>
+            <div class="custom-popup-cont">
+                <div id="prod_detail_popup_inner">
+                    <div id="popup_text_msg" class="popup-text-msg"></div>
+                    <div class="popup-btn-box">
+                        <div class="popup-cont-shopping">
+                            <a class="btn-grey" href="javascript:void(0);" title="<?php echo __('Continue Shopping'); ?>"><?php echo __('Continue Shopping'); ?></a>
+                        </div>
+                        <div style="display:none;" id="goto_cart" class="popup-goto-shopping">
+                            <a class="btn-green" href="<?php echo $this->getUrl().'checkout/cart/'?>" title="<?php echo __('Go to Shopping Cart'); ?>"><?php echo __('Go to Shopping Cart'); ?></a>
+                        </div>
+                        <div style="display:none;" id="goto_enquiry" class="popup-goto-enquiry">
+                            <a class="btn-green" href="<?php echo $this->getUrl().'productenquiry/index/index/'?>" title="<?php echo __('Go to Product Enquiry'); ?>"><?php echo __('Go to Product Enquiry'); ?></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php } ?>
+
+</div>
+<script type="text/javascript">
+function isNumberKey(evt){
+    var charCode = (evt.which) ? evt.which : evt.keyCode
+    if (evt.keyCode==46) return false;
+    if (charCode > 31 && (charCode != 46 &&(charCode < 48 || charCode > 57)))
+        return false;
+    return true;
+}
+</script>
+
+<script type="text/javascript">
+require([
+      'jquery',
+    ], function ($) {
+      $(document).ready(function () {
+
+        $('.alt_contact_us').click(function (e){
+          var contacturl = "<?php echo $this->getUrl().'contact-us'?>";
+          window.open(contacturl, '_blank');
+        });
+
+        jQuery('.popup_close_detail, .popup-cont-shopping').click(function(e){
+                  jQuery('#prod_detail_popup_main').hide();
+                  jQuery('html').removeClass('show_detail_popup');
+                });
+
+
+        /******* Qty text box key press validation Start ***/
+          $(".product_qty_box").keypress(function (e) {
+             if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                   return false;
+             }
+           });
+          $(".product_qty_box").blur(function(e){
+            if($(this).val()<=0)
+            {
+              $(this).val(1);
+            }
+          });
+        /******* Qty text box key press validation END ***/
+    });
+});
+
+function addtoenquiry(id)
+{
+      jQuery('#goto_cart').hide();
+      jQuery('#goto_enquiry').show();
+      jQuery('.prod-popup-title').html('Add to Enquiry');
+
+      var top_current_enq_qty = jQuery('#top_mini_enquiry_count').html();
+
+      var qty_class = 'simple_qty_'+id;
+      var prod_qty = jQuery('.'+qty_class).val();
+      var prod_id  = jQuery('.'+qty_class).attr('id');
+      var parentid = jQuery('.'+qty_class).data('parentid');
+      var name = jQuery('.'+qty_class).data('name');
+      var parenturl = jQuery('.'+qty_class).data('parenturl');
+      var sku = jQuery('.'+qty_class).data('sku');
+
+
+      var productenquiryUrl = "<?php echo $this->getUrl().'productenquiry/index/add'?>";
+      var param = {'prod_id':prod_id, 'parentid':parentid, 'prod_qty':prod_qty, 'name':name, 'parenturl':parenturl, 'sku':sku};
+
+      jQuery.ajax({
+      showLoader: true,
+      url: productenquiryUrl,
+      data: param,
+      type: "POST",
+      dataType: 'json'
+      }).done(function (data) {
+        if(data.status=='success')
+        {
+          jQuery('#top_mini_enquiry_count').html(parseInt(top_current_enq_qty)+parseInt(prod_qty));
+          jQuery('#prod_detail_popup_main').show();
+          jQuery('html').addClass('show_detail_popup');
+          jQuery('#popup_text_msg').html(data.message);
+        }
+        else
+        {
+          location.reload();
+        }
+
+      });
+
+}
+</script>

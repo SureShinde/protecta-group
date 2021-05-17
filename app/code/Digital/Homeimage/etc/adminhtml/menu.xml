@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+
+    <menu>     
+       <add id="Digital_Homeimage::parent" title="Home Images" module="Digital_Homeimage" sortOrder="25" resource="Digital_Homeimage::parent" parent="Zdcs_Digital::23Digital"/>	
+
+		<add id="Digital_Homeimage::homeimage" title="Manage Home Images" module="Digital_Homeimage" sortOrder="24" parent="Digital_Homeimage::parent" action="homeimage/homeimage" resource="Digital_Homeimage::homeimage"/>
+
+		<add id="Digital_Homeimage::settings" title="Settings" module="Digital_Homeimage" sortOrder="26" parent="Digital_Homeimage::parent" action="adminhtml/system_config/edit/section/homeimage_section" resource="Digital_Homeimage::settings"/>
+
+    </menu>
+
+</config>

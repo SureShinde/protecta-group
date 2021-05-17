@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">	
+    <body>
+        <referenceContainer name="content">            
+			 <block class="Dcs\Downloadcatalogue\Block\Downloadcatalogue" name="maindownloadcatalogue" template="Dcs_Downloadcatalogue::downloads.phtml" cacheable="false"/>
+        </referenceContainer>
+		<referenceBlock name="breadcrumbs">
+            <action method="addCrumb">
+                <argument name="crumbName" xsi:type="string">Home</argument>
+                <argument name="crumbInfo" xsi:type="array">
+                    <item name="title" xsi:type="string">Go to Home Page</item>
+                    <item name="label" xsi:type="string">Home</item>
+                    <item name="link" xsi:type="string">{{baseUrl}}</item>
+                </argument>
+            </action>
+            <action method="addCrumb">
+                <argument name="crumbName" xsi:type="string">Info &amp; Downloads</argument>
+                <argument name="crumbInfo" xsi:type="array">
+                    <item name="title" xsi:type="string">Info &amp; Downloads</item>
+                    <item name="label" xsi:type="string">Info &amp; Downloads</item>
+                </argument>
+            </action>
+        </referenceBlock>
+		
+    </body>
+</page>

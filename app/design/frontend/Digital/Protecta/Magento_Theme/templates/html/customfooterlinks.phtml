@@ -1,0 +1,21 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php echo $this->getLayout()->createBlock("Magento\Theme\Block\Html\Header")->setTemplate("Magento_Theme::html/bottom_info.phtml")->toHtml();?>
+<div class="footer-top">
+    <div class="container">
+        <div class="footer-top-inner">			
+            <?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('footer_contact_section')->toHtml(); ?>
+        </div>
+    </div>
+</div>
+<div class="container">
+   <div class="cf footer-links-outer">
+      <?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('footer_section_1')->toHtml(); ?>
+      <?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('footer_section_2')->toHtml(); ?>
+	   <?php echo $this->getLayout()->createBlock("Magento\Newsletter\Block\Subscribe")->setTemplate("Dcs_Newsletter::subscribe.phtml")->toHtml();?>
+   </div>
+</div>

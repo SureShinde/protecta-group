@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+		<referenceBlock name="sidebar.main">
+			<block class="Dcs\Megamenuimg\Block\HeaderMenu" name="category-left-menu" template="Dcs_Megamenuimg::html/leftcategorymenu.phtml"/>
+        </referenceBlock>
+		
+		<referenceContainer name="content">
+		<block class="Magento\Catalog\Block\Category\View" name="category.cms" template="Magento_Catalog::category/cms.phtml" before="category.products"/>
+		<block class="Magento\Catalog\Block\Category\View" name="category.description" template="Magento_Catalog::category/description.phtml" after="category.products"/>	
+		</referenceContainer>
+    </body>
+</page>

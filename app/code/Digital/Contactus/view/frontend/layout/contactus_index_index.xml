@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+		<referenceBlock name="breadcrumbs">
+            <action method="addCrumb">
+                <argument name="crumbName" xsi:type="string">Home</argument>
+                <argument name="crumbInfo" xsi:type="array">
+                    <item name="title" xsi:type="string">Go to Home Page</item>
+                    <item name="label" xsi:type="string">Home</item>
+                    <item name="link" xsi:type="string">{{baseUrl}}</item>
+                </argument>
+            </action>
+            <action method="addCrumb">
+                <argument name="crumbName" xsi:type="string">Contact Us</argument>
+                <argument name="crumbInfo" xsi:type="array">
+                    <item name="title" xsi:type="string">Contact Us</item>
+                    <item name="label" xsi:type="string">Contact Us</item>
+                </argument>
+            </action>
+        </referenceBlock>
+        <!-- <referenceContainer name="page.messages">
+			<block class="Magento\Framework\View\Element\Messages" name="messages" as="messages" template="Magento_Theme::messages.phtml"/>
+        </referenceContainer> -->
+        
+        <referenceContainer name="content">
+			<block class="Digital\Contactus\Block\Contactus" name="contactus.form" template="Digital_Contactus::contact-form.phtml" after="main.content">
+            </block>
+        </referenceContainer>
+        
+		<referenceContainer name="page.top">		
+				<block class="Magento\Cms\Block\Block" name="contactus.banner">
+					 <arguments>
+						<argument name="block_id" xsi:type="string">contact_us_page_top_banner</argument>
+					 </arguments>
+				 </block>
+			
+			
+			<container name="header-bread-title-image" label="header-bread-title-image" as="header-bread-title-image" htmlTag="div" htmlClass="header-bread-title-image" after="header-top-info">       		                
+			</container>
+		   
+		   <container name="section-title-bread" label="section-title-bread" as="section-title-bread" htmlTag="div" htmlClass="section-title-bread" after="header-top-info">
+		   </container>
+			
+		</referenceContainer>
+		
+		<move element="page.main.title" destination="section-title-bread" before="-"/>
+	   	<move element="breadcrumbs" destination="section-title-bread" after="page.main.title"/>
+	   	<move element="contactus.banner" destination="header-bread-title-image" after="breadcrumbs"/>
+	   	<move element="section-title-bread" destination="header-bread-title-image" before="breadcrumbs"/>
+		
+		
+    </body>
+</page>

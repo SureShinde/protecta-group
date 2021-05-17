@@ -1,0 +1,69 @@
+<?php
+$_helper = $this->helper('\Dcs\Megamenuimg\Helper\Data');
+$i = 1;
+
+?>
+<li class="level0 parent level-top products-menu">
+    <a title="<?php echo __("Products");?>" class="level-top product-category" href="<?php echo $this->getBaseUrl()."products.html"; ?>">
+        <span><?php echo __("Products");?></span>
+    </a>
+
+    <ul id="simple_menu_prod" class="level0 submenu simple-products-menu-first">
+        <?php foreach($this->getProductsCategory() as $_category0) { ?>
+            <?php
+            $_category0 = $_helper->getCategoryUrl($_category0->getId());
+            $_subcategories0 = $_category0->getChildrenCategories();
+            ?>
+            <li class="submenu-cols level1 parent <?php if($i==1){ echo 'first-menu active-menu';} ?> <?php if(count($_subcategories0) > 0){ echo "parent";}?>">
+                <a href="<?php echo $this->getCategoryUrl($_category0); ?>" title="<?php echo $_category0->getName(); ?>">
+                    <span class="submenu-cols-cat-name"><?php echo $_category0->getName(); ?></span>
+                </a>
+                <?php if(count($_subcategories0)>0) { ?>
+                    <div class="submenu_wrapper">
+                        <ul class="level1 submenu">
+                            <?php
+                            foreach($_subcategories0 as $_category1) {
+                                $_category1 = $_helper->getCategoryUrl($_category1->getId());
+                                $_subcategories1 = $_category1->getChildrenCategories();
+
+                                $categoryProducts = $_category1->getProductCollection()->addAttributeToSelect('*');
+                                $categoryProducts->addAttributeToFilter('status',\Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_ENABLED);
+                                $categoryProducts->addAttributeToFilter('type_id', array('eq' => 'grouped'));
+                                $categoryProducts->addFieldToFilter('visibility', 4);
+
+                                ?>
+                                <li class="level2 <?php if(count($categoryProducts)>0) { echo 'parent'; } ?>">
+                                    <a href="<?php echo $this->getCategoryUrl($_category1);?>" title="<?php echo $_category1->getName(); ?>">
+                                        <span class="submenu-cat-name submenu-cols-cat-name"><?php echo $_category1->getName(); ?></span>
+                                    </a>
+
+                                    <?php
+                                    $categoryProducts = $_category1->getProductCollection()->addAttributeToSelect('*');
+                                    $categoryProducts->addAttributeToFilter('status',\Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_ENABLED);
+                                    $categoryProducts->addAttributeToFilter('type_id', array('eq' => 'grouped'));
+                                    $categoryProducts->addFieldToFilter('visibility', 4);
+
+                                    if(count($categoryProducts)>0) {   ?>
+                                        <div class="submenu_wrapper">
+                                            <ul class="level3 submenu">
+                                                <?php
+                                                foreach ($categoryProducts as $_product) {
+                                                    ?>
+                                                    <li class="level3 webo-nepal">
+                                                        <a href="<?php echo $_product->getProductUrl(); ?>" title="<?php echo $_product->getName(); ?>">
+                                                            <span class="submenu-cat-name"><?php echo $_product->getName(); ?></span>
+                                                        </a>
+                                                    </li>
+                                                <?php } ?>
+                                            </ul>
+                                        </div>
+                                    <?php  }  ?>
+                                </li>
+                            <?php } ?>
+                        </ul>
+                    </div>
+                <?php } ?>
+            </li>
+            <?php $i++; } ?>
+    </ul>
+</li>

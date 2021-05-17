@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <type name="Magento\Sales\Api\OrderRepositoryInterface">
+        <plugin name="ship_po_number_add_order_extension_attribute" type="WEBO\NetSuite\Plugin\OrderRepositoryPlugin" />
+    </type>
+<!--
+    <type name="Magento\Checkout\Model\ShippingInformationManagement">
+        <plugin name="save-in-quote" type="WEBO\NetSuite\Plugin\Checkout\ShippingInformationManagementPlugin" sortOrder="10"/>
+    </type> -->
+
+    <type name="Magento\Sales\Api\Data\OrderItemInterface">
+    	<plugin disabled="false" name="extra_attribute_order_item_data" sortOrder="10" type="WEBO\NetSuite\Plugin\OrderItemPlugin"/>
+	</type>
+</config>

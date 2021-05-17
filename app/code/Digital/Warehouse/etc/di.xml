@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+	
+    <type name="Magento\Quote\Model\Quote\Item\ToOrderItem">
+        <plugin name="warehouse_quote_to_order_item" type="Digital\Warehouse\Model\Plugin\Quote\QuoteToOrderItem"/>
+    </type>
+	
+	<preference for="Magento\Payment\Model\MethodList" type="Digital\Warehouse\Model\Payment\MethodList" />
+	
+	<preference for="Magento\Checkout\Block\Cart\Crosssell" type="Digital\Warehouse\Block\Cart\Crosssell" />
+
+	
+</config>

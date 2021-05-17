@@ -1,0 +1,31 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
+ 	<head><remove src="mage/calendar.css"/></head>
+ 	<body> 		
+		<referenceContainer name="page.top">
+				<container name="home-cat-section-box" htmlClass="home-cat-section-box" htmlTag="div" after="homebanner-main">
+				<container name="home-cat-section-box-inner" htmlClass="container" htmlTag="div" before="-">
+					<block class="Magento\Cms\Block\Block" name="homepage_about_video_section">
+					 <arguments>
+						<argument name="block_id" xsi:type="string">homepage_about_video</argument>
+					 </arguments>
+				 </block>
+				</container>
+			</container>
+		
+		</referenceContainer>
+		
+    	<referenceContainer name="content">
+		 
+					
+			<container name="home-news-section" htmlClass="home-news-inner" htmlTag="div" after="home-about-block-inner">				 								
+				<block class="Mageplaza\Blog\Block\Post\Listpost" name="homenewsblock" template="post/homepage_news_list.phtml"/>
+			</container>
+			
+			
+		</referenceContainer>		
+		
+		<referenceBlock name="breadcrumbs" remove="true" />
+		<referenceContainer name="page.main.title" remove="true"/>
+		
+    </body>
+</page>

@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+		<referenceContainer name="page.top">
+			<container name="header-bread-title-image" label="header-bread-title-image" as="header-bread-title-image" htmlTag="div" htmlClass="header-bread-title-image" after="header-top-info">
+				 <!--<block class="Magento\Cms\Block\Block" name="product_details_top_banner">
+					 <arguments>
+						<argument name="block_id" xsi:type="string">product_details_top_banner</argument>
+					 </arguments>
+				 </block>-->
+				 
+				 <block class="Magento\Catalog\Block\Product\View" name="groupproduct_top_bannerimage" as="groupproduct_top_bannerimage" template="Magento_GroupedProduct::product/view/groupproduct_top_bannerimage.phtml" />
+				 												
+			</container>
+			<container name="section-title-bread" label="section-title-bread" as="section-title-bread" htmlTag="div" htmlClass="section-title-bread" after="header-top-info">
+			</container>	
+		</referenceContainer>
+		
+		
+		<move element="page.main.title" destination="section-title-bread" before="-"/>
+	   <move element="breadcrumbs" destination="section-title-bread" after="page.main.title"/>
+	   
+	   <move element="section-title-bread" destination="header-bread-title-image" before="breadcrumbs"/>
+		
+		<referenceContainer name="content">
+			<container name="custom.product.add.to.cart" htmlTag="div" htmlClass="custom_product_addtocart" after="product.info.media"/>
+			
+			<container name="groupproduct.top.description" label="groupproduct_top_description" htmlTag="div" htmlClass="groupproduct_top_description" after="product.info.media">
+						<block class="Magento\Catalog\Block\Product\View" name="groupproducttopdescription" as="groupproducttopdescription" template="Magento_GroupedProduct::product/view/groupproduct_top_description.phtml" />				
+			</container>
+			
+			<container name="product.delivery.options" label="product_delivery_options" htmlTag="div" htmlClass="product_delivery_options" after="groupproduct.top.description">
+						<block class="Magento\Catalog\Block\Product\View" name="productdeliveryoptions" as="productdeliveryoptions" template="Magento_Catalog::product/view/delivery_options.phtml" after="groupproduct.top.description" />				
+			</container>
+			
+			<container name="merge.info.and.media" label="merge.info.and.media" htmlTag="div" htmlClass="merge_info_and_media" before="-" />
+					
+			
+		</referenceContainer> 
+		<move element="product.info" destination="custom.product.add.to.cart" />		
+		<move element="product.info.main" destination="merge.info.and.media" before="-"/>
+		<move element="product.info.media" destination="merge.info.and.media" after="product.info.main"/>
+		
+		<referenceBlock name="product.info.price" remove="true"/>
+		
+		
+		<referenceBlock name="product.info.main" remove="true"/>
+		<referenceBlock name="product.info.media" remove="true"/>
+
+    </body>
+</page>

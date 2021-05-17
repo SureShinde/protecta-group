@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <block class="Digital\Restrictproducts\Block\Adminhtml\Restrictproducts\Edit" name="restrictproducts_restrictproducts_edit"/>
+        </referenceContainer>
+        <referenceContainer name="left">
+            <block class="Digital\Restrictproducts\Block\Adminhtml\Restrictproducts\Edit\Tabs" name="restrictproducts_restrictproducts_edit_tabs">
+                <block class="Digital\Restrictproducts\Block\Adminhtml\Restrictproducts\Edit\Tab\Main" name="restrictproducts_restrictproducts_edit_tab_main"/>
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">main_section</argument>
+                    <argument name="block" xsi:type="string">restrictproducts_restrictproducts_edit_tab_main</argument>
+                </action>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

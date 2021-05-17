@@ -1,0 +1,65 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<form id="co-shipping-method-form" data-bind="blockLoader: isLoading, visible: isVisible()">
+    <p class="field note" data-bind="visible: (shippingRates().length <= 0)">
+        <!-- ko text: $t('Sorry, no quotes are available for this order at this time')--><!-- /ko -->
+    </p>
+    <fieldset class="fieldset rate" data-bind="visible: (shippingRates().length > 0)">
+        <dl class="items methods" data-bind="foreach: shippingRateGroups">
+            <dt class="item-title"><span data-bind="text: $data"></span></dt>
+            <dd class="item-options" data-bind="foreach: { data:$parent.getRatesForGroup($data), as: 'method' }">
+				<div data-bind="attr: { 'class': 'poa_' + method.method_code}">
+                <div data-bind="css: {'field choice item': available, 'message error': !available} ">
+                    <!-- ko ifnot: (available) -->
+                    <div data-bind="text: error_message"></div>
+                    <!-- /ko -->
+                    <!-- ko if: (available) -->
+                    <input type="radio"
+                           class="radio"
+                           data-bind="
+                                click: $parents[1].selectShippingMethod,
+                                checked: $parents[1].selectedShippingMethod,
+                                attr: {
+                                        value: carrier_code + '_' + method_code,
+                                        id: 's_method_' + carrier_code + '_' + method_code
+                                        }
+                                "/>
+                    <label class="label" data-bind="attr: {for: 's_method_' + carrier_code + '_' + method_code}">
+                        <!-- ko text: $data.method_title --><!-- /ko -->
+                        <each args="element.getRegion('price')" render="" />
+                    </label>                    
+                    <!-- ko if: (method.extension_attributes.title) -->
+                        <div class="ship_desc_sectio">
+									<div class="ship_desc_icon">
+										<svg x="0px" y="0px" width="30px" height="30px" viewBox="0 0 30 30">
+											<g>
+												<path fill="#64BD61" d="M15,0C6.716,0,0,6.716,0,15c0,8.284,6.716,15,15,15c8.284,0,15-6.717,15-15C30,6.716,23.283,0,15,0z
+													 M18.122,23.247c-0.772,0.305-1.387,0.536-1.848,0.696c-0.46,0.16-0.995,0.239-1.603,0.239c-0.935,0-1.662-0.229-2.181-0.685
+													c-0.518-0.455-0.776-1.033-0.776-1.735c0-0.272,0.019-0.553,0.057-0.837c0.04-0.285,0.102-0.604,0.187-0.964l0.966-3.413
+													c0.085-0.328,0.159-0.639,0.217-0.929c0.058-0.292,0.086-0.56,0.086-0.804c0-0.434-0.09-0.739-0.269-0.91
+													c-0.182-0.172-0.523-0.255-1.032-0.255c-0.249,0-0.505,0.037-0.769,0.114c-0.26,0.08-0.486,0.152-0.671,0.224l0.255-1.052
+													c0.632-0.258,1.238-0.479,1.816-0.662c0.578-0.185,1.124-0.277,1.638-0.277c0.928,0,1.645,0.226,2.149,0.673
+													c0.502,0.448,0.754,1.031,0.754,1.747c0,0.148-0.018,0.41-0.052,0.784s-0.099,0.716-0.193,1.029l-0.961,3.403
+													c-0.079,0.272-0.149,0.585-0.212,0.935s-0.094,0.615-0.094,0.795c0,0.452,0.102,0.76,0.305,0.924c0.2,0.164,0.552,0.246,1.05,0.246
+													c0.235,0,0.497-0.041,0.795-0.123c0.294-0.08,0.508-0.153,0.643-0.215L18.122,23.247z M17.951,9.434
+													c-0.447,0.417-0.987,0.625-1.619,0.625c-0.629,0-1.173-0.208-1.625-0.625c-0.45-0.417-0.677-0.923-0.677-1.515
+													c0-0.591,0.229-1.099,0.677-1.519c0.452-0.421,0.996-0.631,1.625-0.631c0.632,0,1.173,0.209,1.619,0.631
+													c0.449,0.42,0.674,0.928,0.674,1.519C18.625,8.512,18.4,9.017,17.951,9.434z"/>
+											</g>
+											</svg>
+									</div>
+                            <div class="ship_desc_value" data-bind="text: method.extension_attributes.title"></div> 
+                        </div>    
+                    <!-- /ko -->  
+                    <!-- /ko -->
+                </div>
+                </div>
+            </dd>
+        </dl>
+        <div class="cart-ship-methods-note">Selected shipping method will apply only to the item(s) direct from Protecta Group. Interstate Shipping may have an extended delivery timeframe.</div>
+    </fieldset>
+</form>

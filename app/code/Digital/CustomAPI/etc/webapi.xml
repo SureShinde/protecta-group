@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../app/code/Magento/Webapi/etc/webapi.xsd">
+
+    <route url="/V1/get-customer-price/:param" method="GET">
+        <service class="Digital\CustomAPI\Api\TestInterface" method="customerpricing"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+
+
+	<route url="/V1/set-customer-price" method="POST">
+        <service class="Digital\CustomAPI\Api\TestsetpriceInterface" method="setcustomerpricing"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+
+
+	<route url="/V1/set-product-tierprice" method="POST">
+        <service class="Digital\CustomAPI\Api\ProductsettierpriceInterface" method="setproducttierprice"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+
+
+    <route url="/V1/set-shipping-warehouse-data" method="POST">
+        <service class="Digital\CustomAPI\Api\ShippingwarehouseInterface" method="setshippingwarehousedata"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+
+
+    <route url="/V1/set-shipping-zone-data" method="POST">
+        <service class="Digital\CustomAPI\Api\ShippingzoneInterface" method="setshippingzonedata"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+
+
+    <route url="/V1/set-customer-specific-products" method="POST">
+        <service class="Digital\CustomAPI\Api\CustomerspecificproductsInterface" method="setcustomerspecificproducts"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+
+
+	<route url="/V1/set-subaccount-permission" method="POST">
+        <service class="Digital\CustomAPI\Api\SubAccountPermissionInterface" method="setsubaccountpermission"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+
+	<route method="GET" url="/V1/get-customer-groups">
+		<service class="Digital\CustomAPI\Api\CustomerGroupInterface" method="getcustomergroups"/>
+		<resources>
+			<resource ref="anonymous"/>
+		</resources>
+	</route>
+
+    <route method="PUT" url="/V1/update-products">
+		<service class="Digital\CustomAPI\Api\UpdateProductInterface" method="updateproduct"/>
+		<resources>
+            <resource ref="Magento_Customer::manage"/>
+		</resources>
+	</route>
+
+    <route method="POST" url="/V1/update-customer">
+		<service class="Digital\CustomAPI\Api\UpdateCustomerInterface" method="updatecustomer"/>
+		<resources>
+            <resource ref="Magento_Customer::manage"/>
+		</resources>
+	</route>
+
+</routes>

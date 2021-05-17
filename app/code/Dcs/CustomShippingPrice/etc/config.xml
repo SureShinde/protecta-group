@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2016 Dcs. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <dcs_customshippingprice>
+            <general>
+                <module_name>Digital Shipping Method</module_name> 
+            </general>
+        </dcs_customshippingprice>
+        <carriers>
+            <dcsshipping>
+                <active>1</active>
+                <sallowspecific>0</sallowspecific>
+                <model>Dcs\CustomShippingPrice\Model\Carrier\CustomShipping</model>
+                <title>Digital</title>
+                <name>Free shipping</name>
+                <price>0</price>
+                <specificerrmsg>This shipping method is not available. To use this shipping method, please contact us.</specificerrmsg>
+                <sort_order>9999</sort_order>
+            </dcsshipping>
+        </carriers>
+    </default>
+</config>

@@ -1,0 +1,78 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+?>
+<?php
+/** @var $block \Magento\Framework\View\Element\Template */
+/** @var $helper \Magento\Search\Helper\Data */
+$helper = $this->helper(\Magento\Search\Helper\Data::class);
+?>
+<div class="block block-search">
+    <?php /* <div class="search-icon">
+        <a href="javascript:void(0);" class="icon_search" title="<?php echo __('Search'); ?>">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                 width="31px" height="31px" viewBox="0 0 31 31" enable-background="new 0 0 31 31" xml:space="preserve">
+            <g>
+                <path fill="#FFFFFF" d="M30.663,29.359l-7.518-7.519c2.017-2.317,3.237-5.343,3.237-8.649C26.383,5.913,20.463,0,13.191,0
+                    C5.913,0,0,5.92,0,13.191c0,7.271,5.92,13.191,13.191,13.191c3.307,0,6.332-1.221,8.65-3.238l7.519,7.519
+                    c0.179,0.179,0.418,0.274,0.651,0.274c0.232,0,0.473-0.089,0.651-0.274C31.021,30.306,31.021,29.718,30.663,29.359z M1.845,13.191
+                    c0-6.256,5.09-11.339,11.339-11.339c6.255,0,11.339,5.09,11.339,11.339c0,6.248-5.084,11.346-11.339,11.346
+                    C6.935,24.537,1.845,19.447,1.845,13.191z"/>
+            </g>
+            </svg>
+        </a>
+    </div>  */?>
+    <div class="header_search block-search">
+        <div class="block block-title"><strong><?= /* @escapeNotVerified */ __('Search') ?></strong></div>
+        <div class="block block-content">
+            <form class="form minisearch" id="search_mini_form" action="<?= /* @escapeNotVerified */ $helper->getResultUrl() ?>" method="get">
+                <div class="field search">
+                    <label class="label" for="search" data-role="minisearch-label">
+                        <span><?= /* @escapeNotVerified */ __('Search') ?></span>
+                    </label>
+                    <div class="control">
+                        <input id="search"
+                               data-mage-init='{"quickSearch":{
+                                    "formSelector":"#search_mini_form",
+                                    "url":"<?= /* @escapeNotVerified */ $helper->getSuggestUrl()?>",
+                                    "destinationSelector":"#search_autocomplete"}
+                               }'
+                               type="text"
+                               name="<?= /* @escapeNotVerified */ $helper->getQueryParamName() ?>"
+                               value="<?= /* @escapeNotVerified */ $helper->getEscapedQueryText() ?>"
+                               <?php /* placeholder="<?= / * @escapeNotVerified * / __('Search entire store here...') ?>" */ ?>
+                               class="input-text"
+                               maxlength="<?= /* @escapeNotVerified */ $helper->getMaxQueryLength() ?>"
+                               role="combobox"
+                               aria-haspopup="false"
+                               aria-autocomplete="both"
+                               autocomplete="off"/>
+                        <div id="search_autocomplete" class="search-autocomplete"></div>
+                        <?= $block->getChildHtml() ?>
+                    </div>
+                </div>
+                <div class="actions">
+                    <button type="submit"
+                            title="<?= $block->escapeHtml(__('Search')) ?>"
+                            class="action search">
+                        <span><?= /* @escapeNotVerified */ __('Search') ?></span>
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                 width="31px" height="31px" viewBox="0 0 31 31" enable-background="new 0 0 31 31" xml:space="preserve">
+            <g>
+                <path fill="#FFFFFF" d="M30.663,29.359l-7.518-7.519c2.017-2.317,3.237-5.343,3.237-8.649C26.383,5.913,20.463,0,13.191,0
+                    C5.913,0,0,5.92,0,13.191c0,7.271,5.92,13.191,13.191,13.191c3.307,0,6.332-1.221,8.65-3.238l7.519,7.519
+                    c0.179,0.179,0.418,0.274,0.651,0.274c0.232,0,0.473-0.089,0.651-0.274C31.021,30.306,31.021,29.718,30.663,29.359z M1.845,13.191
+                    c0-6.256,5.09-11.339,11.339-11.339c6.255,0,11.339,5.09,11.339,11.339c0,6.248-5.084,11.346-11.339,11.346
+                    C6.935,24.537,1.845,19.447,1.845,13.191z"/>
+            </g>
+            </svg>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

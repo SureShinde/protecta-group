@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Zdcs. All rights reserved.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
+    <body>
+       <referenceBlock name="page.title">
+    	    <action method="setPageTitle">
+    	        <argument name="pageTitle" xsi:type="string">Manage Resources</argument>
+    	    </action>
+    	</referenceBlock>
+		 <referenceContainer name="content">
+            <block class="Dcs\Downloadcatalogue\Block\Adminhtml\Downloadcatalogue" name="admin.block.downloadcatalogue.grid">
+				
+            </block>
+        </referenceContainer>        
+    </body>
+</page>
+

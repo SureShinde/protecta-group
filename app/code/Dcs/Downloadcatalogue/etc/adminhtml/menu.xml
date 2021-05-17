@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+
+<!--<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+
+	 <menu>
+
+        <add id="Dcs_Downloadcatalogue::mainmenu" title="Manage Banner" module="Dcs_Downloadcatalogue" sortOrder="30" resource="Dcs_Downloadcatalogue::mainmenu" parent="Dcs_Contactus::contactus"/>
+
+        <add id="Dcs_Downloadcatalogue::downloadcatalogue" title="Banners" module="Dcs_Downloadcatalogue" sortOrder="40" parent="Dcs_Downloadcatalogue::mainmenu" action="downloadcatalogue/index/" resource="Dcs_Downloadcatalogue::downloadcatalogue"/>        
+
+        <add id="Dcs_Downloadcatalogue::settings" title="Settings" module="Dcs_Downloadcatalogue" sortOrder="60" parent="Dcs_Downloadcatalogue::mainmenu" resource="Dcs_Downloadcatalogue::settings" action="adminhtml/system_config/edit/section/downloadcatalogue" />
+
+    </menu>
+
+</config>-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">   
+
+	<menu>
+
+		<add
+
+			 id="Dcs_Downloadcatalogue::downloadcatalogue" 
+
+			 title="Resources"
+
+			 module="Dcs_Downloadcatalogue"
+
+			 sortOrder="18"
+
+			 resource="Dcs_Homebanner::parent"
+
+			 parent="Zdcs_Digital::23Digital"
+
+		/>		
+
+		<add 
+
+			 id="Dcs_Downloadcatalogue::downloadcatalogue_manage" 
+
+			 title="Manage Resources" module="Dcs_Downloadcatalogue" 
+
+			 sortOrder="50" parent="Dcs_Downloadcatalogue::downloadcatalogue" 
+
+			 action="downloadcatalogue/index/"
+
+			 resource="Dcs_Downloadcatalogue::downloadcatalogue"
+
+		/> 
+
+		<add
+
+			 id="Dcs_Downloadcatalogue::downloadcatalogue_settings" 
+
+			 title="Settings" module="Dcs_Downloadcatalogue" 
+
+			 sortOrder="60" parent="Dcs_Downloadcatalogue::downloadcatalogue" 
+
+			 action="adminhtml/system_config/edit/section/downloadcatalogue"
+
+			 resource="Dcs_Downloadcatalogue::downloadcatalogue_settings"
+
+		/>
+
+	</menu>
+
+</config>
+
+
+

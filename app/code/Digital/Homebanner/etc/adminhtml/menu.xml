@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../Magento/Backend/etc/menu.xsd">
+
+    <menu>
+
+       <add id="Digital_Homebanner::parent" title="Home Banners" module="Digital_Homebanner" sortOrder="15" resource="Digital_Homebanner::parent" parent="Zdcs_Digital::23Digital"/>
+
+		
+
+		<add id="Digital_Homebanner::homebanner_manage" title="Manage Home Banners" module="Digital_Homebanner" sortOrder="16" parent="Zdcs_Digital::23Digital" resource="Digital_Homebanner::homebanner"/>		
+
+		<add id="Digital_Homebanner::homebanner" title="Manage Home Banners" module="Digital_Homebanner" sortOrder="20" parent="Digital_Homebanner::parent" action="homebanner/homebanner" resource="Digital_Homebanner::homebanner"/>
+
+		<add id="Digital_Homebanner::settings" title="Settings" module="Digital_Homebanner" sortOrder="30" parent="Digital_Homebanner::parent" action="adminhtml/system_config/edit/section/homebanner_section" resource="Digital_Homebanner::settings"/>
+
+    </menu>
+
+</config>

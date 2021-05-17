@@ -1,0 +1,126 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/**  @var $block \Magento\Checkout\Block\Cart\Grid */
+?>
+<?php $mergedCells = ($this->helper('Magento\Tax\Helper\Data')->displayCartBothPrices() ? 2 : 1); ?>
+
+<?= $block->getChildHtml('form_before') ?>
+<form action="<?= /* @escapeNotVerified */ $block->getUrl('checkout/cart/updatePost') ?>"
+          method="post"
+          id="form-validate"          
+          data-mage-init='{"validation":{}}'
+          class="form form-cart">
+    <?= $block->getBlockHtml('formkey') ?>
+    <div class="cart table-wrapper<?= $mergedCells == 2 ? ' detailed' : '' ?>">
+        <?php if ($block->getPagerHtml()): ?>
+            <div class="cart-products-toolbar cart-products-toolbar-top toolbar" data-attribute="cart-products-toolbar-top"><?= $block->getPagerHtml() ?></div>
+        <?php endif ?>
+        
+            
+			<?php 		$same_table_flag = 0;
+						$other_table_flag=0; 
+						foreach ($block->getItems() as $_item)
+						{
+							$warehouse_helper = $this->helper('Digital\Warehouse\Helper\Data');
+							$check_cart_store = $warehouse_helper->checkCartStoreSection($_item);
+
+							foreach ($block->getItems() as $_item)
+							{					
+									if($check_cart_store)
+									{
+										$same_table_flag++;
+									}
+									else
+									{
+										$other_table_flag++;
+									}
+							}
+					}
+			?>
+			
+			<?php if($same_table_flag>0){ ?>
+		
+		<table id="shopping-cart-table"
+               class="cart items data table cart_same_head"
+               data-mage-init='{"shoppingCart":{"emptyCartButton": "action.clear",
+               "updateCartActionContainer": "#update_cart_action_container"}}'>
+            <caption role="heading" aria-level="2" class="table-caption"><?= /* @escapeNotVerified */ __('Shopping Cart Items') ?></caption>
+		
+			<thead>
+                <tr>
+                    <th class="col item" scope="col"><span><?= /* @escapeNotVerified */ __('DIRECT FROM PROTECTA GROUP') ?></span></th>
+                    <th class="col qty" scope="col"><span><?= /* @escapeNotVerified */ __('Qty') ?></span></th>
+					<th class="col price" scope="col"><span><?= /* @escapeNotVerified */ __('Price') ?></span></th>                    
+                    <th class="col subtotal" scope="col"><span><?= /* @escapeNotVerified */ __('Subtotal') ?></span></th>
+                    <th class="col cart-actions" scope="col"><span><?= /* @escapeNotVerified */ __('') ?></span></th>
+                </tr>
+            </thead>
+            <?php foreach ($block->getItems() as $_item): ?>
+                <?= $block->getItemHtml($_item) ?>
+            <?php endforeach ?>
+			</table>
+			<?php } ?>
+						
+			<?php if($other_table_flag>0){ ?>
+		<table id="shopping-cart-table"
+               class="cart items data table cart_other_head"
+               data-mage-init='{"shoppingCart":{"emptyCartButton": "action.clear",
+               "updateCartActionContainer": "#update_cart_action_container"}}'>
+            <caption role="heading" aria-level="2" class="table-caption"><?= /* @escapeNotVerified */ __('Shopping Cart Items') ?></caption>
+			
+			<thead>
+                <tr>
+                    <th class="col item" scope="col"><span><?= /* @escapeNotVerified */ __('INTERSTATE SHIPPING') ?></span></th>
+                    <th class="col qty" scope="col"><span><?= /* @escapeNotVerified */ __('Qty') ?></span></th>
+					<th class="col price" scope="col"><span><?= /* @escapeNotVerified */ __('Price') ?></span></th>                    
+                    <th class="col subtotal" scope="col"><span><?= /* @escapeNotVerified */ __('Subtotal') ?></span></th>
+                    <th class="col cart-actions" scope="col"><span><?= /* @escapeNotVerified */ __('') ?></span></th>
+                </tr>
+            </thead>
+			<?php foreach ($block->getItems() as $_item): ?>
+               <?php echo $this->getLayout()->createBlock("Magento\Checkout\Block\Cart\Item\Renderer")->setItem($_item)->setTemplate("Magento_Checkout::cart/item/defaultother.phtml")->toHtml();?>
+            <?php endforeach ?>
+		</table>
+			<?php } ?>
+			
+        
+        <?php if ($block->getPagerHtml()): ?>
+            <div class="cart-products-toolbar cart-products-toolbar-bottom toolbar" data-attribute="cart-products-toolbar-bottom"><?= $block->getPagerHtml() ?></div>
+        <?php endif ?>
+    </div>
+    <div class="cart main actions">
+        <?php if ($block->getContinueShoppingUrl()): ?>
+            <a class="action continue btn-border"
+               href="<?= $block->escapeUrl($block->getContinueShoppingUrl()) ?>"
+               title="<?= $block->escapeHtml(__('Continue Shopping')) ?>">
+                <span><?= /* @escapeNotVerified */ __('Continue Shopping') ?></span>
+            </a>
+        <?php endif; ?>
+        <button type="submit"
+                name="update_cart_action"
+                data-cart-empty=""
+                value="empty_cart"
+                title="<?= $block->escapeHtml(__('Clear Shopping Cart')) ?>"
+                class="action clear btn-border" id="empty_cart_button">
+            <span><?= /* @escapeNotVerified */ __('Clear Shopping Cart') ?></span>
+        </button>
+        <button type="submit"
+                name="update_cart_action"
+                data-cart-item-update=""
+                value="update_qty"
+                title="<?= $block->escapeHtml(__('Update Shopping Cart')) ?>"
+                class="action update btn-green">
+            <span><?=  __('Update Shopping Cart') ?></span>
+        </button>
+        <input type="hidden" value="" id="update_cart_action_container" data-cart-item-update=""/>
+    </div>
+</form>
+<?= $block->getChildHtml('checkout.cart.order.actions') ?>
+<?= $block->getChildHtml('shopping.cart.table.after') ?>
+

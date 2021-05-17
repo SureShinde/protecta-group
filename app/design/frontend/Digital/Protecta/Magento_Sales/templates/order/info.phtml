@@ -1,0 +1,82 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php /** @var $block \Magento\Sales\Block\Order\Info */ ?>
+<?php $_order = $block->getOrder() ?>
+
+<?php if($_order->getShipDueDate() || $_order->getShipPoNumber()){ ?>
+
+<div class="odr-info-ship-fields">
+
+<?php if($_order->getShipDueDate()){ ?>
+    <div class="info-ship-info">
+        <div class="info-ship-title"><?php echo __('Date Required: '); ?></div>
+        <div class="info-ship-value">
+            <?php echo $_order->getShipDueDate(); ?>
+        </div>
+    </div>
+<?php } ?>
+
+<?php if($_order->getShipPoNumber()){ ?>
+    <div class="info-ship-info">
+        <div class="info-ship-title"><?php echo __('PO Number: '); ?></div>
+        <div class="info-ship-value">
+            <?php echo $_order->getShipPoNumber(); ?>
+        </div>
+    </div>
+<?php } ?>
+
+</div>
+<?php } ?>
+
+<div class="block block-order-details-view">
+    <div class="block-title">
+        <strong><?= /* @escapeNotVerified */ __('Order Information') ?></strong>
+    </div>
+    <div class="block-content">
+    <?php if (!$_order->getIsVirtual()): ?>
+        <div class="box box-order-shipping-address">
+            <strong class="box-title"><span><?= /* @escapeNotVerified */ __('Shipping Address') ?></span></strong>
+            <div class="box-content">
+                <address><?= /* @escapeNotVerified */ $block->getFormattedAddress($_order->getShippingAddress()) ?></address>
+            </div>
+        </div>
+
+        <div class="box box-order-shipping-method">
+            <strong class="box-title">
+                <span><?= /* @escapeNotVerified */ __('Shipping Method') ?></span>
+            </strong>
+            <div class="box-content">
+            <?php if ($_order->getShippingDescription()): ?>
+                <?= $block->escapeHtml($_order->getShippingDescription()) ?>
+            <?php else: ?>
+                <?= /* @escapeNotVerified */ __('No shipping information available') ?>
+            <?php endif; ?>
+            </div>
+        </div>
+    <?php endif; ?>
+
+        <div class="box box-order-billing-address">
+            <strong class="box-title">
+                <span><?= /* @escapeNotVerified */ __('Billing Address') ?></span>
+            </strong>
+            <div class="box-content">
+                <address><?= /* @escapeNotVerified */ $block->getFormattedAddress($_order->getBillingAddress()) ?></address>
+            </div>
+        </div>
+        <div class="box box-order-billing-method">
+            <strong class="box-title">
+                <span><?= /* @escapeNotVerified */ __('Payment Method') ?></span>
+            </strong>
+            <div class="box-content">
+                <?= $block->getPaymentInfoHtml() ?>
+            </div>
+        </div>
+    </div>
+</div>

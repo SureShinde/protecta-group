@@ -1,0 +1,80 @@
+<?php
+if($this->isEnabled()){ 
+$helper = $this->helper('Digital\Homeimage\Helper\Data');
+?>
+<div class="digital-homeimage-main">	
+    <div class="owl-digital-image owl-carousel">
+        
+		<?php foreach ($this->getLoadedBannerCollection()  as $k => $value) { 
+		    
+			if(@GetImageSize($this->getImageUrl($value->getImage()))){ ?>	
+			<div class="item">
+                <div class="img-slider-box">				
+                <div class="image-box">
+                	<?php  if($value->getBannerUrl()){ ?><a title="<?php echo $value->getName(); ?>" href="<?php echo $value->getBannerUrl()? $value->getBannerUrl(): "javascript:void(0)";?>"><?php }  ?>
+						<img src="<?php echo $this->getImageUrl($value->getImage()); ?>" alt="<?php echo $value->getName(); ?>"/>
+                	<?php if($value->getBannerUrl()){ ?></a><?php }  ?>
+                </div>
+				<div class="home-image-name-desc-section">
+					<div class="home-image-name-box">
+						<?php  if($value->getBannerUrl()){ ?><a title="<?php echo $value->getName(); ?>" href="<?php echo $value->getBannerUrl()? $value->getBannerUrl(): "javascript:void(0)";?>"><?php }  ?>
+							<?php echo $value->getName(); ?>
+						<?php if($value->getBannerUrl()){ ?></a><?php }  ?>			
+					</div>
+					<div class="home-image-desc-box">
+						<?php echo $value->getBannerDescription(); ?>
+					</div>
+				</div>	
+                </div>
+			</div> 
+		<?php }
+		} ?>
+	</div>
+</div>
+<script type="text/javascript">
+require(['jquery','digital/homebanner',
+    ], function ($) {
+        jQuery(document).ready(function () {
+			var totalItems = <?php echo count($this->getLoadedBannerCollection()); ?>;
+			if (totalItems == 1) {
+				var isLooped = false;
+				var isNav = false;
+				var isAutopay=false;
+				var Isdot=false;
+			} else {
+				var isLooped = true;
+				var isNav = false;
+				var isAutopay=true;
+				var Isdot=true;
+			} 
+			jQuery(".digital-homeimage-main .owl-digital-image").owlCarousel({
+				navigation: true,
+				pagination: false,
+				autoplay:isAutopay,
+				items:1,
+				smartSpeed:1000,
+				lazyLoad:true,
+				autoplayHoverPause:!0,
+				autoplayTimeout:4000,
+				transitionStyle : "fade",
+				animateIn: 'fadeIn',
+				animateOut: 'fadeOut',
+				loop:isLooped,
+				nav:isNav,
+				margin:0,
+				responsiveClass:!0,
+				responsive:
+				{
+					0:{items:1,dots:Isdot,navigation: false},
+					767:{items:1,dots:Isdot,navigation: false},
+					1e3:{items:1,dots:Isdot,navigation: false}
+				}
+			});
+    });
+});
+</script>
+
+
+
+<?php } ?> 
+

@@ -1,0 +1,191 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Magento\Checkout\Block\Cart\Item\Renderer */
+
+$_item = $block->getItem();
+$product = $_item->getProduct();
+$isVisibleProduct = $product->isVisibleInSiteVisibility();
+/** @var \Magento\Msrp\Helper\Data $helper */
+$helper = $this->helper('Magento\Msrp\Helper\Data');
+$canApplyMsrp = $helper->isShowBeforeOrderConfirm($product) && $helper->isMinimalPriceLessMsrp($product);
+//$helper_warehouse = $this->helper('Digital\Warehouse\Helper\Data');
+//$parent_url = $helper_warehouse->getParentGroupProductUrl($_item->getProduct()->getId());
+
+$warehouse_helper = $this->helper('Digital\Warehouse\Helper\Data');
+$check_cart_store = $warehouse_helper->checkCartStoreSection($_item);
+
+
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$child_product = $objectManager->create('Magento\Catalog\Model\Product')->load($_item->getProduct()->getId());
+
+$cart_helper = $this->helper('Magento\Checkout\Helper\Cart');
+?>
+<?php if(!$check_cart_store){ ?>
+<tbody class="cart item">
+    <tr class="item-info">
+        <td data-th="<?= $block->escapeHtml(__('Item')) ?>" class="col item">
+            <?php if ($block->hasProductUrl()):?>
+                <a href="<?= /* @escapeNotVerified */ $block->getProductUrl() ?>"
+                   title="<?= $block->escapeHtml($block->getProductName()) ?>"
+                   tabindex="-1"
+                   class="product-item-photo">
+            <?php else:?>
+                <span class="product-item-photo">
+            <?php endif;?>
+            <?= $block->getImage($block->getProductForThumbnail(), 'cart_page_product_thumbnail')->toHtml() ?>
+            <?php if ($block->hasProductUrl()):?>
+                </a>
+            <?php else: ?>
+                </span>
+            <?php endif; ?>
+            <div class="product-item-details">				
+                <strong class="product-item-name">
+                    <?php if ($block->hasProductUrl()):?>
+                        <a href="<?= /* @escapeNotVerified */ $block->getProductUrl() ?>"><?= $block->escapeHtml($block->getProductName()) ?></a>							
+                    <?php else: ?>
+                        <?= $block->escapeHtml($block->getProductName()) ?>							
+                    <?php endif; ?>						
+                </strong>
+                <?php 
+                    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+                    $productRepository = $objectManager->get('\Magento\Catalog\Model\ProductRepository');        
+                    $productObj = $productRepository->get($_item->getSku());
+                    $short_description = $productObj->getShortDescription();
+                    if($short_description) {
+                ?>   
+                    <div class="shoppingcart-short_description">
+                        <?php echo $short_description; ?>
+                    </div> 
+                <?php }?>
+				<?php echo '<div class="cart_code"><label class="sku">'.$block->escapeHtml(__('Code: ')) .'</label>'.$_item->getSku().'</div>'; ?>
+                <?php if ($_options = $block->getOptionList()):?>
+                    <dl class="item-options">
+                        <?php foreach ($_options as $_option) : ?>
+                            <?php $_formatedOptionValue = $block->getFormatedOptionValue($_option) ?>
+                            <dt><?= $block->escapeHtml($_option['label']) ?></dt>
+                            <dd>
+                                <?php if (isset($_formatedOptionValue['full_view'])): ?>
+                                    <?= /* @escapeNotVerified */ $_formatedOptionValue['full_view'] ?>
+                                <?php else: ?>
+                                    <?= /* @escapeNotVerified */ $_formatedOptionValue['value'] ?>
+                                <?php endif; ?>
+                            </dd>
+                        <?php endforeach; ?>
+                    </dl>
+                <?php endif;?>
+                <?php if ($messages = $block->getMessages()): ?>
+                    <?php foreach ($messages as $message): ?>
+						<?php if($message['type']=='notice') { ?>
+								<div class="cart item message cart_lead_time_message"><div><?php echo __('Lead time may apply'); ?></div></div>
+						<?php }else{ ?>				
+                        	<div class="cart item message <?= /* @escapeNotVerified */ $message['type'] ?>"><div><?= $block->escapeHtml($message['text']) ?></div></div>
+						<?php } ?>				
+				
+                    <?php endforeach; ?>
+                <?php endif; ?>
+                <?php $addInfoBlock = $block->getProductAdditionalInformationBlock(); ?>
+                <?php if ($addInfoBlock): ?>
+                    <?= $addInfoBlock->setItem($_item)->toHtml() ?>
+                <?php endif;?>
+            </div>
+        </td>
+
+		<td class="col qty" data-th="<?= $block->escapeHtml(__('Qty')) ?>">
+            <div class="field qty">
+                <label class="label" for="cart-<?= /* @escapeNotVerified */ $_item->getId() ?>-qty">
+                    <span><?= /* @escapeNotVerified */ __('Qty') ?></span>
+                </label>
+                <div class="control qty">
+                    <input id="cart-<?= /* @escapeNotVerified */ $_item->getId() ?>-qty"
+                           name="cart[<?= /* @escapeNotVerified */ $_item->getId() ?>][qty]"
+                           data-cart-item-id="<?= $block->escapeHtml($_item->getSku()) ?>"
+                           value="<?= /* @escapeNotVerified */ $block->getQty() ?>"
+                           type="number"
+                           size="4"
+                           title="<?= $block->escapeHtml(__('Qty')) ?>"
+                           class="input-text qty"
+                           data-validate="{required:true,'validate-greater-than-zero':true}"
+                           data-role="cart-item-qty"
+                           oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                           maxlength="4"
+                           onkeypress="return isNumberKey(event)" />
+                </div>
+            </div>
+        </td>
+        <?php if ($canApplyMsrp): ?>
+            <td class="col msrp" data-th="<?= $block->escapeHtml(__('Price')) ?>">
+                <span class="pricing msrp">
+                    <span class="msrp notice"><?= /* @escapeNotVerified */ __('See price before order confirmation.') ?></span>
+                    <?php $helpLinkId = 'cart-msrp-help-' . $_item->getId(); ?>
+                    <a href="#" class="action help map" id="<?= /* @escapeNotVerified */ ($helpLinkId) ?>" data-mage-init='{"addToCart":{"helpLinkId": "#<?= /* @escapeNotVerified */ $helpLinkId ?>","productName": "<?= /* @escapeNotVerified */ $product->getName() ?>","showAddToCart": false}}'>
+                        <span><?= /* @escapeNotVerified */ __("What's this?") ?></span>
+                    </a>
+                </span>
+            </td>
+        <?php else: ?>
+            <td class="col price" data-th="<?= $block->escapeHtml(__('Price')) ?>">
+                <?= $block->getUnitPriceHtml($_item) ?>
+				<span class="cart-price-excl-gst"><?= $block->escapeHtml(__('excl. GST')) ?></span>
+            </td>
+        <?php endif; ?>
+        
+
+        <td class="col subtotal" data-th="<?= $block->escapeHtml(__('Subtotal')) ?>">
+            <?php if ($canApplyMsrp): ?>
+                <span class="cart msrp subtotal">--</span>
+            <?php else: ?>
+                <?= $block->getRowTotalHtml($_item) ?>
+            <?php endif; ?>
+			<span class="cart-price-excl-gst"><?= $block->escapeHtml(__('excl. GST')) ?></span>
+        </td>
+		
+		<td class="col cart-action" data-th="<?= $block->escapeHtml(__('')) ?>">
+			<a href="javascript:void(0);"
+   title="<?= $block->escapeHtml(__('Remove item')) ?>"
+   class="action action-delete"
+   data-post='<?= /* @escapeNotVerified */ $cart_helper->getDeletePostJson($_item) ?>'>
+    <span>        
+		<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="18px" height="18px" viewBox="0 0 18 18" enable-background="new 0 0 18 18" xml:space="preserve">
+<g>
+	<path fill="#FFFFFF" d="M8.939,0C4.01,0,0,4.018,0,8.956c0,4.938,4.01,8.956,8.939,8.956c4.928,0,8.939-4.019,8.939-8.956
+		C17.878,4.018,13.867,0,8.939,0z M8.939,16.377c-4.084,0-7.407-3.33-7.407-7.421c0-4.092,3.322-7.421,7.407-7.421
+		c4.083,0,7.406,3.329,7.406,7.421C16.345,13.047,13.022,16.377,8.939,16.377z"/>
+	<path fill="#FFFFFF" d="M12.398,5.491c-0.301-0.3-0.785-0.3-1.084,0l-2.375,2.38l-2.375-2.38c-0.299-0.3-0.784-0.3-1.083,0
+		c-0.299,0.299-0.299,0.786,0,1.085l2.375,2.38l-2.375,2.38c-0.299,0.3-0.299,0.785,0,1.086c0.15,0.15,0.347,0.225,0.542,0.225
+		c0.196,0,0.393-0.074,0.542-0.225l2.375-2.381l2.375,2.381c0.149,0.15,0.346,0.225,0.542,0.225c0.195,0,0.392-0.074,0.542-0.225
+		c0.298-0.301,0.298-0.786,0-1.086l-2.376-2.38l2.376-2.38C12.696,6.277,12.696,5.791,12.398,5.491z"/>
+</g>
+</svg>
+    </span>
+</a>
+
+		</td>	
+		
+    </tr>
+    <?php /*<tr class="item-actions">
+        <td colspan="100">
+            <div class="actions-toolbar">
+                <?= / * @escapeNotVerified * / $block->getActions($_item) ?>
+            </div>
+        </td>
+    </tr> */ ?>
+</tbody>
+<script type="text/javascript">
+function isNumberKey(evt){
+    var charCode = (evt.which) ? evt.which : evt.keyCode
+    if (evt.keyCode==46) return false; 
+    if (charCode > 31 && (charCode != 46 &&(charCode < 48 || charCode > 57)))
+        return false;
+    return true;
+}
+</script>
+<?php }?>
+
+

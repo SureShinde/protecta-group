@@ -1,0 +1,23 @@
+<?xml version="1.0"?> 
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd"> 
+    <body>
+        <referenceBlock name="catalog.topnav">
+          <action method="setTemplate">
+			<argument name="template" xsi:type="string">Dcs_Megamenuimg::html/topmenu.phtml</argument>
+          </action>
+        </referenceBlock>
+		
+		<!-- <referenceContainer name="sidebar.main">
+       		<block class="Magento\Cms\Block\Block" name="category_left_sidebar" before="catalog.leftnav">
+            	<arguments>
+                	<argument name="block_id" xsi:type="string">category_left_sidebar</argument>
+            	</arguments>
+        	</block>
+    	</referenceContainer> -->
+				
+		<!-- <referenceBlock name="sidebar.main">
+			<block class="Dcs\Megamenuimg\Block\HeaderMenu" name="category-left-menu" template="Dcs_Megamenuimg::html/leftcategorymenu.phtml"/>
+        </referenceBlock> -->
+		
+    </body>
+</page>

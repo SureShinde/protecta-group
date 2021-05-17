@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+    	<referenceBlock name="product.price.tier" remove="true" />
+    	<referenceBlock name="product.info.addto" remove="true" />   	
+        <referenceBlock name="product.info.price" remove="true" />
+        
+    	<referenceContainer name="content">
+    		<container name="product.code.available.section" label="product_code_available_section" htmlTag="div" htmlClass="product_code_available_section">
+    			<block class="Magento\Catalog\Block\Product\View" name="product.code.available" template="Magento_Catalog::product/view/code_available.phtml" />    			
+    		</container>    		
+        </referenceContainer>
+        <move element="product.code.available.section" destination="product.info.main" before="product.info.price" />
+        <move element="product.info.overview" destination="product.info.main" after="product.info.price" before="product.price.tier" />
+        <referenceContainer name="product.info.main">
+           	<block class="Magento\Catalog\Block\Product\View" name="product.info.tag_line" template="Magento_Catalog::product/view/tag_line.phtml" before="-" />
+       </referenceContainer>
+        <move element="product.info.tag_line" destination="product.info.main" after="page.main.title" />
+    	<referenceContainer name="content.aside">
+			<container name="product-detail-bottom-banner-section" htmlClass="product-detail-bottom-banner-section" htmlTag="div">
+				<container name="product-detail-bottom-banner" htmlClass="product-detail-bottom-banner" htmlTag="div" before="-">
+					<block class="Magento\Cms\Block\Block" name="product_detail_bottom_banner">
+					 <arguments>
+						<argument name="block_id" xsi:type="string">product_detail_bottom_banner</argument>
+					 </arguments>
+				 </block>
+				</container>
+			</container>
+		</referenceContainer>
+    </body>
+</page>

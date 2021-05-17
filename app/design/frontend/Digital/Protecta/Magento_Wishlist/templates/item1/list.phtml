@@ -1,0 +1,59 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/** @var \Magento\Wishlist\Block\Customer\Wishlist\Items $block */
+$columns = $block->getColumns();
+
+$warehouse_helper = $this->helper('Digital\Warehouse\Helper\Data');
+$customerSession = $warehouse_helper->getCustomerSession();
+$selected_location = $customerSession->getLocationSession();	
+
+?>
+<div class="wishlist-auto-block">
+	<div class="products-grid wishlist">
+		<?php $iterator = 1; ?>
+		<?php if (count($block->getItems())): ?>
+		<ul class="custom-wishlist-title">
+		   <li class="wishlist-row-code">
+				<div class="product-item-sku-no"><?php /* @escapeNotVerified */ echo __('Code') ?></div>
+				<div class="product-item-name"><?php /* @escapeNotVerified */ echo __('Description') ?></div>
+				<div class="price-box price-configured_price"><?php /* @escapeNotVerified */ echo __('Price') ?></div>
+				<div class="product-item-inner">
+					<div class="box-tocart"><?php /* @escapeNotVerified */ echo __('QTY') ?></div>
+					<div class="product-item-actions"><?php /* @escapeNotVerified */ echo __('') ?></div>
+				</div>
+			</li>
+		  </ul> 
+		<ul class="product-items-wishlist">
+			<?php foreach ($block->getItems() as $item): ?>
+			<?= /* @noEscape */ ($iterator++ == 1) ? '<li data-row="product-item" class="product-item-wishlist" id="item_' . $block->escapeHtmlAttr($item->getId()) . '">' : '</li><li class="product-item-wishlist" id="item_' . $block->escapeHtmlAttr($item->getId()) . '">' ?>
+				<div class="product-item-info" data-container="product-grid">
+					<?php foreach ($columns as $column): ?>
+						<?php $column->setItem($item); echo $column->toHtml($item);?>
+					<?php endforeach; ?>
+				</div>
+			<?= ($iterator == count($block->getItems())+1) ? '</li>' : '' ?>
+			<?php endforeach; ?>
+		</ul>
+		<?php else: ?>
+			<div class="message info empty">
+				<span><?= $block->escapeHtml(__('This Wish List has no Items')) ?></span>
+			</div>
+		<?php endif; ?>
+	</div>
+</div>
+<div id="validation_message_box_wish" style="display:none;"><div generated="" class="mage-error">Please specify the quantity of product(s).</div></div>
+<?php if($selected_location==''){ ?>
+<div class="note-select-location-wish"><?php echo __('Please select location for Add to Cart.'); ?></div>
+<?php } ?>
+
+<?php foreach ($columns as $column): ?>
+	<?= $column->getAdditionalHtml() ?>
+<?php endforeach; ?>

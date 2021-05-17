@@ -1,0 +1,40 @@
+<?php $product = $block->getProduct();
+	$video1 = $product->getData('pg_video_first');
+	$video2 = $product->getData('pg_video_second');
+	$video3 = $product->getData('pg_video_third');
+	$video4 = $product->getData('pg_video_fourth');
+	if($video1!='' || $video2!='' || $video3!='' || $video4!='')
+	{
+		echo '<div class="video-tab-section">';
+		
+		if($video1!='')
+		{
+			echo '<div class="tab-video-item"><div class="video_wrapper">';
+			echo '<iframe src="'.$video1.'" allowfullscreen></iframe>';
+			echo '</div></div>';
+		}
+		
+		if($video2!='')
+		{
+			echo '<div class="tab-video-item"><div class="video_wrapper">';
+			echo '<iframe src="'.$video2.'" allowfullscreen></iframe>';
+			echo '</div></div>';
+		}
+		
+		if($video3!='')
+		{
+			echo '<div class="tab-video-item"><div class="video_wrapper">';
+			echo '<iframe src="'.$video3.'" allowfullscreen></iframe>';
+			echo '</div></div>';
+		}
+		
+		if($video4!='')
+		{
+			echo '<div class="tab-video-item"><div class="video_wrapper">';
+			echo '<iframe src="'.$video4.'" allowfullscreen></iframe>';
+			echo '</div></div>';
+		}
+		
+		echo '</div>';
+	}
+?>

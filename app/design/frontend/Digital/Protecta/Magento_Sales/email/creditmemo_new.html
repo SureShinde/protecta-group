@@ -1,0 +1,142 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<!--@subject {{trans "Credit memo for your %store_name order" store_name=$store.getFrontendName()}} @-->
+<!--@vars {
+"var formattedBillingAddress|raw":"Billing Address",
+"var comment":"Credit Memo Comment",
+"var creditmemo.increment_id":"Credit Memo Id",
+"layout handle=\"sales_email_order_creditmemo_items\" creditmemo=$creditmemo order=$order":"Credit Memo Items Grid",
+"var this.getUrl($store, 'customer/account/')":"Customer Account URL",
+"var order.getCustomerName()":"Customer Name",
+"var order.increment_id":"Order Id",
+"var payment_html|raw":"Payment Details",
+"var formattedShippingAddress|raw":"Shipping Address",
+"var order.getShippingDescription()":"Shipping Description",
+"var order.shipping_description":"Shipping Description"
+} @-->
+{{template config_path="design/email/header_template"}}
+<table border="0" width="100%" cellpadding="20" cellspacing="0">
+    <tr>
+        <td>
+            <div class="top-info-sec">
+                <h5 style="font-size: 30px; margin: 0 0 25px; color: #606a71; font-weight: bold; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;" class="greeting">{{trans "%name," name=$order.getCustomerName()}}</h5>
+                <div class="order-box">
+                    <table border="0" width="100%">
+                        <tr>
+                            <td style="250px; text-align: center; vertical-align: middle;">
+                                <div class="Credit Memo" style="padding: 0; text-align: center;"><img src="{{view url='Magento_Email/images/credit-memo.png'}}" width="120" height="107" alt="Invoice" /></div>
+                            </td>
+                            <td style="vertical-align: middle; width: 450px; padding-left: 20px;">
+                                <p style="font-size: 16px; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #3d3d3d; margin-bottom:0;">
+                                    {{trans "Thank you for your order from %store_name." store_name=$store.getFrontendName()}}
+                                    {{trans 'You can check the status of your order by <b><u><a href="%account_url">logging into your account</a></u></b>.' account_url=$this.getUrl($store,'customer/account/',[_nosid:1]) |raw}}
+                                    {{trans 'If you have questions about your order, you can email us at <b><u><a href="mailto:%store_email">%store_email</a></u></b>' store_email=$store_email |raw}}{{depend store_phone}} {{trans 'or call us at <b><u><a href="tel:%store_phone">%store_phone</a></u></b>' store_phone=$store_phone |raw}}{{/depend}}.
+                                    {{depend store_hours}}
+                                        {{trans 'Our hours are <span class="no-link">%store_hours</span>.' store_hours=$store_hours |raw}}
+                                    {{/depend}}
+                                </p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+<table border="0" width="100%" cellpadding="20" cellspacing="0" bgcolor="#fff" style="background: #fff; border-bottom: dashed 2px #ddd; border-top: dashed 2px #ddd;">
+    <tr>
+        <td>
+            <div class="order-summry">
+                <div class="top-head" style="text-align: center; margin-bottom: 15px;">
+                    <h6 style="margin: 0; padding: 0; font-size: 24px; font-weight: bold; color: #606a71; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+                        {{trans 'Your Credit Memo <span class="no-link" style="color: #63bd60;">#%creditmemo_id</span> for Order <span class="no-link" style="color: #63bd60;">#%order_id</span>' creditmemo_id=$creditmemo.increment_id order_id=$order.increment_id |raw}}
+                    </h6>
+                </div>
+                <div class="order-box-sec" style="padding: 20px 25px;">
+                    {{depend comment}}
+                    <div class="info" style="font-size: 19px; font-weight: bold; color: #3d3d3d; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+                        {{var comment|escape|nl2br}}
+                    </div>
+                     {{/depend}}
+                    <table border="0" width="100%">
+                        <tr>
+                            <td style="width:50%; padding-bottom: 40px;">
+                                <table border="0" width="100%">
+                                    <tr>
+                                        <td style="width:60px; font-size: 0; line-height: 0;">
+                                            <div class="order" style="padding: 0; text-align: center;"><img src="{{view url='Magento_Email/images/Billing-Info.png'}}" width="60" height="69" alt="Billing Info" /></div>
+                                        </td>
+                                        <td style="text-align: left; padding-left: 15px;">
+                                            <h3 style="margin: 0 0 10px; padding: 0; font-size: 16px; font-weight: bold; color: #3d3d3d; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;">{{trans "Billing Info"}}</h3>
+                                            <p style="font-size: 14px; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #3d3d3d; margin: 0;">{{var formattedBillingAddress|raw}}</p>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            {{depend order.getIsNotVirtual()}}
+                            <td style="width:50%; padding-bottom: 40px;">
+                                <table border="0" width="100%">
+                                    <tr>
+                                        <td style="width:60px; font-size: 0; line-height: 0;">
+                                            <div class="order" style="padding: 0; text-align: center;"><img src="{{view url='Magento_Email/images/Shipping-Info.png'}}" width="60" height="69" alt="Shipping Info" /></div>
+                                        </td>
+                                        <td style="text-align: left; padding-left: 15px;">
+                                            <h3 style="margin: 0 0 10px; padding: 0; font-size: 16px; font-weight: bold; color: #3d3d3d; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;">{{trans "Shipping Info"}}</h3>
+                                            <p style="font-size: 14px; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #3d3d3d; margin: 0;">{{var formattedShippingAddress|raw}}</p>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            {{/depend}}
+                        </tr>
+                        <tr>
+                            <td style="width:50%; vertical-align: middle;">
+                                <table border="0" width="100%">
+                                    <tr>
+                                        <td style="width:60px; font-size: 0; line-height: 0;">
+                                            <div class="order" style="padding: 0; text-align: center;"><img src="{{view url='Magento_Email/images/Payment-Method.png'}}" width="60" height="69" alt="Payment Method" /></div>
+                                        </td>
+                                        <td style="text-align: left; padding-left: 15px; vertical-align: middle;">
+                                            <h3 style="margin: 0 0 10px; padding: 0; font-size: 16px; font-weight: bold; color: #3d3d3d; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;">{{trans "Payment Method"}}</h3>
+                                            <p style="font-size: 14px; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #3d3d3d; margin: 0;">{{var payment_html|raw}}</p>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            {{depend order.getIsNotVirtual()}}
+                            <td style="width:50%;">
+                                <table border="0" width="100%">
+                                    <tr>
+                                        <td style="width:60px; font-size: 0; line-height: 0;">
+                                            <div class="order" style="padding: 0; text-align: center;"><img src="{{view url='Magento_Email/images/Shipping-Method.png'}}" width="60" height="69" alt="Shipping-Method.png" /></div>
+                                        </td>
+                                        <td style="text-align: left; padding-left: 15px; vertical-align: middle;">
+                                            <h3 style="margin: 0 0 10px; padding: 0; font-size: 16px; font-weight: bold; color: #3d3d3d; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;">{{trans "Shipping Method"}}</h3>
+                                            <p style="font-size: 14px; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #3d3d3d; margin: 0;">{{var order.getShippingDescription()}}</p>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            {{/depend}}
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+<table border="0" width="100%" cellpadding="20" cellspacing="0" style="background: #fff;">
+    <tr>
+        <td>
+            <div class="order-data-table"> 
+                <p style="text-align: center;font-size: 16px; font-weight: bold; color: #3d3d3d; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; margin: 0 0 20px;">Items Ordered</p>
+                {{layout handle="sales_email_order_creditmemo_items" creditmemo=$creditmemo order=$order}}
+            </div>
+        </td>
+    </tr>
+</table>
+{{template config_path="design/email/footer_template"}}

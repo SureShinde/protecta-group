@@ -1,0 +1,139 @@
+<!--
+/**
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
+ * https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_Osc
+ * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
+ */
+-->
+
+<div id="shipping" class="checkout-shipping-address webo-nepal" data-bind="fadeVisible: visible()">
+    <div class="step-title" data-role="title">
+        <i class="fa fa-home"></i>
+        <!-- ko if: window.checkoutConfig.oscConfig.isUsedMaterialDesign -->
+        <span class="fa-stack fa-2x">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <strong class="fa-stack-1x fa-stack-text fa-inverse">1</strong>
+        </span>
+        <!-- /ko -->
+        <span data-bind="i18n: 'Shipping Address'"></span>
+    </div>
+    <div id="checkout-step-shipping" class="step-content" data-role="content">
+
+        <!-- ko if: (!quoteIsVirtual) -->
+        <!-- ko foreach: getRegion('customer-email') -->
+        <!-- ko template: getTemplate() -->
+        <!-- /ko -->
+        <!--/ko-->
+        <!--/ko-->
+
+        <!-- ko foreach: getRegion('address-list') -->
+        <!-- ko template: getTemplate() -->
+        <!-- /ko -->
+        <!--/ko-->
+
+        <!-- ko foreach: getRegion('address-list-additional-addresses') -->
+        <!-- ko template: getTemplate() -->
+        <!-- /ko -->
+        <!--/ko-->
+
+        <!-- Address form pop up -->
+        <!-- ko if: (!isFormInline) -->
+
+        <div class="onestepcheckout-shipaddress-custom-main login-field">
+
+            <div class="onestepcheckout-pgdeliverycontact">
+                <label for="pg_delivery_contact" class="label">Delivery Contact<sup
+                        style="color:#e02b27">*</sup></label>
+                <input type="text" col="15" name="pg_delivery_contact" id="pg_delivery_contact"
+                    class="osc-additional-data input-text" placeholder="Delivery Contact *" maxlength="255" />
+                <div generated="true" style="display: none;" id="pg_delivery_contact_validation_msg" class="mage-error">
+                    This is a required field.</div>
+            </div>
+
+            <div class="onestepcheckout-pgdeliveryphone">
+                <label for="pg_delivery_phone" class="label">Delivery Phone<sup style="color:#e02b27">*</sup></label>
+                <input type="number"
+                    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                    col="15" name="pg_delivery_phone" id="pg_delivery_phone" class="osc-additional-data input-text"
+                    placeholder="Delivery Phone *" maxlength="12" />
+                <div generated="true" style="display: none;" id="pg_delivery_phone_validation_msg" class="mage-error">
+                    This is a required field.</div>
+            </div>
+        </div>
+        <!-- ko ifnot: window.checkoutConfig.oscConfig.isChildCustomer -->
+        <button type="button" data-bind="click: showFormPopUp, visible: !isNewAddressAdded()"
+            class="action action-show-popup add-address-btn">
+            <span data-bind="i18n: 'New Address'"></span></button>
+        <!-- /ko -->
+        <div id="opc-new-shipping-address" data-bind="visible: isFormPopUpVisible()">
+            <!-- ko template: 'Mageplaza_Osc/container/address/shipping/form' -->
+            <!-- /ko -->
+        </div>
+        <!-- /ko -->
+
+        <!-- ko foreach: getRegion('before-form') -->
+        <!-- ko template: getTemplate() -->
+        <!-- /ko -->
+        <!--/ko-->
+
+        <!-- ko if: !isAmazonAccountLoggedIn() -->
+        <!-- Inline address form -->
+        <!-- ko if: (isFormInline) -->
+        <!-- ko template: 'Mageplaza_Osc/container/address/shipping/form' -->
+        <!-- /ko -->
+        <div class="onestepcheckout-shipaddress-custom-main login-field">
+            <div class="onestepcheckout-pgdeliverycontact">
+                <label for="pg_delivery_contact" class="label">Delivery Contact<sup style="color:#e02b27">
+                        *</sup></label>
+                <input type="text" col="15" name="pg_delivery_contact" id="pg_delivery_contact"
+                    class="osc-additional-data input-text" placeholder="Delivery Contact *" maxlength="255" />
+                <div generated="true" style="display: none;" id="pg_delivery_contact_validation_msg" class="mage-error">
+                    This is a required field.</div>
+            </div>
+
+            <div class="onestepcheckout-pgdeliveryphone">
+                <label for="pg_delivery_phone" class="label">Delivery Phone<sup style="color:#e02b27">
+                        *</sup></label>
+                <input type="number"
+                    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                    col="15" name="pg_delivery_phone" id="pg_delivery_phone" class="osc-additional-data input-text"
+                    placeholder="Delivery Phone *" maxlength="12" />
+                <div generated="true" style="display: none;" id="pg_delivery_phone_validation_msg" class="mage-error">
+                    This is a required field.</div>
+            </div>
+        </div>
+        <!-- /ko -->
+
+        <!-- ko if: (!isCustomerLoggedIn() && !quoteIsVirtual) && !window.checkoutConfig.oscConfig.isChildCustomer -->
+        <!-- ko foreach: getRegion('customer-email') -->
+        <!-- ko template: 'Mageplaza_Osc/container/address/billing/create' -->
+        <!-- /ko -->
+        <!--/ko-->
+        <!--/ko-->
+
+        <div class="mp-clear"></div>
+        <!-- ko ifnot: window.checkoutConfig.oscConfig.isChildCustomer -->
+        <!-- ko scope: 'checkout.steps.shipping-step.billingAddress' -->
+        <!-- ko template: 'Mageplaza_Osc/container/address/billing/checkbox' -->
+        <!-- /ko -->
+        <!--/ko-->
+        <!--/ko-->
+        <!--/ko-->
+
+        <div class="mp-clear"></div>
+    </div>
+</div>

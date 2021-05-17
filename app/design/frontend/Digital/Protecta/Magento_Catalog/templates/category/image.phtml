@@ -1,0 +1,46 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/**
+ * Category view template
+ *
+ * @var $block \Magento\Catalog\Block\Category\View
+ */
+?>
+<?php
+	
+	$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+	$store = $objectManager->get('Magento\Store\Model\StoreManagerInterface')->getStore(); 
+	$categoryImageUrl = $store->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA).'catalog/category/';
+	
+	$helper = $this->helper('Digital\Homebanner\Helper\Data');
+    $_helper    = $this->helper('Magento\Catalog\Helper\Output');
+    $_category  = $block->getCurrentCategory();
+    $_imgHtml   = '';
+    /*if ($_imgUrl = $_category->getImageUrl()) {
+        $_imgHtml = '<div class="category-image"><img src="' . $_imgUrl . '" alt="' . $block->escapeHtml($_category->getName()) . '" title="' . $block->escapeHtml($_category->getName()) . '" class="image" /></div>';
+        $_imgHtml = $_helper->categoryAttribute($_category, $_imgHtml, 'image');
+        /* @escapeNotVerified * / echo $_imgHtml;
+    }*/
+?>
+<?php if($_category->getImage() && $helper->checkDeviceNew()==0){ // desktop ?>
+	<div class="category-image desktop-prod-image"><img class="image" src="<?php echo $categoryImageUrl.$_category->getImage(); ?>" alt="<?php echo $block->escapeHtml($_category->getName()); ?>" /></div>
+<?php }
+	else if($_category->getMobileCatBanner() && $helper->checkDeviceNew()==1){ // mobile ?>
+	<div class="category-image mobile-prod-image"><img class="image" src="<?php echo $categoryImageUrl.$_category->getMobileCatBanner(); ?>" alt="<?php echo $block->escapeHtml($_category->getName()); ?>" /></div>
+<?php }
+	else if($_category->getTabletCatBanner() && $helper->checkDeviceNew()==2){ // tablet ?>
+	<div class="category-image tablet-prod-image"><img class="image" src="<?php echo $categoryImageUrl.$_category->getTabletCatBanner(); ?>" alt="<?php echo $block->escapeHtml($_category->getName()); ?>" /></div>
+<?php	}	
+	else
+	{
+		echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('category_productlist_top_banner')->toHtml();
+	}
+?>

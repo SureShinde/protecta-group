@@ -1,0 +1,161 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php
+$warehouse_helper = $this->helper('Digital\Warehouse\Helper\Data');
+$customerSession = $warehouse_helper->getCustomerSession();
+$selected_location = $customerSession->getLocationSession();
+
+$counter = $this->helper('\Magento\Checkout\Helper\Cart');
+$cart_items_count = $counter->getItemsCount();
+?>
+
+<div class="delivery_popup_section" id="top_warehouse_popup_content">
+	<a href="javascript:void(0);" title="<?php echo __('Close'); ?>" class="close-warehouse-popup"><?php echo __('Close'); ?></a>
+	<div class="selected-location-text" id="selected_location_text">
+		<?php if($selected_location!=''){ ?>
+		<div class="top-loc-selc-warehouse"><span class="loc_sel_text"><?php echo __('Your delivery location is set to: '); ?></span><span class="loc_sel_name"><?php echo $selected_location; ?></span></div>
+		<?php } ?>
+	</div>
+
+	<?php if($selected_location!='' && $cart_items_count > 0){ ?>
+	<div class="popup-cart-empty-warning"><?php echo __('Your cart is not empty! If you change the location, all items from the cart will be removed and you have to add them again.'); ?></div>
+	<?php } ?>
+	<div class="delivery_popup_inner">
+		<div class="title_sec">
+            <h4><?php echo __('Enter Delivery Location'); ?></h4>
+            <label for="address"><?php echo __('Please enter your delivery suburb or postcode to see availability'); ?></label>
+        </div>
+		<div class="form-search-warehouse">
+                <div class="form-box location-field">
+                    <div class="location-search">
+                        <input id="address" name="address" type="text" class="address-input-text input-text" placeholder="Suburb or Postcode" autocomplete="off" data-validate="{required:true}">
+                        <button type="button" title="Search" class="store-search-btn">
+                            <span class="search_icon">
+                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="31px" height="31px" viewBox="0 0 31 31" enable-background="new 0 0 31 31" xml:space="preserve">
+                                    <g>
+                                        <path fill="#FFFFFF" d="M30.663,29.359l-7.518-7.519c2.017-2.317,3.237-5.343,3.237-8.649C26.383,5.913,20.463,0,13.191,0
+                                            C5.913,0,0,5.92,0,13.191c0,7.271,5.92,13.191,13.191,13.191c3.307,0,6.332-1.221,8.65-3.238l7.519,7.519
+                                            c0.179,0.179,0.418,0.274,0.651,0.274c0.232,0,0.473-0.089,0.651-0.274C31.021,30.306,31.021,29.718,30.663,29.359z M1.845,13.191
+                                            c0-6.256,5.09-11.339,11.339-11.339c6.255,0,11.339,5.09,11.339,11.339c0,6.248-5.084,11.346-11.339,11.346
+                                            C6.935,24.537,1.845,19.447,1.845,13.191z"></path>
+                                    </g>
+                                    </svg>
+                            </span>
+                        </button>
+                    </div>
+					<button type="button" title="<?php echo __('Confirm'); ?>" class="store-search-btn action primary btn-confirm-popup"><span><?php echo __('Confirm'); ?></span></button>
+                </div>
+                <div class="form-box or">
+                    <div class="or_text"><?php echo __('OR'); ?></div>
+                </div>
+                <div class="form-box location_btn">
+                    <a title="Find my location" href="javascript:void(0);" class="linkdetailstore" onclick="initMap()">
+                        <span>
+                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="29.79px" height="37.294px" viewBox="0 0 29.79 37.294" enable-background="new 0 0 29.79 37.294" xml:space="preserve">
+                                <g>
+                                    <g>
+                                        <path fill="#606A71" d="M14.906,0C6.71,0,0.039,6.672,0.039,14.868c0,0.933,0.085,1.874,0.265,2.792
+                                            c0.007,0.054,0.039,0.218,0.101,0.498c0.226,1.003,0.56,1.991,0.996,2.932c1.602,3.771,5.124,9.564,12.853,15.769
+                                            c0.196,0.156,0.428,0.234,0.661,0.234c0.234,0,0.467-0.078,0.661-0.234c7.722-6.204,11.252-11.998,12.853-15.769
+                                            c0.437-0.941,0.771-1.921,0.996-2.932c0.062-0.28,0.093-0.443,0.102-0.498c0.171-0.917,0.265-1.858,0.265-2.792
+                                            C29.773,6.672,23.102,0,14.906,0z M27.441,17.294c0,0.015-0.008,0.031-0.008,0.046c-0.009,0.039-0.032,0.156-0.07,0.334
+                                            c0,0.008,0,0.008,0,0.016c-0.194,0.871-0.481,1.718-0.864,2.535c-0.007,0.008-0.007,0.022-0.015,0.03
+                                            c-1.454,3.445-4.642,8.702-11.578,14.433C7.97,28.958,4.782,23.701,3.328,20.256c-0.008-0.008-0.008-0.022-0.016-0.03
+                                            c-0.373-0.809-0.661-1.665-0.863-2.535c0-0.008,0-0.008,0-0.016c-0.047-0.178-0.062-0.295-0.07-0.334
+                                            c0-0.015-0.008-0.031-0.008-0.054c-0.155-0.801-0.233-1.61-0.233-2.426c0-7.037,5.73-12.768,12.768-12.768
+                                            c7.036,0,12.769,5.731,12.769,12.768C27.675,15.684,27.597,16.5,27.441,17.294z"></path>
+                                        <path fill="#606A71" d="M14.906,5.591c-5.202,0-9.44,4.238-9.44,9.44c0,5.203,4.238,9.441,9.44,9.441
+                                            c5.201,0,9.439-4.238,9.439-9.441C24.346,9.829,20.107,5.591,14.906,5.591z M14.906,22.372c-4.051,0-7.34-3.297-7.34-7.341
+                                            c0-4.043,3.297-7.34,7.34-7.34c4.043,0,7.341,3.297,7.341,7.34C22.247,19.075,18.958,22.372,14.906,22.372z"></path>
+                                    </g>
+                                </g>
+                                </svg>
+                        </span><?php echo __('Use my current location'); ?></a>
+                </div>
+
+
+
+
+
+            </div>
+	</div>
+</div>
+<script type="text/javascript">
+ require([
+		'jquery',
+	 	'mage/mage',
+		'Magento_Customer/js/customer-data'
+	], function($, $m, customerData) {
+	 	var dataForm = $('#warehouse_popup_form');
+    	dataForm.mage('validation', {});
+		jQuery(document).ready(function() {
+			jQuery('#top_warehouse_popup_content #address').keypress(function (e) {
+				 var key = e.which;
+				 if(key == 13)  // the enter key code
+				  {
+					 jQuery(".store-search-btn").trigger('click');
+				  }
+				});
+			jQuery(".store-search-btn").click(function() {
+			var address = jQuery('#address').val();
+			if(address == '' || address == null){
+				alert('Please enter suburb or postcode.');
+				return false;
+			}
+        var geocoder = new google.maps.Geocoder();
+        geocoder.geocode({address: address+'Australia'}, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                var latlng = new google.maps.LatLng(results[0].geometry.location.lat(), results[0].geometry.location.lng());
+               //searchLocationsNear(results[0].geometry.location);
+				var center = results[0].geometry.location;
+				var lat = center.lat();
+				var	lng = center.lng();
+				var radius_search = 0;
+				if(address!='')
+				{
+					var warehouselocationUrl = "<?php echo $this->getBaseUrl().'warehouse/index/post';?>";
+					var param = {'lat': lat, 'lng': lng, 'radius': radius_search, 'address': address};
+					jQuery.ajax({
+							showLoader: true,
+							url: warehouselocationUrl,
+							data: param,
+							type: "POST",
+							dataType: 'json'
+						}).done(function (data) {
+							if(data.status=='success')
+							{
+								var sections = ['cart'];
+        						customerData.invalidate(sections);
+								//alert(data.message);
+								jQuery('#selected_location_text').html('<div class="top-loc-selc-warehouse"><span class="loc_sel_text">Your delivery location is set to: </span><span class="loc_sel_name">'+data.message+'</span></div>');
+								setTimeout(function(){
+									jQuery('.close-warehouse-popup').trigger('click');
+									location.reload();
+								}, 300);
+							}
+							else
+							{
+								location.reload();
+							}
+						});
+					return false;
+			}
+            } else {
+
+                alert(address + ' is not found');
+				return false;
+            }
+        });
+			});
+			});
+	});
+	function searchLocationsNear(center) {
+		var lat = center.lat();
+		var	lng = center.lng();
+		var radius_search = 500;
+	}
+</script>

@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="updateaccount_email_email_template" label="Request To Update Account Information Email" file="updateaccount_email_form.html" type="html" module="Dcs_Updateaccount" area="frontend"/>
+    <template id="updateaccount_email_admin_email" label="Request To Update Account Information Email Admin" file="updateaccount_email_form_admin.html" type="html" module="Dcs_Updateaccount" area="frontend"/>
+</config>

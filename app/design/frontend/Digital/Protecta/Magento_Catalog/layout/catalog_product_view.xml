@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd"> 
+	<body>
+                <referenceBlock name="view.addto.compare" remove="true" />
+				<referenceBlock name="product.info.upsell" remove="true" />
+				<referenceBlock name="product.info.sku" remove="true" />
+				<!--<referenceBlock name="product.info.addto" remove="true" />-->
+				<referenceBlock name="product.info.stock.sku" remove="true" />
+		
+			<referenceContainer name="content.top">
+	            <block class="Zdcs\Digital\Block\Html\Breadcrumbs" name="breadcrumbs" as="breadcrumbs"/>
+	        </referenceContainer> 
+	        <referenceBlock name="breadcrumbs" template="Magento_Catalog::product/breadcrumbs.phtml">
+	            <arguments>
+	                <argument name="viewModel" xsi:type="object">Magento\Catalog\ViewModel\Product\Breadcrumbs</argument>
+	            </arguments>
+	        </referenceBlock>  
+			<referenceContainer name="content">
+
+
+
+
+                <block class="Magento\Catalog\Block\Product\View\Description" name="product.info.overview" template="Magento_Catalog::product/view/attribute.phtml" group="detailed_info" after="product.info.extrahint">
+                    <arguments>
+                        <argument name="at_call" xsi:type="string">getPgFeaturedDescription</argument>
+                        <argument name="at_code" xsi:type="string">pg_featured_description</argument>
+                        <argument name="css_class" xsi:type="string">overview</argument>
+                        <argument name="at_label" xsi:type="string">none</argument>
+                        <argument name="title" translate="true" xsi:type="string">Overview</argument>
+                        <argument name="add_attribute" xsi:type="string">itemprop="description"</argument>
+                    </arguments>
+                </block>
+            
+
+					<!--<container name="product.spec.resources.friend.call" label="product_spec_resources_friend_call" htmlTag="div" htmlClass="product_spec_resources_friend_call">
+						<block class="Magento\Catalog\Block\Product\View" name="specresfriendcall" as="specresfriendcall" template="Magento_Catalog::product/view/spec_res_frnd_call.phtml" before="product.info.overview" />				
+					</container>
+					<container name="merge.desc.res.frnd.call" label="merge.desc.res.frnd.call" htmlTag="div" htmlClass="merge_desc_res_frnd_call" after="product.info.main" before="product.info.price">
+					</container>-->
+					
+					<block class="Magento\Catalog\Block\Product\View\Description" name="product.info.details" template="Magento_Catalog::product/view/details.phtml" after="product.info.media">
+                		<block class="Magento\Catalog\Block\Product\View\Description" name="product.info.description" as="description" template="Magento_Catalog::product/view/attribute.phtml" group="detailed_info">
+							<arguments>
+								<argument name="at_call" xsi:type="string">getDescription</argument>
+								<argument name="at_code" xsi:type="string">description</argument>
+								<argument name="css_class" xsi:type="string">description</argument>
+								<argument name="at_label" xsi:type="string">none</argument>
+								<argument name="title" translate="true" xsi:type="string">Specifications</argument>
+							</arguments>
+                		</block>
+				</block>
+				
+				
+					
+					
+			</referenceContainer>
+		
+				<!--<move element="merge.desc.res.frnd.call" destination="product.info.main"/>
+				<move element="product.spec.resources.friend.call" destination="merge.desc.res.frnd.call" before="-"/>-->
+				
+		
+				<referenceBlock name="product.info.details">
+
+
+					<block class="Magento\Catalog\Block\Product\View" name="benefitstab" template="Magento_Catalog::product/view/benefits.phtml" group="detailed_info" after="product.info.description">
+						<arguments>
+							<argument translate="true" name="title" xsi:type="string">Benefits</argument>
+						</arguments>
+					</block>
+
+
+					<block class="Magento\Catalog\Block\Product\View" name="resourcestab" template="Magento_Catalog::product/view/resources.phtml" group="detailed_info" after="product.info.benefits">
+						<arguments>
+							<argument translate="true" name="title" xsi:type="string">Resources</argument>
+						</arguments>
+					</block>
+					
+					
+					<block class="Magento\Catalog\Block\Product\View" name="videotab" template="Magento_Catalog::product/view/video.phtml" group="detailed_info" after="resourcestab">
+						<arguments>
+							<argument translate="true" name="title" xsi:type="string">Videos</argument>
+						</arguments>
+					</block>
+					
+					<block class="Magento\Catalog\Block\Product\View" name="faqtab" template="Magento_Catalog::product/view/faq.phtml" group="detailed_info" after="videotab">
+						<arguments>
+							<argument translate="true" name="title" xsi:type="string">FAQs</argument>
+						</arguments>
+					</block>
+
+
+					<block class="Magento\Catalog\Block\Product\View" name="terms_conditionstab" template="Magento_Catalog::product/view/terms_conditions.phtml" group="detailed_info" after="faqtab">
+						<arguments>
+							<argument translate="true" name="title" xsi:type="string">Terms &amp; Conditions</argument>
+						</arguments>
+					</block>
+					
+					
+					<block class="Magento\Catalog\Block\Product\View" name="alternate_productstab" template="Magento_Catalog::product/view/simple_alternate_products.phtml" group="detailed_info" after="terms_conditionstab">
+						<arguments>
+							<argument translate="true" name="title" xsi:type="string">Alternate Products</argument>
+						</arguments>
+					</block>
+					
+				</referenceBlock>
+
+
+
+				
+		
+				
+    </body>
+</page>

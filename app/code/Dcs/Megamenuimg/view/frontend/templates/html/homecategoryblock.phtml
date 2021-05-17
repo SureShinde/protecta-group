@@ -1,0 +1,75 @@
+<?php $helper_home = $this->helper('Digital\Homebanner\Helper\Data');
+
+	$_helper = $this->helper('\Dcs\Megamenuimg\Helper\Data');	
+?>
+<?php if($helper_home->checkDevice()==1){ /// For Mobile ?>
+<div class="home-cat-section">
+<div class="cat_cont_box">
+<div class="cat_cont_inner">	
+	<?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('home_page_category_section_text')->toHtml();?>
+</div>
+</div>
+</div>
+<?php } ?>
+
+<div class="home-categories-block-section">
+	
+    <div class="home-categories-sec">
+    
+	<?php if($helper_home->checkDevice()==0){ /// For Desktop ?>	
+		<div class="home-category-item home-category-cont-sec home-category-desktop">
+            <div class="home-category-item-inner">
+				<div class="cat_cont_box">
+					<div class="cat_cont_inner">
+                <?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('home_page_category_section_text')->toHtml();?>
+					</div>
+				</div>
+            </div>
+        </div>
+	<?php } ?>	
+<?php 
+						if(count($this->getHomePageCategory())>0)
+						{
+							foreach($this->getHomePageCategory() as $_category0)
+							{	
+								$_category0 = $_helper->getCategoryUrl($_category0->getId());                        
+	?>
+							<div class="home-category-item home-cat-slider-item">
+                                <div class="home-category-item-inner">
+                                    <a class="link_icon" href="<?php echo $this->getCategoryUrl($_category0); ?>" title="<?php echo $_category0->getName(); ?>">
+                                        <?php if($_category0->getMenuFirstImg()!=''){  ?>	
+                                        <div class="cat_item_image">
+                                            <img width="270" height="355" src="<?php echo $this->getImageUrl($_category0->getMenuFirstImg()); ?>" alt="<?php echo $_category0->getName(); ?>">
+                                        </div>
+                                        <?php }else{ ?>
+                                        <div class="cat_item_image">
+                                            <img width="270" height="355" src="<?php echo $this->getnoImageCategory(); ?>" alt="<?php echo $_category0->getName(); ?>">
+                                        </div>
+                                        <?php } ?>	
+                                        <div class="name_box">
+                                            <div class="cat_item_name"><span class="cat_name"><span><?php echo $_category0->getName(); ?></span></span></div>
+                                            <div class="cat_item_icon"><span><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                                 width="23px" height="16px" viewBox="0 0 23 16" enable-background="new 0 0 23 16" xml:space="preserve">
+                                            <path fill="#FFFFFF" d="M15.592,0.24c-0.308-0.32-0.823-0.32-1.142,0c-0.31,0.309-0.31,0.823,0,1.131l5.795,5.797H0.8
+                                                c-0.446,0-0.8,0.354-0.8,0.8c0,0.445,0.354,0.811,0.8,0.811h19.445l-5.795,5.784c-0.31,0.32-0.31,0.835,0,1.144
+                                                c0.318,0.32,0.834,0.32,1.142,0l7.167-7.167c0.321-0.308,0.321-0.823,0-1.13L15.592,0.24z"/>
+                                            <path display="none" fill="#1E211E" d="M0.241,7.408c-0.321,0.307-0.321,0.822,0,1.13l7.167,7.167c0.308,0.32,0.823,0.32,1.142,0
+                                                c0.31-0.309,0.31-0.823,0-1.144L2.755,8.778h19.444C22.646,8.778,23,8.413,23,7.968c0-0.446-0.354-0.8-0.801-0.8H2.755L8.55,1.371
+                                                c0.31-0.308,0.31-0.822,0-1.131c-0.318-0.32-0.834-0.32-1.142,0L0.241,7.408z"/>
+                                            </svg></span></div>
+                                        </div>
+                                    </a>
+                                </div>
+							</div>                     
+
+					<?php } ?>
+    </div>
+					<div class="view-all-products">
+						<a class="button-green primary action" href="<?php echo $this->getBaseUrl()."products.html"; ?>" title="<?php echo __("View All Products"); ?>"><?php echo __("View All Products"); ?></a>
+					</div>
+	
+				<?php }else{ ?>
+					<div><?php echo __("We can't find categories matching the selection."); ?></div>
+				<?php } ?>
+	
+</div>	

@@ -1,0 +1,609 @@
+@font-face {
+  font-family: 'HelveticaNeue-Medium';
+  src: url('../fonts/HelveticaNeue-Medium.eot?#iefix') format('embedded-opentype'),  url('../fonts/HelveticaNeue-Medium.woff') format('woff'), url('../fonts/HelveticaNeue-Medium.ttf')  format('truetype'), url('../fonts/HelveticaNeue-Medium.svg#HelveticaNeue-Medium') format('svg');
+  font-weight: normal;
+  font-style: normal;
+font-display: Medium;
+}
+@font-face {
+  font-family: 'HelveticaNeue-Bold';
+  src: url('../fonts/HelveticaNeue-Bold.eot?#iefix') format('embedded-opentype'),  url('../fonts/HelveticaNeue-Bold.woff') format('woff'), url('../fonts/HelveticaNeue-Bold.ttf')  format('truetype'), url('../fonts/HelveticaNeue-Bold.svg#HelveticaNeue-Bold') format('svg');
+  font-weight: normal;
+  font-style: normal;
+    font-display: Bold;
+}
+@font-face {
+  font-family: 'HelveticaNeue';
+  src: url('../fonts/HelveticaNeue.eot?#iefix') format('embedded-opentype'),  url('../fonts/HelveticaNeue.woff') format('woff'), url('../fonts/HelveticaNeue.ttf')  format('truetype'), url('../fonts/HelveticaNeue.svg#HelveticaNeue') format('svg');
+  font-weight: normal;
+  font-style: normal;
+    font-display: 'HelveticaNeue';
+}
+@font-face {
+    font-family: 'fsalbertregular';
+    src: url('../fonts/fsalbert_regular-webfont.woff2') format('woff2'),
+         url('../fonts/fsalbert_regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: 'fsalbertregular';
+}
+@font-face {
+    font-family: 'fsalbertbold';
+    src: url('../fonts/fsalbert-bold-webfont.woff2') format('woff2'),
+         url('../fonts/fsalbert-bold-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: 'fsalbertbold';
+}
+@font-face {
+    font-family: 'fsalbertlight';
+    src: url('../fonts/fsalbert_light-webfont.woff2') format('woff2'),
+         url('../fonts/fsalbert_light-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: 'fsalbertlight';
+}
+@font-face {
+  font-family: 'Helvetica';
+  src: url('../fonts/Helvetica.eot?#iefix') format('embedded-opentype'),  url('../fonts/Helvetica.woff') format('woff'), url('../fonts/Helvetica.ttf')  format('truetype'), url('../fonts/Helvetica.svg#Helvetica') format('svg');
+  font-weight: normal;
+  font-style: normal;
+    font-display: 'Helvetica';
+}
+
+.page-layout-admin-login{
+	background-color:#606368;
+	color:#2f2f2f;
+	text-align: center;
+}
+.page-layout-admin-login .page-wrapper{
+    -webkit-box-shadow: 0 0 16px rgba(0,0,0,.1);
+	-moz-box-shadow: 0 0 16px rgba(0,0,0,.1);
+	box-shadow: 0 0 16px rgba(0,0,0,.1);
+    padding: 30px;
+}
+.login-footer{
+	color:#ffffff;
+	background-color:#63bd60;
+	margin:0;
+	font-size:14px;
+	padding: 20px;	
+}
+.page-layout-admin-login .action-primary{
+	background-image: none;
+    background: #63bd60;
+    color: #ffffff;
+    cursor: pointer;
+    display: inline-block;
+    padding: 0 15px;
+    font-size: 15px;
+    min-width: 150px;
+    border: none;
+    height: 50px;
+    line-height: 50px;
+    box-sizing: border-box;
+    vertical-align: middle;
+    text-align: center;
+    text-transform: uppercase;
+    border-radius: 0;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    font-family: 'fsalbertbold';
+    text-shadow: none;
+}
+.links a{
+    color: #606a71;
+    text-decoration: underline;
+    font-family: 'fsalbertbold';
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+[class*='admin__control-'].mage-error ~ [class*='admin__addon-']:before, .admin__field-control > [class*='admin__control-'].mage-error{
+    border-color:#606a71; 
+}
+.page-layout-admin-login .actions{
+    width: 50%;
+    padding: 0;
+    float: left;
+    text-align: left;
+}
+.links{
+    text-align: right;
+    width: 50%;
+    float: left;
+}
+.admin__field-error, label.mage-error{
+    display: inline-block;
+    vertical-align: top;
+}
+.adminhtml-auth-login .admin__field-error, .adminhtml-auth-login label.mage-error, .adminhtml-auth-forgotpassword .admin__field-error, .adminhtml-auth-forgotpassword label.mage-error{
+    margin-top: 2px;
+    background: #e02b27;
+    color: #fff;
+    padding: 3px 5px 4px;
+    line-height: 1;
+    display: inline-block;
+    border-radius: 4px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: auto;
+}
+
+.links a:hover{
+    color: #62ba42;
+}
+.page-layout-admin-login .action-primary:hover{
+        background: #606a71;
+    color: #ffffff;
+    border: none;
+    box-shadow: none;
+}
+.page-layout-admin-login .action-primary:focus{
+    box-shadow: none;
+}
+.page-layout-admin-login .admin__legend{
+	font-weight: normal;
+    font-size: 24px;
+    text-transform: uppercase;
+    color: #606a71;
+    font-family: 'fsalbertbold';
+    border: none;
+    position: relative;
+    margin-bottom: 40px;
+    padding-bottom: 12px;
+    text-align: left;
+}
+.page-layout-admin-login .admin__legend:after{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 70px;
+    height: 5px;
+    display: block;
+    content: "";
+    background: #63bd60;
+}
+.page-layout-admin-login .admin__legend:before{
+    position: absolute;
+    bottom: 0;
+    left: 74px;
+    width: 3px;
+    height: 5px;
+    display: block;
+    content: "";
+    background: #606a71;
+}
+.adminhtml-auth-login input, .adminhtml-auth-forgotpassword input{
+	height: 50px;
+    width: 100%;
+    border: solid 1px #606a71;
+    font-size: 14px;
+    font-family: 'fsalbertbold';
+    color: #606a71;
+}
+input{
+    border: solid 1px #606a71;
+    font-size: 14px;
+    color: #606a71;
+}
+input[type=text]::-webkit-input-placeholder, input[type=email]::-webkit-input-placeholder, input[type=password]::-webkit-input-placeholder, input[type=number]::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  font-size: 14px;
+    font-family: 'fsalbertbold';
+    color: #606a71;
+    text-transform: capitalize;
+}
+input[type=text]::-moz-placeholder, input[type=email]::-moz-placeholder, input[type=password]::-moz-placeholder, input[type=number]::-moz-placeholder{ /* Firefox 19+ */
+  font-size: 14px;
+    font-family: 'fsalbertbold';
+    color: #606a71;
+    text-transform: capitalize;
+}
+input[type=text]::-ms-placeholder, input[type=email]::-ms-placeholder, input[type=password]::-ms-placeholder, input[type=number]::-ms-placeholder{ /* IE 10+ */
+  font-size: 14px;
+    font-family: 'fsalbertbold';
+    color: #606a71;
+    text-transform: capitalize;
+}
+input[type=text]:-moz-placeholder, input[type=email]:-moz-placeholder, input[type=password]:-moz-placeholder, input[type=number]:-moz-placeholder{ /* Firefox 18- */
+  font-size: 14px;
+    font-family: 'fsalbertbold';
+    color: #606a71;
+    text-transform: capitalize;
+}
+.adminhtml-auth-login .form-actions{
+    display: block;
+    margin: 0;
+}
+.adminhtml-auth-login .form-actions:after{
+    clear: both;
+    display: block;
+    content: "";
+}
+.adminhtml-auth-login .form-actions > div{
+    float: left;
+    vertical-align: top;
+    margin: 0;
+    padding: 0 !important;
+    width: 50%;
+}
+.adminhtml-auth-login .form-actions > div:first-child{
+    text-align: left;
+}
+.adminhtml-auth-login .form-actions > div:nth-child(2){
+    text-align: right;
+}
+.adminhtml-auth-login .admin__fieldset > .admin__field, .adminhtml-auth-forgotpassword .admin__fieldset > .admin__field{
+    margin: 0 0 30px;
+    padding: 0;
+    position: relative;
+}
+.adminhtml-auth-login .admin__fieldset > .admin__field > .admin__field-control, .adminhtml-auth-forgotpassword .admin__fieldset > .admin__field > .admin__field-control{
+    margin: 0;
+    padding: 0;
+}
+.adminhtml-auth-login .admin__fieldset > .admin__field > .admin__field-label, .adminhtml-auth-forgotpassword .admin__fieldset > .admin__field > .admin__field-label{
+    margin: 0;
+    margin-bottom: 5px;
+}
+.adminhtml-auth-login .admin__fieldset > .admin__field > .admin__field-label span, .adminhtml-auth-forgotpassword .admin__fieldset > .admin__field > .admin__field-label span{
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    position: relative;
+    padding-right: 10px !important;
+}
+.adminhtml-auth-login .admin__fieldset > .admin__field > .admin__field-label span:after, .adminhtml-auth-forgotpassword .admin__fieldset > .admin__field > .admin__field-label span:after{
+    left: inherit !important;
+    right: 0 !important;
+    font-size: 12px;
+    top: 0;
+    margin: 0 !important;
+}
+.admin__control-text:focus, .admin__control-select:focus, .admin__control-multiselect:focus, .admin__control-file:active + .admin__control-file-label:before, .admin__control-file:focus + .admin__control-file-label:before, .admin__control-textarea:focus, .admin__control-addon [class*='admin__control-'][class]:focus ~ [class*='admin__addon-']:last-child:before, .selectmenu._focus, .selectmenu._focus .selectmenu-toggle:before, [class*='adminhtml-giftwrapping-'] .field-base_price .admin__control-addon [class*='admin__control-'][class]:focus ~ .addafter:last-child:before, .ui-datepicker .ui-datepicker-title select:focus{
+    border-color: #606a71;
+}
+.page-layout-admin-login .admin__field-info{
+        font-size: 14px;
+    text-align: left;
+    color: #606a71;
+    font-family: 'HelveticaNeue-Medium';
+}
+/*******/
+/***** Admin *****/
+.menu-wrapper:before{
+    background: #606a71;
+}
+.admin__menu .level-0._active > a, .admin__menu .level-0:hover > a{
+    background: #63bd60;
+}
+.admin__menu .level-0 > a{
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+.admin__menu .level-0._active > a, .admin__menu .level-0:hover > a{
+    color: #fff;
+}
+.admin__menu .level-0 > a{
+    color: #fff;
+}
+.action-primary{
+    background: #63bd60;
+    color: #ffffff;
+    cursor: pointer;
+    display: inline-block;
+    padding: 0 15px;
+    font-size: 15px;
+    min-width: 150px;
+    border: none;
+    height: 50px;
+    line-height: 50px;
+    box-sizing: border-box;
+    vertical-align: middle;
+    text-align: center;
+    text-transform: uppercase;
+    border-radius: 0;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    font-family: 'fsalbertbold';
+    text-shadow: none;
+    padding: 0 15px !important;
+}
+.action-primary:hover{
+    box-shadow: none;
+    background: #606a71;
+    color: #fff;
+}
+.action-advanced-reports{
+  background: #606a71;
+    color: #ffffff;
+    cursor: pointer;
+    display: inline-block;
+    padding: 0 15px;
+    font-size: 15px;
+    min-width: 150px;
+    border: none;
+    height: 50px;
+    line-height: 50px;
+    box-sizing: border-box;
+    vertical-align: middle;
+    text-align: center;
+    text-transform: uppercase;
+    border-radius: 0;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    font-family: 'fsalbertbold';
+    text-shadow: none;
+    padding: 0 15px !important;   
+}
+.action-advanced-reports:hover{
+    background: #63bd60;
+    color: #fff;
+    box-shadow: none;
+}
+.dashboard-item-primary:first-child .dashboard-sales-value, .dashboard-totals-item:first-child .price{
+    color: #63bd60;
+}
+.tabs-horiz .ui-state-active .ui-tabs-anchor{
+    border-top-color: #63bd60;
+}
+.dashboard-item-title, .dashboard-advanced-reports-title{
+    color: #606a71;
+    text-transform: uppercase;
+    font-family:'fsalbertbold' ;
+    margin-bottom: 10px;
+}
+.dashboard-data.admin__table-primary th{
+    font-size: 17px;
+    color: #363636;
+    font-family: 'fsalbertbold';
+    text-transform: uppercase;
+    line-height: 1;
+    border: none !important;
+    padding: 15px 10px 15px;
+}
+.dashboard-data{
+    border: solid 1px #dfdfdf;
+    border-collapse: separate;
+}
+.admin__table-primary td{
+    border: none;
+    padding: 11px 10px !important;
+    font-size: 14px;
+    font-weight: normal;
+    font-family: 'HelveticaNeue-Medium';
+    color: #606a71;
+}
+.admin__table-primary tbody tr:nth-child(odd), .admin__table-primary tbody tr:first-child{
+    background: #f9f9f9;
+}
+.admin__menu .level-0 > .submenu{
+    background-color: #7b8388;
+    box-shadow: 0 0 3px #7b8388;
+}
+.admin__menu .submenu-title{
+    text-transform: uppercase;
+    font-family: 'fsalbertbold';
+    color: #ffffff;
+    padding-bottom: 10px;
+    position: relative;
+}
+.admin__menu .submenu-title:after{
+    position: absolute;
+    bottom: 0;
+    left: 1px;
+    width: 73px;
+    height: 7px;
+    display: block;
+    content: "";
+    background: #62ba42;
+}
+.admin__menu .submenu-title:before{
+    position: absolute;
+    bottom: 0;
+    left: 76px;
+    width: 4px;
+    height: 7px;
+    display: block;
+    content: "";
+    background: #fff;
+}
+.admin__menu #menu-zdcs-digital-23digital .submenu-title:after, .admin__menu #menu-zdcs-digital-23digital .submenu-title:before{
+    display: none;
+}
+.admin__menu [class*='level-']:not(.level-0) a:hover{
+    background: #63bd60;
+}
+.admin__menu .submenu .parent .submenu-group-title{
+    text-transform: uppercase;
+    font-family: 'fsalbertbold';
+    color: #ffffff;
+}
+.admin__menu .action-close:before{
+    color: #fff;
+}
+.abs-action-primary, button.primary, .page-actions > button.action-primary, .page-actions .page-actions-buttons > button.action-primary, .page-actions .page-actions-buttons > .action.action-primary, .page-actions > button.primary, .page-actions .page-actions-buttons > button.primary, .page-actions .page-actions-buttons > .action.primary, .block-footer .action-add.primary, .page-actions > .block-footer .action-add.action-primary, .page-actions .page-actions-buttons > .block-footer .action-add.action-primary, .page-actions > .block-footer .action-add.primary, .page-actions .page-actions-buttons > .block-footer .action-add.primary{
+    background: #63bd60;
+    color: #ffffff;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 15px;
+    border: none;
+    box-sizing: border-box;
+    vertical-align: middle;
+    text-align: center;
+    text-transform: uppercase;
+    border-radius: 0;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    font-family: 'fsalbertbold';
+    text-shadow: none;
+}
+.abs-action-primary:hover, .abs-action-primary:active, .abs-action-primary:focus, button.primary:hover, button.primary:active, button.primary:focus, .page-actions > button.action-primary:hover, .page-actions > button.action-primary:active, .page-actions > button.action-primary:focus, .page-actions .page-actions-buttons > button.action-primary:hover, .page-actions .page-actions-buttons > button.action-primary:active, .page-actions .page-actions-buttons > button.action-primary:focus, .page-actions .page-actions-buttons > .action.action-primary:hover, .page-actions .page-actions-buttons > .action.action-primary:active, .page-actions .page-actions-buttons > .action.action-primary:focus, .page-actions > button.primary:hover, .page-actions > button.primary:active, .page-actions > button.primary:focus, .page-actions .page-actions-buttons > button.primary:hover, .page-actions .page-actions-buttons > button.primary:active, .page-actions .page-actions-buttons > button.primary:focus, .page-actions .page-actions-buttons > .action.primary:hover, .page-actions .page-actions-buttons > .action.primary:active, .page-actions .page-actions-buttons > .action.primary:focus, .block-footer .action-add.primary:hover, .block-footer .action-add.primary:active, .block-footer .action-add.primary:focus, .page-actions > .block-footer .action-add.action-primary:hover, .page-actions > .block-footer .action-add.action-primary:active, .page-actions > .block-footer .action-add.action-primary:focus, .page-actions .page-actions-buttons > .block-footer .action-add.action-primary:hover, .page-actions .page-actions-buttons > .block-footer .action-add.action-primary:active, .page-actions .page-actions-buttons > .block-footer .action-add.action-primary:focus, .page-actions > .block-footer .action-add.primary:hover, .page-actions > .block-footer .action-add.primary:active, .page-actions > .block-footer .action-add.primary:focus, .page-actions .page-actions-buttons > .block-footer .action-add.primary:hover, .page-actions .page-actions-buttons > .block-footer .action-add.primary:active, .page-actions .page-actions-buttons > .block-footer .action-add.primary:focus{
+    background: #606a71;
+    color: #fff;
+    box-shadow: none;
+}
+.actions-split.active, .actions-split._active, .actions-split:hover{
+    box-shadow: none;
+}
+.notifications-action .notifications-counter{
+   background: #63bd60;  
+}
+.admin__collapsible-block-wrapper .admin__collapsible-title{
+    font-family: 'fsalbertbold';
+    color: #606a71;
+}
+.admin__collapsible-block-wrapper .admin__collapsible-title:hover{
+    color: #63bd60;
+}
+.data-grid th{
+    background: #606a71;
+}
+.data-grid .data-grid-th._sortable:focus, .data-grid .data-grid-th._sortable:hover{
+   background: #63bd60; 
+}
+.data-grid .data-grid-th{
+    text-transform: uppercase;
+    font-family: 'fsalbertbold';
+    color: #ffffff;
+}
+.action-secondary{
+    background: #606a71;
+    color: #ffffff;
+    cursor: pointer;
+    display: inline-block;
+    border: none;
+    box-sizing: border-box;
+    vertical-align: middle;
+    text-align: center;
+    text-transform: uppercase;
+    border-radius: 0;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    font-family: 'fsalbertbold';
+    text-shadow: none;   
+}
+.action-secondary:hover{
+    background: #63bd60; 
+    color: #fff;
+    box-shadow: none;
+}
+.dashboard-store-stats .ui-tabs-panel{
+    background-color: #fbfbfb;
+    border: solid 1px #adadad;
+}
+
+.page-footer a{
+    color: #63bd60;
+}
+.page-footer a:hover{
+    color: #606a71;
+}
+.data-grid tr:hover td{
+    background: #f9f9f9;
+}
+.action-default, button, .block-footer .action-add, .block-footer .action-add{
+   background: #606a71;
+    color: #fff;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    font-family: 'fsalbertbold';
+    text-transform: uppercase;
+    border: none;
+    box-shadow: none;
+}
+.action-default:hover, button:hover, .block-footer .action-add:hover, .block-footer .action-add:hover{
+    background: #63bd60; 
+    color: #fff;
+    box-shadow: none;
+}
+.page-title{
+    text-transform: uppercase;
+    font-family: 'fsalbertbold';
+    color: #606a71;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    position: relative;
+}
+.page-title:after{
+    position: absolute;
+    bottom: 0;
+    left: 1px;
+    width: 133px;
+    height: 7px;
+    display: block;
+    content: "";
+    background: #62ba42;
+}
+.page-title:before{
+    position: absolute;
+    bottom: 0;
+    left: 140px;
+    width: 4px;
+    height: 7px;
+    display: block;
+    content: "";
+    background: #606a71;
+}
+.message-system-short button{
+    color: #606a71;
+}
+a{
+    color: #63bd60;
+}
+a:hover{
+    color: #606a71;
+}
+.data-grid td{
+    font-weight: normal;
+    font-family: 'HelveticaNeue-Medium';
+    color: #606a71;
+}
+.admin__control-radio:checked + label:before, .admin__control-checkbox:checked + label:before, .mass-select-wrap select._checked + label:before{
+    color: #63bd60;
+}
+.data-grid-filters-action-wrap .action-default:before{
+    color: #fff;
+}
+.admin__data-grid-header-row .action-select{
+    color: #606a71;
+    border: solid 1px #606a71;
+}
+.admin__data-grid-header-row .action-select:hover{
+    color: #606a71;
+    
+}
+.admin__page-section-title{
+    text-transform: uppercase;
+    font-family: 'fsalbertbold';
+    color: #606a71;
+}
+h2, .form-sharing-info .admin__legend span, .admin__page-section-title strong, .admin__page-section-title .title{
+    text-transform: uppercase;
+    font-family: 'fsalbertbold';
+    color: #606a71;
+}
+.admin__legend, .gift-options-popup .admin__legend, .admin__page-section .admin__legend, .admin__page-section-item-title .title, .admin__page-section-content .admin__page-section-title .title{
+    text-transform: uppercase;
+    font-family: 'fsalbertbold';
+    color: #606a71;
+}
+.admin__page-nav-item._active, .admin__page-nav-item.ui-state-active{
+    border-color:#63bd60;
+}
+.admin__page-nav-title._collapsible{
+    text-transform: uppercase;
+    font-family: 'fsalbertbold';
+    color: #606a71;
+}
+.abs-actions-split-xl .action-default, .page-actions .actions-split .action-default{
+    height: 45px;
+}

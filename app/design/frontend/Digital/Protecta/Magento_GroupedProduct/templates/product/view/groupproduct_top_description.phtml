@@ -1,0 +1,24 @@
+<?php $product = $block->getProduct(); ?>
+
+<?php if($product->getData('pg_key_benefits')!='' || $product->getData('pg_applications')!=''){ ?>
+<div class="group-top-details-desc-section">
+	
+<?php if($product->getData('pg_key_benefits')!=''){ ?>
+	<div class="group-prod-key-wrapper">
+	<div class="prod-detail-desc-title"><?php echo __('Key Benefits'); ?></div>
+	<div class="group-prod-key-benefites">
+		<?php echo $product->getData('pg_key_benefits'); ?>
+	</div>
+	</div>
+<?php } ?>	
+
+<?php if($product->getData('pg_applications')!=''){ ?>
+	<div class="group-prod-application-wrapper">
+	<div class="prod-detail-desc-title"><?php echo __('Applications'); ?></div>
+	<div class="group-prod-applications">
+		<?php echo $product->getData('pg_applications'); ?>
+	</div>
+	</div>		
+<?php } ?>
+</div>
+<?php } ?>

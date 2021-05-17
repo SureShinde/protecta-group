@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+
+    <menu>     
+       <add id="Digital_Restrictproducts::parent" title="Custom Branded Items" module="Digital_Restrictproducts" sortOrder="25" resource="Digital_Restrictproducts::parent" parent="Zdcs_Digital::23Digital"/>	
+
+		<add id="Digital_Restrictproducts::restrictproducts" title="Manage Custom Branded Items" module="Digital_Restrictproducts" sortOrder="24" parent="Digital_Restrictproducts::parent" action="restrictproducts/restrictproducts" resource="Digital_Restrictproducts::restrictproducts"/>
+		
+    </menu>
+
+</config>

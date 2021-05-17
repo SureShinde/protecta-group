@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">   
+
+	<menu>
+
+		<add
+
+			 id="Dcs_Productenquiry::productenquiry" 
+
+			 title="Product Enquiries"
+
+			 module="Dcs_Productenquiry"
+
+			 sortOrder="30"
+
+			 resource="Dcs_Productenquiry::productenquiry"
+
+			 parent="Zdcs_Digital::23Digital"
+
+		/>		
+
+		<add 
+
+			 id="Dcs_Productenquiry::manage" 
+
+			 title="Manage Product Enquiries" module="Dcs_Productenquiry" 
+
+			 sortOrder="20" parent="Dcs_Productenquiry::productenquiry" 
+
+			 action="productenquiry/index/"
+
+			 resource="Dcs_Productenquiry::manage"
+
+		/> 
+
+		<add
+
+			 id="Dcs_Productenquiry::config_productenquiry" 
+
+			 title="Settings" module="Dcs_Productenquiry" 
+
+			 sortOrder="30" parent="Dcs_Productenquiry::productenquiry" 
+
+			 action="adminhtml/system_config/edit/section/productenquiry"
+
+			 resource="Dcs_Productenquiry::config_productenquiry"
+
+		/>
+
+	</menu>
+
+</config>
+

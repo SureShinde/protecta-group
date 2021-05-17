@@ -1,0 +1,21 @@
+<?php 	
+	$product = $block->getProduct();
+	
+	$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+	$store = $objectManager->get('Magento\Store\Model\StoreManagerInterface')->getStore(); 
+	$productImageUrl = $store->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA).'catalog/product';
+	
+	$helper = $this->helper('Digital\Homebanner\Helper\Data');
+	
+ ?>
+<?php if($product->getPgGroupImage() && $product->getPgGroupImage()!= 'no_selection' && $helper->checkDeviceNew()==0){ // desktop ?>
+	<div class="category-image desktop-prod-image"><img class="image" src="<?php echo $productImageUrl.$product->getPgGroupImage(); ?>" alt="<?php echo $product->getName(); ?>" /></div>
+<?php }
+	else if($product->getPgGroupImageMobile() && $product->getPgGroupImageMobile()!= 'no_selection' && $helper->checkDeviceNew()==1){ // mobile ?>
+	<div class="category-image mobile-prod-image"><img class="image" src="<?php echo $productImageUrl.$product->getPgGroupImageMobile(); ?>" alt="<?php echo $product->getName(); ?>" /></div>
+<?php }
+	else if($product->getPgGroupImageTablet() && $product->getPgGroupImageTablet()!= 'no_selection' && $helper->checkDeviceNew()==2){ // tablet ?>
+	<div class="category-image tablet-prod-image"><img class="image" src="<?php echo $productImageUrl.$product->getPgGroupImageTablet(); ?>" alt="<?php echo $product->getName(); ?>" /></div>
+<?php	}else{ 
+		echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('product_details_top_banner')->toHtml();	
+ } ?> 

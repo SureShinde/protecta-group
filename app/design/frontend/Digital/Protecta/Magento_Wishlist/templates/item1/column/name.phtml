@@ -1,0 +1,35 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var \Magento\Wishlist\Block\Customer\Wishlist\Item\Column\Info $block */
+
+/** @var \Magento\Wishlist\Model\Item $item */
+$item = $block->getItem();
+$product = $item->getProduct();
+
+/*$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$resource = $objectManager->get('Magento\Framework\App\ResourceConnection');
+$connection = $resource->getConnection();
+$sql = "SELECT parent_id FROM `catalog_product_relation` where `child_id` =".$product->getId();
+$result = $connection->fetchAll($sql);
+if(isset($result[0]['parent_id']) && (int)$result[0]['parent_id'] > 0 )
+		{
+			 $parentProduct = $objectManager->create('Magento\Catalog\Model\Product')->load($result[0]['parent_id']);
+			$parentUrl	   = $parentProduct->getUrlModel()->getUrl($parentProduct);
+		}
+else
+{
+		$parentUrl	   = $block->escapeUrl($block->getProductUrl($item));
+}*/
+
+?>
+<strong class="product-item-name">
+    <a href="<?= $block->escapeUrl($block->getProductUrl($item)) ?>" title="<?= $block->escapeHtmlAttr($product->getName()) ?>" class="product-item-link">
+        <?= $block->escapeHtml($product->getName()) ?>
+    </a>
+</strong>

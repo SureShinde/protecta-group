@@ -1,0 +1,23 @@
+<?php
+	$helper = $this->helper('Dcs\Updateaccount\Helper\Data');
+	$sessionMessage = $helper->getUpdateMessage();
+	$sessionMessageStatus = $helper->getUpdateMessageStatus();
+?>
+<div data-bind="scope: 'messages'">
+    <div class="messages">
+        <div class="
+				<?php if($sessionMessage != '' && $sessionMessageStatus == 'true') { 
+					echo "message-success success message"; 
+				} else if($sessionMessage != '') { 
+					echo "message-error error message"; 
+				} ?>
+			">
+			<?php if($sessionMessage != '') { ?>
+            	<div data-bind="html: message.text">
+					<?php echo $sessionMessage; ?>
+				</div>
+			 <?php } ?>			
+        </div>
+    </div>    
+</div>
+<?php $helper->resetSessionMessage();?>

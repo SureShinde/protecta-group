@@ -1,0 +1,85 @@
+<?php
+
+$product = $block->getProduct();
+$all_up_sell_products = $product->getUpSellProducts();
+
+
+		$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+		$restricts_products = array();
+
+		$resource = $objectManager->get('Magento\Framework\App\ResourceConnection');
+		$connection = $resource->getConnection();
+		$tableName = $resource->getTableName('restrictproducts');
+		$product_sql = "SELECT product_id FROM " . $tableName;
+		$product_result = $connection->fetchAll($product_sql);		
+		if(count($product_result)>0)
+		{
+			foreach ($product_result as $product_record) {
+				$restricts_products[] = $product_record['product_id'];
+			}
+		}
+		$ristrictHelper = $this->helper('Digital\Restrictproducts\Helper\Data');
+		$customer_id = $ristrictHelper->LoginCustomerId();
+
+		$new_alter_items_array = array();
+		foreach ($all_up_sell_products as $simp_item)
+		{
+
+			$product_id = $simp_item->getId();
+			if (in_array($product_id, $restricts_products)) //// login
+			{
+				if($customer_id > 0)
+				{
+					$cust_product_sql = "SELECT * FROM " . $tableName. " Where FIND_IN_SET(".$customer_id.",customers_id) AND product_id=".$product_id."";
+					$cust_product_result = $connection->fetchAll($cust_product_sql);
+					if(count($cust_product_result)>0)
+		    		{
+		    			$new_alter_items_array[] = $simp_item;
+		    		}
+				}				
+			}
+			else
+			{
+				$new_alter_items_array[] = $simp_item->getId();
+			}			
+		}	
+
+
+if(count($new_alter_items_array))
+{
+
+?>
+
+	<div class="prod_alt_main">
+	<?php foreach($new_alter_items_array as $up_one_item){ ?>
+	<?php
+		if($up_one_item!='')
+		{			
+			$_product = $objectManager->create('Magento\Catalog\Model\Product')->load($up_one_item);
+		?>
+	<div class="prod_alt_main_section">
+		<div class="prod_alt_inner_section">
+            <div class="prod_alt_inner_wrapper">
+				<div class="prod_alt_inner_left">			
+				<?php $imageBlock = $this->getImage($_product,'product_alternate_custom_image');
+					echo $imageBlock->toHtml();
+				?>
+				</div>
+				
+				<div class="prod_alt_inner_right">
+						<div class="product_alt_name"><?php echo $_product->getName(); ?></div>
+                    <div class="product_alt_sku"><span class="l_bal"><?php echo __('Code: '); ?></span><?php echo $_product->getSku(); ?></div>
+                    <div class="price-box"><span class="l_bal"><?php echo __('Price: '); ?></span> <?php echo $this->getProductPrice($_product); ?>
+                    <?php /*<span class="product-price-excl-gst"> <?php echo __('excl. GST'); ?></span> */ ?>
+                </div>
+						<div class="product_alt_view_detail"><a class="product-item-link" href="<?php echo $_product->getProductUrl(); ?>" title="<?php echo $_product->getName(); ?>"><?php echo __('View Detail'); ?></a></div>
+				</div>	
+            </div>
+		</div>		
+	</div>
+	<?php } ?>
+	<?php } ?>
+    </div>
+    	
+		
+<?php } ?>

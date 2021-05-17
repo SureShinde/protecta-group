@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="digital" translate="label" sortOrder="10" class="digital-tab">
+            <label>23 Digital Settings</label>
+        </tab>
+        <section id="zdcs" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+        	<label>Social Links</label>
+        	<tab>digital</tab>
+        	<resource>Zdcs_Digital::digital_config</resource>
+        	<group id="view" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+        		<label>Social Links</label>
+				
+				<field id="facebook_link" translate="label" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+	        		<label>Facebook URL</label>
+	        		<comment>Set Facebook Page URL</comment>
+	        	</field>
+				
+				<field id="twitter_link" translate="label" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+	        		<label>Twitter URL</label>
+	        		<comment>Set Twitter Page URL</comment>
+	        	</field>
+				
+	        	<field id="googleplus_link" translate="label" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+	        		<label>Google Plus URL</label>
+	        		<comment>Set Google Plus Page URL</comment>
+	        	</field>
+				
+				<field id="instagram_link" translate="label" sortOrder="40" showInDefault="1" showInWebsite="0" showInStore="0">
+	        		<label>Instagram URL</label>
+	        		<comment>Set Instagram Page URL</comment>
+	        	</field>
+				
+				<field id="linked_in" translate="label" sortOrder="50" showInDefault="1" showInWebsite="0" showInStore="0">
+	        		<label>Linked In URL</label>
+	        		<comment>Set LinkedIn Profile URL</comment>
+	        	</field>	        	
+        	</group>        	
+        </section>        
+    </system>
+</config>

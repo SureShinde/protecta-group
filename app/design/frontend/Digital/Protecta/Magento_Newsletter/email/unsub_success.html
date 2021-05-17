@@ -1,0 +1,29 @@
+<!--
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<!--@subject {{trans "Newsletter unsubscription success at "}}{{config path="general/store_information/name"}} @-->
+<!--@vars {
+"template config_path=\"design\/email\/footer_template\"":"Email Footer Template",
+"template config_path=\"design\/email\/header_template\"":"Email Header Template"
+} @-->
+
+
+{{template config_path="design/email/header_template"}}
+
+            <table border="0" width="100%" cellpadding="20" cellspacing="0">
+                <tr>
+                    <td style="200px; vertical-align: middle;">
+                        <div class="news_unsubscribe" style="text-align: center;"><img src="{{view url='Magento_Email/images/email-icon.png'}}" width="160" height="120" alt="Unsubscribe" /></div>
+                    </td>
+                    <td style="width: 500px; vertical-align: middle;">
+                        <div class="news_unsubscribe_text" style="font-size: 16px; color: #3d3d3d; font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif; font-weight: 500;">
+                            <p style="font-size: 16px; color: #3d3d3d; font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif; font-weight: 500;">{{trans "You have been successfully unsubscribed from our "}}{{config path="general/store_information/name"}}{{trans " online newsletter."}} </p>
+                            <p style="font-size: 16px; color: #3d3d3d; font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif; font-weight: 500; margin-bottom: 0;">{{trans "We’re sorry to see you go."}}</p>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+{{template config_path="design/email/footer_template"}}

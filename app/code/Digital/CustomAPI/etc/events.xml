@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Cminds MultiUserAccounts events config.
+ *
+ * @category Cminds
+ * @package  Cminds_MultiUserAccounts
+ * @author   Piotr Pierzak <piotr@cminds.com>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="subaccount_save_before">
+        <observer name="digital_sucaccount_save_before"
+                  instance="Digital\CustomAPI\Observer\Subaccount\SaveBefore"/>
+    </event>
+</config>

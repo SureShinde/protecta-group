@@ -1,0 +1,640 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/**
+ * Grouped product data template
+ *
+ * @var $block \Magento\Catalog\Block\Product\View\BaseImage
+ * @var $block \Magento\GroupedProduct\Block\Product\View\Type\Grouped
+ */
+?>
+<?php $warehouse_helper = $this->helper('Digital\Warehouse\Helper\Data');
+	  $customerSession = $warehouse_helper->getCustomerSession();
+	  $selected_location = $customerSession->getLocationSession();
+
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$base_url = $objectManager->get('\Magento\Store\Model\StoreManagerInterface')->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_WEB);
+
+?>
+<?php
+	$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+	$media_product_url = $objectManager->get('Magento\Store\Model\StoreManagerInterface')->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA).'catalog/product';
+	$priceHelper = $objectManager->create('Magento\Framework\Pricing\Helper\Data');
+
+	$wish_list_product_array = array();
+	$customerSession = $objectManager->get('Magento\Customer\Model\Session');
+	if($customerSession->isLoggedIn())
+	{
+		$cust_id = $customerSession->getCustomer()->getId();
+		$wishlist = $objectManager->get('\Magento\Wishlist\Model\Wishlist');
+		$wishlist_collection = $wishlist->loadByCustomerId($cust_id, true)->getItemCollection();
+		if(count($wishlist_collection)>0)
+		{
+			foreach($wishlist_collection as $wish_item)
+			{
+				$wish_list_product_array[] = $wish_item->getProductId();
+			}
+		}
+	}
+
+?>
+<?php $block->setPreconfiguredValue(); ?>
+<?php $_product = $block->getProduct(); ?>
+<?php $_associatedProducts = $block->getAssociatedProducts(); ?>
+
+<?php
+		
+		$restricts_products = array();
+
+		$resource = $objectManager->get('Magento\Framework\App\ResourceConnection');
+		$connection = $resource->getConnection();
+		$tableName = $resource->getTableName('restrictproducts');
+		$product_sql = "SELECT product_id FROM " . $tableName;
+		$product_result = $connection->fetchAll($product_sql);		
+		if(count($product_result)>0)
+		{
+			foreach ($product_result as $product_record) {
+				$restricts_products[] = $product_record['product_id'];
+			}
+		}
+		$ristrictHelper = $this->helper('Digital\Restrictproducts\Helper\Data');
+		$customer_id = $ristrictHelper->LoginCustomerId();
+
+		$new_assco_items_array = array();
+		foreach ($_associatedProducts as $simp_item)
+		{
+
+			$product_id = $simp_item->getId();
+			if (in_array($product_id, $restricts_products)) //// login
+			{
+				if($customer_id > 0)
+				{
+					$cust_product_sql = "SELECT * FROM " . $tableName. " Where FIND_IN_SET(".$customer_id.",customers_id) AND product_id=".$product_id."";
+					$cust_product_result = $connection->fetchAll($cust_product_sql);
+					if(count($cust_product_result)>0)
+		    		{
+		    			$check_product = $objectManager->create('Magento\Catalog\Model\Product')->load($simp_item->getId());
+						if($check_product->getVisibility()!=1)
+						{
+							$new_assco_items_array[] = $simp_item;
+						}
+		    		}
+				}				
+			}
+			else
+			{
+				$check_product = $objectManager->create('Magento\Catalog\Model\Product')->load($simp_item->getId());
+				if($check_product->getVisibility()!=1)
+				{
+					$new_assco_items_array[] = $simp_item;
+				}
+			}			
+		}		
+?>
+
+<?php 
+	$_associatedProducts = array();
+	$_associatedProducts = $new_assco_items_array; ?>
+<?php $_hasAssociatedProducts = count($_associatedProducts) > 0; ?>
+
+<div class="table-wrapper-custome grouped">
+    <table class="table data grouped" id="super-product-table">
+        <caption class="table-caption"><?= /* @escapeNotVerified */ __('Grouped product items') ?></caption>
+
+        <?php if ($_hasAssociatedProducts){ ?>
+        <thead>
+        <tr>
+			<th class="col item image-th" scope="col"><?= /* @escapeNotVerified */ __('Image') ?></th>
+			<th class="col item code-th" scope="col"><?= /* @escapeNotVerified */ __('Code') ?></th>
+            <th class="col item description-th" scope="col"><?= /* @escapeNotVerified */ __('Description') ?></th>
+			<th class="col item wishlist-th" scope="col"><?= /* @escapeNotVerified */ __('Add To Project List') ?></th>
+            <?php if ($_product->isSaleable()): ?>
+                <th class="col item qty-th" scope="col"><?= /* @escapeNotVerified */ __('Qty') ?></th>
+            <?php endif; ?>
+			<th class="col item price-th" scope="col"><?= /* @escapeNotVerified */ __('Price') ?></th>
+			<th class="col item action-th" scope="col"><?= /* @escapeNotVerified */ __('Action') ?></th>
+			<th class="col item status-th" scope="col"><?= /* @escapeNotVerified */ __('Status') ?></th>
+			<th class="col item alternate-th" scope="col"><?= /* @escapeNotVerified */ __('Alternate Product') ?></th>
+        </tr>
+        </thead>
+    	<?php } ?>
+
+        <?php if ($_hasAssociatedProducts): ?>
+        <?php foreach ($_associatedProducts as $_item): ?>
+        <tbody>
+			<?php $simple_product = $objectManager->create('Magento\Catalog\Model\Product')->load($_item->getId()); ?>
+			<?php 	$simple_prod_url = '';
+					$simple_prod_url =  $base_url.$simple_product['url_key'].'.html';
+			?>
+            <tr>
+				<td data-th="<?= $block->escapeHtml(__('Image')) ?>" class="col item image-td">
+					<?php /*<img width ="75" heigth="70" src="<?php echo $media_product_url.$block->escapeHtml($simple_product->getImage()) ?>" alt="<?= $block->escapeHtml($_item->getName()) ?>" title="<?= $block->escapeHtml($_item->getName()) ?>" /> */ ?>
+					<a href="<?php echo $simple_prod_url; ?>">
+					<?php 
+								$imageBlock = $this->getImage($simple_product,'product_group_custom_image');
+								echo $imageBlock->toHtml();
+					?>
+					</a>	
+					
+				</td>
+				<td data-th="<?= $block->escapeHtml(__('Code')) ?>" class="col item code-td">
+					<strong class="product-item-code"><a href="<?php echo $simple_prod_url; ?>"><?= $block->escapeHtml($_item->getSku()) ?></a></strong>
+				</td>	
+                <td data-th="<?= $block->escapeHtml(__('Product Name')) ?>" class="col item description-td">
+                    <strong class="product-item-name"><a href="<?php echo $simple_prod_url; ?>"><?= $block->escapeHtml($_item->getName()) ?></a></strong>
+                    <?php /*if ($block->getCanShowProductPrice($_product)): ?>
+                        <?php if ($block->getCanShowProductPrice($_item)): ?>
+                            <?= /* @escapeNotVerified * / $block->getProductPrice($_item) ?>
+                        <?php endif; ?>
+                     <?php endif; */ ?>
+					<?php if($simple_product->getShortDescription()!=''){ ?>
+                    <div class="pro-description"><?php echo $simple_product->getShortDescription(); ?></div>
+					<?php } ?>
+                </td>
+				
+				<td data-th="<?= $block->escapeHtml(__('Add To Project List')) ?>" class="col item wishlist-td">
+                    <a title="<?= $block->escapeHtml(__('Add to Project List')) ?>" href="#" data-post='<?php  echo $this->helper('Magento\Wishlist\Helper\Data')->getAddParams($_item) ?>' class="action towishlist <?php if(in_array($_item->getId(),$wish_list_product_array)){echo 'is_favourite';}?>" data-action="add-to-wishlist">
+                        <span class="start-normal">
+                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                 width="23px" height="23px" viewBox="0 0 23 23" enable-background="new 0 0 23 23" xml:space="preserve">
+                            <g>
+                                <path fill="#64BD61" d="M22.969,8.819c-0.076-0.231-0.273-0.396-0.515-0.435l-7.176-1.02L12.05,0.874
+                                    c-0.109-0.217-0.331-0.354-0.571-0.354l0,0c-0.241,0-0.463,0.137-0.571,0.359l-3.187,6.51L0.545,8.455
+                                    C0.305,8.493,0.106,8.658,0.031,8.89c-0.075,0.231-0.009,0.486,0.166,0.651l5.207,5.047l-1.204,7.146
+                                    c-0.042,0.24,0.057,0.481,0.255,0.623c0.108,0.08,0.241,0.123,0.373,0.123c0.104,0,0.203-0.023,0.297-0.076l6.406-3.394
+                                    l6.425,3.356c0.095,0.047,0.193,0.07,0.293,0.07l0,0c0.35,0,0.637-0.287,0.637-0.637c0-0.053-0.004-0.1-0.019-0.146l-1.241-7.105
+                                    l5.174-5.074C22.982,9.305,23.044,9.05,22.969,8.819z M16.501,13.875c-0.151,0.146-0.217,0.358-0.179,0.566l1.08,6.197
+                                    l-5.579-2.912c-0.185-0.1-0.406-0.094-0.595,0l-5.561,2.945l1.043-6.207c0.033-0.208-0.033-0.416-0.184-0.563l-4.513-4.38
+                                    L8.24,8.597c0.208-0.033,0.387-0.16,0.477-0.349l2.767-5.651l2.804,5.637c0.095,0.189,0.273,0.316,0.481,0.349L21,9.47
+                                    L16.501,13.875z"/>
+                            </g>
+                            </svg>
+                        </span>
+                        <span class="star-fill">
+                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                 width="23px" height="23px" viewBox="0 0 23 23" enable-background="new 0 0 23 23" xml:space="preserve">
+                            <g>
+                                <path fill="#64BD61" d="M12.043,0.895l2.926,6.924l7.49,0.644c0.52,0.045,0.73,0.693,0.337,1.034l-5.681,4.922l1.701,7.322
+                                    c0.119,0.509-0.433,0.909-0.879,0.64L11.5,18.498l-6.437,3.883c-0.448,0.269-0.998-0.132-0.88-0.64l1.703-7.322L0.204,9.496
+                                    C-0.19,9.155,0.02,8.506,0.541,8.461l7.49-0.643l2.926-6.923C11.159,0.413,11.841,0.413,12.043,0.895z"/>
+                            </g>
+                            </svg>
+                        </span>
+                    </a>
+                </td>
+				
+                <?php if ($_product->isSaleable()): ?>
+                <td data-th="<?= $block->escapeHtml(__('Qty')) ?>" class="col item qty-td">
+                <?php //if ($_item->isSaleable()) : ?>
+                    <div class="control qty">
+                        <input type="number"
+							   maxlength="4"
+                               name="super_group[<?= /* @escapeNotVerified */ $_item->getId() ?>]"
+                               data-selector="super_group[<?= /* @escapeNotVerified */ $_item->getId() ?>]"
+                               value="<?= /* @escapeNotVerified */ 1 ?>"
+                               title="<?= /* @escapeNotVerified */ __('Qty') ?>"
+                               class="input-text qty product_qty_box simple_qty_<?= $_item->getId(); ?>"
+                               data-validate="{'validate-grouped-qty':'#super-product-table'}"
+                               data-errors-message-box="#validation-message-box"
+							   id="<?= $_item->getId(); ?>"
+							   data-parentid="<?= $_product->getId(); ?>"
+							   data-name="<?= $_item->getName(); ?>"
+							   data-parenturl="<?= $_product->getUrlModel()->getUrl($_product); ?>"
+							   data-sku="<?= $_item->getSku(); ?>"
+							   oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+			                   maxlength="4"
+			                   onkeypress="return isNumberKey(event)" />    
+                    </div>
+                <?php /*else: ?>
+                    <div class="stock unavailable" title="<?= /* @escapeNotVerified * / __('Availability') ?>">
+                        <span><?= /* @escapeNotVerified * / __('Out of stock') ?></span>
+                    </div>
+                <?php endif; */ ?>
+                </td>
+                <?php endif; ?>
+				
+				<td data-th="<?= $block->escapeHtml(__('Price')) ?>" class="col item price-td">
+					<div class="price-exclude"><?php echo $priceHelper->currency($simple_product->getFinalPrice()); ?><span class="price-ex-gst"><?= $block->escapeHtml(__(' excl. GST')) ?></span></div>
+					<div class="product-tier-dropdown">
+						<?php 
+							
+							$customer_group_id = $warehouse_helper->getCurrentCustomerIdForTierPrice();
+							$simple_product->setCustomerGroupId($customer_group_id);
+
+						  ?>
+						<?php if(count($simple_product->getTierPrice())>0){ ?>
+								<span class="span-bulk-buy-price" data-ulid="<?= $_item->getId(); ?>"><?php echo __('BULK BUY PRICING'); ?></span>
+								<ul id="simple_tier_drop_id_<?= $_item->getId(); ?>" name="simple_tier_drop_name_<?= $_item->getId(); ?>" class="simple-tier-price-drop-down">								
+								<?php foreach($simple_product->getTierPrice() as $_index => $simple_price){ ?>
+								<?php //$final_price_with_currency1 = $priceHelper->currency($simple_price['price_qty'] * $simple_price['price']);
+									  $final_price_with_currency1 = $priceHelper->currency($simple_price['price']);	
+								?>
+								<li><?php echo round($simple_price['price_qty'], 0).' = '.$final_price_with_currency1; ?></li>
+								<?php } ?>
+								<?php if(!$customerSession->isLoggedIn()){ ?>
+								<li class="non-login-bluk-text"><?php echo __('* You need to login/register to get this bulk pricing'); ?></li>
+								<?php } ?>
+							</ul>	
+						<?php } ?>
+					</div>
+				</td>
+				
+				
+				<td data-th="<?= $block->escapeHtml(__('Action')) ?>" class="col item action-td">
+					<?php if ($_product->isSaleable()): ?>
+					<div class="product-action-buttons">						
+						<div class="prod-addto-cart"><a href="javascript:void(0);" onclick="addtocartcustom(this.id);" id="<?= $_item->getId(); ?>" class="simple-prod-add-to-cart" title="<?php echo __('Add to Cart'); ?>"><?php echo __('Add to Cart'); ?></a></div>
+						
+						<div class="prod-addto-enquiry"><a href="javascript:void(0);" onclick="addtoenquiry(this.id);" id="<?= $_item->getId(); ?>" class="simple-prod-add-to-enquiry" title="<?php echo __('Add to Enquiry'); ?>"><?php echo __('Add to Enquiry'); ?></a></div>
+					</div>
+				<?php endif; ?>
+				</td>
+				
+				
+				<td data-th="<?= $block->escapeHtml(__('Status')) ?>" class="col item status-td">
+					<div class="product-item-status">
+						<div class="simple-prod-status">
+							<?php $status_qty_status = $warehouse_helper->getCurrentLocationQtyStatus($simple_product);								
+								  $status_qty_message = $warehouse_helper->getCurrentLocationQtyMessage($simple_product);
+									$new_class = '';
+									if($status_qty_status=='Available')
+									{
+										$new_class = 'available';
+									}
+									else
+									{
+										$new_class = 'low-in-stock';
+									}
+								  				
+							?>
+							<div class="prod-status-main <?php echo $new_class; ?>"><?php echo $status_qty_status; ?></div>
+							<div class="prod-status-message"><?php echo $status_qty_message; ?></div>							
+						</div>
+					</div>
+				</td>
+				
+				<td data-th="<?= $block->escapeHtml(__('Alternate Product')) ?>" class="col item alternate-td">					
+					<div class="product-item-alternate">
+					<?php if(count($simple_product->getUpSellProducts())>0){ ?>					
+						<a href="javascript:void(0);" class="prod_alt_link" onclick="showalternateproduct(this.id);" id="<?= $_item->getId(); ?>" title="<?php echo __('Alternate Product'); ?>">
+                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                 width="33px" height="26px" viewBox="0 0 33 26" enable-background="new 0 0 33 26" xml:space="preserve">
+                            <g>
+                                <path fill="#FFFFFF" d="M12.158,13.321c0,1.07-0.005,2.14,0.005,3.209c0.002,0.194-0.056,0.303-0.226,0.4
+                                    c-1.864,1.068-3.724,2.142-5.582,3.219c-0.144,0.083-0.252,0.087-0.399,0.002c-1.881-1.082-3.765-2.16-5.653-3.23
+                                    c-0.183-0.104-0.236-0.225-0.234-0.428c0.009-2.117,0.009-4.235,0.003-6.352c-0.001-0.206,0.061-0.326,0.24-0.429
+                                    c1.876-1.069,3.749-2.144,5.617-3.225C6.091,6.395,6.204,6.41,6.357,6.499c1.849,1.07,3.7,2.137,5.557,3.193
+                                    c0.197,0.112,0.254,0.237,0.252,0.455c-0.011,1.058-0.005,2.117-0.005,3.175C12.161,13.321,12.159,13.321,12.158,13.321z
+                                     M1.835,10.193c1.419,0.828,2.79,1.623,4.156,2.427c0.165,0.097,0.27,0.022,0.397-0.053c1.2-0.709,2.402-1.416,3.602-2.123
+                                    c0.13-0.077,0.258-0.156,0.388-0.234c-0.033-0.047-0.042-0.073-0.06-0.083C8.975,9.353,7.628,8.583,6.287,7.804
+                                    C6.138,7.718,6.039,7.771,5.918,7.84c-0.622,0.361-1.247,0.718-1.87,1.077C3.329,9.331,2.61,9.747,1.835,10.193z M5.567,18.58
+                                    c0-1.62-0.002-3.161,0.003-4.703c0-0.174-0.116-0.228-0.232-0.294c-1.263-0.735-2.525-1.471-3.79-2.203
+                                    c-0.08-0.046-0.153-0.141-0.293-0.083c0,1.546,0.002,3.098-0.003,4.652c0,0.174,0.11,0.229,0.227,0.296
+                                    c0.605,0.345,1.21,0.691,1.816,1.037C4.033,17.704,4.771,18.125,5.567,18.58z M10.967,11.251c-0.047,0.019-0.088,0.028-0.124,0.049
+                                    c-1.317,0.773-2.63,1.55-3.952,2.316c-0.168,0.098-0.151,0.226-0.151,0.369c0,1.349,0,2.699,0,4.048c0,0.162,0,0.325,0,0.494
+                                    c0.059-0.01,0.083-0.008,0.101-0.018c1.333-0.768,2.664-1.539,4.001-2.299c0.165-0.093,0.162-0.216,0.161-0.364
+                                    c-0.001-1.36,0.001-2.721-0.001-4.082C11.002,11.603,11.032,11.434,10.967,11.251z"/>
+                                <path fill="#FFFFFF" d="M32.923,13.329c0,1.047-0.004,2.094,0.004,3.14c0.002,0.226-0.058,0.362-0.268,0.481
+                                    c-1.836,1.047-3.666,2.103-5.491,3.168c-0.192,0.112-0.326,0.107-0.517-0.003c-1.849-1.067-3.703-2.127-5.561-3.18
+                                    c-0.178-0.102-0.253-0.211-0.253-0.421c0.009-2.139,0.01-4.278,0.006-6.416c0-0.181,0.056-0.285,0.214-0.375
+                                    c1.874-1.071,3.745-2.146,5.611-3.229c0.175-0.102,0.295-0.08,0.456,0.014c1.851,1.067,3.702,2.13,5.559,3.188
+                                    c0.178,0.102,0.25,0.218,0.248,0.424c-0.009,1.069-0.004,2.139-0.004,3.208C32.927,13.329,32.925,13.329,32.923,13.329z
+                                     M22.639,10.221c1.37,0.797,2.742,1.592,4.106,2.396c0.166,0.098,0.271,0.025,0.396-0.049c1.057-0.622,2.112-1.244,3.167-1.867
+                                    c0.275-0.162,0.549-0.328,0.825-0.493c-0.03-0.042-0.039-0.067-0.057-0.078c-1.344-0.775-2.689-1.546-4.029-2.328
+                                    c-0.166-0.096-0.271-0.019-0.396,0.054c-1.246,0.718-2.494,1.436-3.74,2.155C22.817,10.066,22.701,10.096,22.639,10.221z
+                                     M22.035,11.221c-0.012,0.091-0.022,0.131-0.022,0.172c-0.001,1.507,0.002,3.015-0.007,4.522c-0.001,0.185,0.096,0.252,0.229,0.326
+                                    c1.287,0.735,2.573,1.473,3.86,2.208c0.064,0.036,0.123,0.104,0.213,0.075c0.009-0.02,0.025-0.039,0.025-0.057
+                                    c0.002-1.519,0.001-3.037,0.009-4.555c0-0.167-0.083-0.233-0.208-0.305c-0.816-0.471-1.631-0.948-2.446-1.423
+                                    C23.148,11.871,22.608,11.555,22.035,11.221z M31.753,11.245c-0.077,0.028-0.119,0.035-0.155,0.056
+                                    c-1.316,0.773-2.63,1.552-3.952,2.319c-0.162,0.095-0.158,0.222-0.158,0.368c0.002,1.204,0.002,2.407,0.003,3.61
+                                    c0,0.31,0,0.618,0,0.967c0.081-0.038,0.121-0.054,0.157-0.075c1.304-0.752,2.604-1.508,3.912-2.254
+                                    c0.166-0.095,0.196-0.214,0.196-0.384c-0.006-1.225-0.004-2.451-0.004-3.676C31.753,11.875,31.753,11.575,31.753,11.245z"/>
+                                <path fill="#FFFFFF" d="M9.015,3.935c0.444,0.056,0.808-0.018,1.173-0.041c0.196-0.012,0.304,0.03,0.277,0.25
+                                    c-0.006,0.055,0.005,0.112,0.009,0.168c0.056,0.77,0.056,0.76-0.705,0.79C8.904,5.137,8.038,5.184,7.174,5.24
+                                    c-0.23,0.015-0.311-0.048-0.319-0.286C6.819,3.909,6.769,2.863,6.713,1.818c-0.01-0.188,0.06-0.23,0.229-0.23
+                                    c0.225,0,0.451-0.014,0.674-0.042C7.826,1.52,7.889,1.6,7.892,1.805C7.9,2.274,7.931,2.744,7.953,3.224
+                                    C8.128,3.2,8.204,3.075,8.305,2.996c2.454-1.943,5.248-2.946,8.375-2.87c3.688,0.09,6.795,1.537,9.311,4.245
+                                    c0.157,0.169,0.182,0.274-0.022,0.417c-0.228,0.161-0.425,0.47-0.656,0.492c-0.223,0.021-0.375-0.341-0.566-0.528
+                                    c-2.605-2.545-5.731-3.698-9.355-3.416C13.031,1.521,10.93,2.412,9.015,3.935z"/>
+                                <path fill="#FFFFFF" d="M23.441,22.317c-0.366,0-0.732-0.013-1.096,0.004c-0.206,0.011-0.266-0.054-0.277-0.261
+                                    c-0.052-0.932-0.059-0.925,0.87-0.936c0.821-0.01,1.644-0.031,2.465-0.062c0.23-0.009,0.317,0.051,0.316,0.295
+                                    c-0.003,1.047,0.007,2.093,0.021,3.14c0.003,0.176-0.049,0.241-0.226,0.237c-0.236-0.006-0.473-0.001-0.709,0.016
+                                    c-0.188,0.013-0.227-0.07-0.224-0.239c0.008-0.479,0.003-0.958,0.003-1.438c-0.186-0.012-0.25,0.098-0.334,0.161
+                                    c-2.533,1.908-5.379,2.802-8.548,2.621c-3.385-0.193-6.24-1.555-8.618-3.957c-0.226-0.228-0.239-0.351,0.016-0.568
+                                    c0.574-0.486,0.557-0.496,1.105,0.029c2.525,2.418,5.545,3.534,9.025,3.331c2.228-0.131,4.252-0.894,6.061-2.211
+                                    C23.351,22.437,23.438,22.415,23.441,22.317z"/>
+                            </g>
+                            </svg>
+                        
+                        </a>				
+					<?php }else{ ?>
+						<a href="javascript:void(0);" class="prod_alt_link disable" disabled="disabled" style="cursor: not-allowed; opacity: 0.5;">
+                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                 width="33px" height="26px" viewBox="0 0 33 26" enable-background="new 0 0 33 26" xml:space="preserve">
+                            <g>
+                                <path fill="#FFFFFF" d="M12.158,13.321c0,1.07-0.005,2.14,0.005,3.209c0.002,0.194-0.056,0.303-0.226,0.4
+                                    c-1.864,1.068-3.724,2.142-5.582,3.219c-0.144,0.083-0.252,0.087-0.399,0.002c-1.881-1.082-3.765-2.16-5.653-3.23
+                                    c-0.183-0.104-0.236-0.225-0.234-0.428c0.009-2.117,0.009-4.235,0.003-6.352c-0.001-0.206,0.061-0.326,0.24-0.429
+                                    c1.876-1.069,3.749-2.144,5.617-3.225C6.091,6.395,6.204,6.41,6.357,6.499c1.849,1.07,3.7,2.137,5.557,3.193
+                                    c0.197,0.112,0.254,0.237,0.252,0.455c-0.011,1.058-0.005,2.117-0.005,3.175C12.161,13.321,12.159,13.321,12.158,13.321z
+                                     M1.835,10.193c1.419,0.828,2.79,1.623,4.156,2.427c0.165,0.097,0.27,0.022,0.397-0.053c1.2-0.709,2.402-1.416,3.602-2.123
+                                    c0.13-0.077,0.258-0.156,0.388-0.234c-0.033-0.047-0.042-0.073-0.06-0.083C8.975,9.353,7.628,8.583,6.287,7.804
+                                    C6.138,7.718,6.039,7.771,5.918,7.84c-0.622,0.361-1.247,0.718-1.87,1.077C3.329,9.331,2.61,9.747,1.835,10.193z M5.567,18.58
+                                    c0-1.62-0.002-3.161,0.003-4.703c0-0.174-0.116-0.228-0.232-0.294c-1.263-0.735-2.525-1.471-3.79-2.203
+                                    c-0.08-0.046-0.153-0.141-0.293-0.083c0,1.546,0.002,3.098-0.003,4.652c0,0.174,0.11,0.229,0.227,0.296
+                                    c0.605,0.345,1.21,0.691,1.816,1.037C4.033,17.704,4.771,18.125,5.567,18.58z M10.967,11.251c-0.047,0.019-0.088,0.028-0.124,0.049
+                                    c-1.317,0.773-2.63,1.55-3.952,2.316c-0.168,0.098-0.151,0.226-0.151,0.369c0,1.349,0,2.699,0,4.048c0,0.162,0,0.325,0,0.494
+                                    c0.059-0.01,0.083-0.008,0.101-0.018c1.333-0.768,2.664-1.539,4.001-2.299c0.165-0.093,0.162-0.216,0.161-0.364
+                                    c-0.001-1.36,0.001-2.721-0.001-4.082C11.002,11.603,11.032,11.434,10.967,11.251z"/>
+                                <path fill="#FFFFFF" d="M32.923,13.329c0,1.047-0.004,2.094,0.004,3.14c0.002,0.226-0.058,0.362-0.268,0.481
+                                    c-1.836,1.047-3.666,2.103-5.491,3.168c-0.192,0.112-0.326,0.107-0.517-0.003c-1.849-1.067-3.703-2.127-5.561-3.18
+                                    c-0.178-0.102-0.253-0.211-0.253-0.421c0.009-2.139,0.01-4.278,0.006-6.416c0-0.181,0.056-0.285,0.214-0.375
+                                    c1.874-1.071,3.745-2.146,5.611-3.229c0.175-0.102,0.295-0.08,0.456,0.014c1.851,1.067,3.702,2.13,5.559,3.188
+                                    c0.178,0.102,0.25,0.218,0.248,0.424c-0.009,1.069-0.004,2.139-0.004,3.208C32.927,13.329,32.925,13.329,32.923,13.329z
+                                     M22.639,10.221c1.37,0.797,2.742,1.592,4.106,2.396c0.166,0.098,0.271,0.025,0.396-0.049c1.057-0.622,2.112-1.244,3.167-1.867
+                                    c0.275-0.162,0.549-0.328,0.825-0.493c-0.03-0.042-0.039-0.067-0.057-0.078c-1.344-0.775-2.689-1.546-4.029-2.328
+                                    c-0.166-0.096-0.271-0.019-0.396,0.054c-1.246,0.718-2.494,1.436-3.74,2.155C22.817,10.066,22.701,10.096,22.639,10.221z
+                                     M22.035,11.221c-0.012,0.091-0.022,0.131-0.022,0.172c-0.001,1.507,0.002,3.015-0.007,4.522c-0.001,0.185,0.096,0.252,0.229,0.326
+                                    c1.287,0.735,2.573,1.473,3.86,2.208c0.064,0.036,0.123,0.104,0.213,0.075c0.009-0.02,0.025-0.039,0.025-0.057
+                                    c0.002-1.519,0.001-3.037,0.009-4.555c0-0.167-0.083-0.233-0.208-0.305c-0.816-0.471-1.631-0.948-2.446-1.423
+                                    C23.148,11.871,22.608,11.555,22.035,11.221z M31.753,11.245c-0.077,0.028-0.119,0.035-0.155,0.056
+                                    c-1.316,0.773-2.63,1.552-3.952,2.319c-0.162,0.095-0.158,0.222-0.158,0.368c0.002,1.204,0.002,2.407,0.003,3.61
+                                    c0,0.31,0,0.618,0,0.967c0.081-0.038,0.121-0.054,0.157-0.075c1.304-0.752,2.604-1.508,3.912-2.254
+                                    c0.166-0.095,0.196-0.214,0.196-0.384c-0.006-1.225-0.004-2.451-0.004-3.676C31.753,11.875,31.753,11.575,31.753,11.245z"/>
+                                <path fill="#FFFFFF" d="M9.015,3.935c0.444,0.056,0.808-0.018,1.173-0.041c0.196-0.012,0.304,0.03,0.277,0.25
+                                    c-0.006,0.055,0.005,0.112,0.009,0.168c0.056,0.77,0.056,0.76-0.705,0.79C8.904,5.137,8.038,5.184,7.174,5.24
+                                    c-0.23,0.015-0.311-0.048-0.319-0.286C6.819,3.909,6.769,2.863,6.713,1.818c-0.01-0.188,0.06-0.23,0.229-0.23
+                                    c0.225,0,0.451-0.014,0.674-0.042C7.826,1.52,7.889,1.6,7.892,1.805C7.9,2.274,7.931,2.744,7.953,3.224
+                                    C8.128,3.2,8.204,3.075,8.305,2.996c2.454-1.943,5.248-2.946,8.375-2.87c3.688,0.09,6.795,1.537,9.311,4.245
+                                    c0.157,0.169,0.182,0.274-0.022,0.417c-0.228,0.161-0.425,0.47-0.656,0.492c-0.223,0.021-0.375-0.341-0.566-0.528
+                                    c-2.605-2.545-5.731-3.698-9.355-3.416C13.031,1.521,10.93,2.412,9.015,3.935z"/>
+                                <path fill="#FFFFFF" d="M23.441,22.317c-0.366,0-0.732-0.013-1.096,0.004c-0.206,0.011-0.266-0.054-0.277-0.261
+                                    c-0.052-0.932-0.059-0.925,0.87-0.936c0.821-0.01,1.644-0.031,2.465-0.062c0.23-0.009,0.317,0.051,0.316,0.295
+                                    c-0.003,1.047,0.007,2.093,0.021,3.14c0.003,0.176-0.049,0.241-0.226,0.237c-0.236-0.006-0.473-0.001-0.709,0.016
+                                    c-0.188,0.013-0.227-0.07-0.224-0.239c0.008-0.479,0.003-0.958,0.003-1.438c-0.186-0.012-0.25,0.098-0.334,0.161
+                                    c-2.533,1.908-5.379,2.802-8.548,2.621c-3.385-0.193-6.24-1.555-8.618-3.957c-0.226-0.228-0.239-0.351,0.016-0.568
+                                    c0.574-0.486,0.557-0.496,1.105,0.029c2.525,2.418,5.545,3.534,9.025,3.331c2.228-0.131,4.252-0.894,6.061-2.211
+                                    C23.351,22.437,23.438,22.415,23.441,22.317z"/>
+                            </g>
+                            </svg>
+                        </a>
+					<?php } ?> 	
+					</div>	
+				</td>
+				
+            </tr>
+			
+			<tr class="prod-alternate-content" id="<?= 'main_alternate_'.$_item->getId(); ?>">					
+			</tr>
+            <?php /*if ($block->getCanShowProductPrice($_product)
+                && $block->getCanShowProductPrice($_item)
+                && trim($block->getProductPriceHtml(
+                    $_item,
+                    \Magento\Catalog\Pricing\Price\TierPrice::PRICE_CODE
+                ))): ?>
+                <tr class="row-tier-price">
+                    <td colspan="2">
+                        <?= $block->getProductPriceHtml(
+                            $_item,
+                            \Magento\Catalog\Pricing\Price\TierPrice::PRICE_CODE
+                        ) ?>
+                    </td>
+                </tr>
+            <?php endif; */ ?>
+        </tbody>
+        <?php endforeach; ?>
+        <?php else: ?>
+        <?php /*<tbody>
+            <tr>
+                <td class="unavailable"
+                    colspan="<?php if ($_product->isSaleable()): ?>4<?php else : ?>3<?php endif; ?>">
+                    <?= / * @escapeNotVerified * / __('No options of this product are available.') ?>
+                </td>
+            </tr>
+        </tbody>  */ ?>
+        <?php endif;  ?>
+    </table>
+    <span class="scroll-icon"></span>
+</div>
+<div id="validation-message-box"></div>
+
+<div id="prod_detail_popup_main" class="prod-detail-popup-main" style="display:none;">
+    <div class="custom-popup">
+        <div class="custom-popup-inner">
+            <div class="custom-popup-title">
+                <h3 class="prod-popup-title"></h3>
+                <a href="javascript:void(0);" title="Close" class="popup_close_detail"><?php echo __('Close'); ?></a>
+            </div>
+            <div class="custom-popup-cont">
+                <div id="prod_detail_popup_inner">
+                    <div id="popup_text_msg" class="popup-text-msg"></div>
+                    <div class="popup-btn-box">
+                        <div class="popup-cont-shopping">
+                            <a class="btn-grey" href="javascript:void(0);" title="<?php echo __('Continue Shopping'); ?>"><?php echo __('Continue Shopping'); ?></a>
+                        </div>
+                        <div style="display:none;" id="goto_cart" class="popup-goto-shopping">
+                            <a class="btn-green" href="<?php echo $this->getUrl().'checkout/cart/'?>" title="<?php echo __('Go to Shopping Cart'); ?>"><?php echo __('Go to Shopping Cart'); ?></a>
+                        </div>
+                        <div style="display:none;" id="goto_enquiry" class="popup-goto-enquiry">
+                            <a class="btn-green" href="<?php echo $this->getUrl().'productenquiry/index/index/'?>" title="<?php echo __('Go to Product Enquiry'); ?>"><?php echo __('Go to Product Enquiry'); ?></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>	
+</div>	
+<script type="text/javascript">
+function isNumberKey(evt){
+    var charCode = (evt.which) ? evt.which : evt.keyCode
+    if (evt.keyCode==46) return false; 
+    if (charCode > 31 && (charCode != 46 &&(charCode < 48 || charCode > 57)))
+        return false;
+    return true;
+}
+</script>
+<script type="text/javascript">
+function showalternateproduct(id)
+{
+	jQuery('.prod-alternate-content').html('');
+	jQuery('tbody').removeClass('active');
+	var productalternateUrl = "<?php echo $this->getUrl().'warehouse/index/alternateproduct'?>";
+	var param = {'id': id};
+	
+			jQuery.ajax({
+				showLoader: true,
+				url: productalternateUrl,
+				data: param,
+				type: "POST",
+				dataType: 'json'
+			}).done(function (data) {		
+				if(data.status=='success')
+				{
+					jQuery('#main_alternate_'+id).closest('tbody').addClass('active');					
+					jQuery('#main_alternate_'+id).html(data.output);
+				}
+				else
+				{					
+					location.reload();
+				}
+
+			});
+	
+}
+	
+	
+function addtocartcustom(id)
+{
+		var selected_location = '<?php echo $selected_location; ?>';
+		if(selected_location=='')
+		{
+			alert('Please select location before Add to Cart.');
+			return false;
+		}
+		jQuery('#goto_cart').show();
+		jQuery('#goto_enquiry').hide();
+		jQuery('.prod-popup-title').html('Add to Cart');
+	
+		var qty_class = 'simple_qty_'+id;
+		var prod_qty = jQuery('.'+qty_class).val();	
+		
+		var productaddtocartUrl = "<?php echo $this->getUrl().'warehouse/index/addtocart'?>";
+		var param = {'id': id, 'prod_qty': prod_qty};
+		
+			jQuery.ajax({
+				showLoader: true,
+				url: productaddtocartUrl,
+				data: param,
+				type: "POST",
+				dataType: 'json'
+			}).done(function (data) {		
+				if(data.status=='success')
+				{
+					//jQuery('#prod_detail_popup_main').show();
+					//jQuery('html').addClass('show_detail_popup');
+					//jQuery('#popup_text_msg').html(data.message);
+
+					setTimeout(function(){
+						jQuery('.showcart').trigger('click');
+					}, 900);
+
+					setTimeout(function(){
+						jQuery('#btn-minicart-close').trigger('click');
+					 }, 4000);
+					
+
+				}
+				else
+				{					
+					location.reload();
+				}
+
+			});
+	
+	require([
+        'Magento_Customer/js/customer-data'
+    ], function (customerData) {
+        var sections = ['cart'];		
+        customerData.invalidate(sections);
+    });
+	
+}
+	
+function addtoenquiry(id)
+{
+			jQuery('#goto_cart').hide();
+			jQuery('#goto_enquiry').show();
+			jQuery('.prod-popup-title').html('Add to Enquiry');
+		
+			var top_current_enq_qty = jQuery('#top_mini_enquiry_count').html();
+			
+			var qty_class = 'simple_qty_'+id;
+			var prod_qty = jQuery('.'+qty_class).val();
+			var prod_id  = jQuery('.'+qty_class).attr('id');
+			var parentid = jQuery('.'+qty_class).data('parentid');
+			var name = jQuery('.'+qty_class).data('name');
+			var parenturl = jQuery('.'+qty_class).data('parenturl');
+			var sku = jQuery('.'+qty_class).data('sku');
+		
+					
+			var productenquiryUrl = "<?php echo $this->getUrl().'productenquiry/index/add'?>";
+			var param = {'prod_id':prod_id, 'parentid':parentid, 'prod_qty':prod_qty, 'name':name, 'parenturl':parenturl, 'sku':sku};
+				  	
+			jQuery.ajax({
+			showLoader: true,
+			url: productenquiryUrl,
+			data: param,
+			type: "POST",
+			dataType: 'json'
+			}).done(function (data) {		
+				if(data.status=='success')
+				{
+					jQuery('#top_mini_enquiry_count').html(parseInt(top_current_enq_qty)+parseInt(prod_qty));
+					jQuery('#prod_detail_popup_main').show();
+					jQuery('html').addClass('show_detail_popup');
+					jQuery('#popup_text_msg').html(data.message);				
+				}
+				else
+				{					
+					location.reload();
+				}
+
+			});
+
+}
+	
+	
+	
+	require([
+			'jquery',
+		], function ($) {
+			$(document).ready(function () {	
+			
+				jQuery('.span-bulk-buy-price').click(function(e){
+					if(jQuery(this).hasClass('active-bulk-price'))
+					{
+						jQuery(".simple-tier-price-drop-down").hide('slow');
+					}
+					jQuery(this).toggleClass('active-bulk-price');
+					var data_id = jQuery(this).data("ulid");
+					jQuery('#simple_tier_drop_id_'+data_id).toggle('slow');
+				});
+						
+				
+				jQuery(document).on('click', '.alternate-prod-close', function(e) {
+					jQuery(this).closest('tbody').removeClass('active');
+					jQuery(this).closest('.prod-alternate-content').html('');
+				});
+				
+				jQuery('.popup_close_detail, .popup-cont-shopping').click(function(e){
+						jQuery('#prod_detail_popup_main').hide();
+						jQuery('html').removeClass('show_detail_popup');
+					});
+				
+				$('.alt_contact_us').click(function (e){
+					var contacturl = "<?php echo $this->getUrl().'contact-us'?>";					
+ 					window.open(contacturl, '_blank');
+				});
+				
+		/******* Qty text box key press validation Start ***/
+		$(".product_qty_box").keypress(function (e) {     
+			 if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) { 
+					   return false;
+			 }
+	   });	
+		$(".product_qty_box").blur(function(e){
+			if($(this).val()<=0)
+			{
+				$(this).val(1);
+			}
+		});	
+				});
+	});
+	/******* Qty text box key press validation END ***/
+	 
+</script>

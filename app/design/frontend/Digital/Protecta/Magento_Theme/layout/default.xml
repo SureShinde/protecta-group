@@ -1,0 +1,132 @@
+<?xml version="1.0"?>
+<!--
+   /**
+    * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+    * See COPYING.txt for license details.
+    */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+   <body>
+	   
+	   
+	   <!--<referenceContainer name="footer-container">
+			<block class="Magento\Framework\View\Element\Template" name="custom_customer_form_login" template="Magento_Theme::form/login.phtml" />
+		</referenceContainer>-->
+	   
+	   <referenceContainer name="footer">
+         <container name="custom-footer-links-container" label="custom-footer-links-container" htmlTag="div" htmlClass="custom-footer-links-container">
+            <block class="Magento\Framework\View\Element\Template" name="customfooterlinks" as="customfooterlinks" template="Magento_Theme::html/customfooterlinks.phtml" cacheable="false"/>			
+         </container>
+		   
+		   	<container name="footer-contact-sidebar-form" label="footer-contact-sidebar-form" htmlTag="div" htmlClass="footer-contact-sidebar-form" after="custom-footer-links-container">
+            	<block class="Digital\Contactus\Block\Contactus" name="customcontactsidebarform" as="customcontactsidebarform" template="Digital_Contactus::sidebar-contact-form.phtml" cacheable="false"/>			
+         	</container>
+		   
+		   <container name="footer-warehouse-popup-form" label="footer-warehouse-popup-form" htmlTag="div" htmlClass="footer-warehouse-popup-form">
+            	<block class="Digital\Warehouse\Block\Warehouse" name="customwarehousepopupform" as="customwarehousepopupform" template="Digital_Warehouse::warehouse-popup.phtml" cacheable="false"/>			
+         	</container>
+		   
+      </referenceContainer>
+	   
+	   
+      
+	   	   
+	   <referenceContainer name="header.panel">
+	   		<container name="header-top-left" label="header-top-left" as="header-top-left" htmlTag="div" htmlClass="header-top-left" before="top.links">				
+				<block class="Magento\Theme\Block\Html\Header" name="header-left-links" template="html/customheaderleft.phtml" before="top.links" />				
+			</container>
+		   
+		   <container name="header-top-right" label="header-top-right" as="header-top-right" htmlTag="div" htmlClass="header-top-right">
+			   <block class="Magento\Theme\Block\Html\Header" name="header-right-links" template="html/customheaderright.phtml" after="top.links" />
+		   </container>
+		   
+		   
+		   <container name="merge-section-cart" htmlClass="merge-section-cart" htmlTag="div"></container>		   
+		</referenceContainer>
+	   
+	   <move element="minicart" destination="header-top-right" after="header-right-links" />
+	   
+	   
+	   
+	   <referenceContainer name="header-wrapper">
+            <container name="header-main" htmlClass="header-main" htmlTag="div"></container>
+           	<container name="header-left-logo" htmlClass="header-left-logo" htmlTag="div"></container>
+		   <container name="header-middle-search" htmlClass="header-middle-search" htmlTag="div"></container>
+            <container name="header-right-main" htmlClass="header-right-main" htmlTag="div" after="header-left-logo"></container>
+		   	<container name="header-top-location" label="header-top-location" as="header-top-location" htmlTag="div" htmlClass="header-top-location" before="top.search">
+		   		<block class="Magento\Theme\Block\Html\Header" name="header-location" template="html/top_location.phtml" after="logo" before="top.search" />	
+		   </container>
+		   
+		   <container name="header-right-zero-dust-logo" htmlClass="header-right-zero-dust-logo" htmlTag="div" before="-">
+					<block class="Magento\Cms\Block\Block" name="header_right_zero_dust_logo">
+					 <arguments>
+						<argument name="block_id" xsi:type="string">header_right_zero_dust_logo</argument>
+					 </arguments>
+				 </block>
+				</container>
+		   
+			<container name="section-top-mini-search" htmlClass="section-top-mini-search" htmlTag="div"></container>
+        </referenceContainer>
+	   
+       
+       <move element="logo" destination="header-left-logo" before="-"/>
+	   <move element="navigation.sections" destination="header-wrapper" before="header-top-location"/>
+	   <move element="top.search" destination="header-middle-search" after="header-location" />	   
+       <move element="navigation.sections" destination="header-right-main" before="-"/>
+       <move element="header-top-location" destination="header-right-main" after="navigation.sections"/>
+       <move element="header-right-zero-dust-logo" destination="header-right-main" after="header-top-location"/>
+       <move element="section-top-mini-search" destination="header-right-main" after="header-top-location"/>
+       <move element="header-left-logo" destination="header-main" after="-"/>
+       <move element="header-middle-search" destination="header-main" after="header-left-logo"/>
+       <move element="header-right-main" destination="header-main" after="header-middle-search"/>
+	   
+	   
+	   <referenceBlock name="top.links">
+			<referenceBlock name="register-link" remove="true" />           <!--for Create Account Link-->			
+	        <referenceBlock name="authorization-link-login" remove="true"/> <!--for Sign In Link  -->
+			<referenceBlock name="customer" remove="true"/>					<!--for Name Remove and Sign Out Remove  -->
+			<referenceBlock name="authorization-link" remove="true"/>		<!--for Name Remove and Sign Out Remove  -->
+			<referenceBlock name="wish-list-link" remove="true" />          <!--for WishList Link-->
+			<referenceBlock name="my-account-link" remove="true" />         <!--for My Account Link-->
+    	</referenceBlock>
+	   
+	   
+	   <referenceBlock name="top.links" remove="true"/>
+	   <referenceBlock name="header" remove="true"/>
+	   
+	    <referenceBlock name="report.bugs" remove="true"/>
+        <referenceBlock name="privacy-policy-link" remove="true"/>
+        <referenceBlock name="search-term-popular-link" remove="true"/>
+        <referenceBlock name="contact-us-link" remove="true"/>
+        <referenceBlock name="catalog-search-advanced-link" remove="true"/>
+        <referenceBlock name="sales-guest-form-link" remove="true"/>	    
+	    <referenceBlock name="sale.reorder.sidebar" remove="true"/>
+	    <referenceBlock name="footer_links" remove="true" />
+	    <referenceBlock name="form.subscribe" remove="true" />
+
+	   
+	   
+	   <referenceContainer name="page.top">
+		   <!--<container name="header-top-info" label="header-top-info" as="header-top-info" htmlTag="div" htmlClass="header-top-info" before="breadcrumbs">       		
+                <block class="Magento\Theme\Block\Html\Header" name="top-info-section" after="header-wrapper" template="html/top_info.phtml" />            
+			</container>-->
+		   
+		   <container name="header-top-info-new" label="header-top-info-new" as="header-top-info-new" htmlTag="div" htmlClass="header-top-info-new" before="breadcrumbs">       		
+                <block class="Magento\Theme\Block\Html\Header" name="top-info-section-new" after="header-wrapper" template="html/top_info.phtml" />            
+			</container>
+		   
+		   <!--<container name="header-bread-title-image" label="header-bread-title-image" as="header-bread-title-image" htmlTag="div" htmlClass="header-bread-title-image" after="header-top-info">       		                
+			</container>
+		   
+		   <container name="section-title-bread" label="section-title-bread" as="section-title-bread" htmlTag="div" htmlClass="section-title-bread" after="header-top-info">
+		   </container>-->	   
+    	</referenceContainer>
+	   
+	   <!--<move element="page.main.title" destination="section-title-bread" before="-"/>
+	   <move element="breadcrumbs" destination="section-title-bread" after="page.main.title"/>
+	   <move element="category.image" destination="header-bread-title-image" after="breadcrumbs"/>
+	   <move element="section-title-bread" destination="header-bread-title-image" before="breadcrumbs"/>-->
+	   
+	           
+   </body>
+</page>

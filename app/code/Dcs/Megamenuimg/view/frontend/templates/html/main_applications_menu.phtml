@@ -1,0 +1,52 @@
+<?php
+	$_helper = $this->helper('\Dcs\Megamenuimg\Helper\Data');
+	$i = 1;
+		
+?>
+<li class="level0 parent level-top products-menu">
+	<a title="<?php echo __("Solutions");?>" class="level-top product-category" href="<?php echo $this->getBaseUrl()."solutions.html"; ?>">
+		<span><?php echo __("Solutions");?></span>	
+	</a>
+    		
+            <ul class="level0 submenu products-menu-first">
+				<?php /*<li class="main-shop-by-category"><span><?php echo __("Shop By Category");?></span></li> */ ?>
+                <?php foreach($this->getApplicationsCategory() as $_category0) { ?>
+                    <?php
+                        $_category0 = $_helper->getCategoryUrl($_category0->getId());
+                        $_subcategories0 = $_category0->getChildrenCategories();						
+                    ?>
+                    <li class="submenu-cols level1 parent <?php if($i==1){ echo 'first-menu active-menu';} ?> <?php if(count($_subcategories0) > 0){ echo "parent";}?>">                        
+                        <a href="<?php echo $this->getCategoryUrl($_category0); ?>" title="<?php echo $_category0->getName(); ?>">
+                            <span class="submenu-cols-cat-name"><?php echo $_category0->getName(); ?></span>                           
+                        </a>
+						<?php if(count($_subcategories0)>0) { ?>
+                        <div class="submenu_wrapper">
+                            <ul class="level1 submenu">
+                                <?php 
+                                    foreach($_subcategories0 as $_category1) {
+                                        $_category1 = $_helper->getCategoryUrl($_category1->getId());
+                                        $_subcategories1 = $_category1->getChildrenCategories();
+										$thumb_img = $this->getImageUrl($_category1->getMenuThumbnail());
+								
+								?>						
+                                        <li class="level2">
+                                            <a href="<?php echo $this->getCategoryUrl($_category1);?>" title="<?php echo $_category1->getName(); ?>">
+                                                <span class="submenu-cat-name"><?php echo $_category1->getName(); ?></span>
+                                                <?php if($thumb_img) { ?>
+												<span class="menu-thumbnail-img">															
+												<img class="lazy" width="81" height="60" src="<?php echo $thumb_img;?>" alt="<?php echo $_category1->getName(); ?>">
+												</span>
+											<?php } ?>	
+                                            </a>
+											
+											
+											
+                                        </li>															
+                                <?php } ?>						
+                            </ul>							
+                        </div>
+						<?php } ?>
+                    </li>				
+                <?php $i++; } ?>
+            </ul>
+</li>

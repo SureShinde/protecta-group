@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">   
+	<menu>
+		<add
+			 id="Digital_Contactus::parent" 
+			 title="Contact Us"
+			 module="Digital_Contactus"
+			 sortOrder="20"
+			 resource="Digital_Homebanner::parent"
+			 parent="Zdcs_Digital::23Digital"
+		/>		
+		<add 
+			 id="Digital_Contactus::contactus_manage" 
+			 title="Manage Contact Enquiries" module="Digital_Contactus" 
+			 sortOrder="30" parent="Digital_Contactus::parent" 
+			 action="contactus/index/"
+			 resource="Digital_Contactus::contactus_manage"
+		/> 
+		<add
+			 id="Digital_Contactus::contactus_settings" 
+			 title="Settings" module="Digital_Contactus" 
+			 sortOrder="40" parent="Digital_Contactus::parent" 
+			 action="adminhtml/system_config/edit/section/contactus"
+			 resource="Digital_Contactus::contactus_settings"
+		/>
+	</menu>
+</config>

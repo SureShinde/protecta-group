@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        
+		<add id="Dcs_CustomShippingPrice::main" title="Digital Shipping Method" module="Dcs_CustomShippingPrice" sortOrder="15" resource="Dcs_CustomShippingPrice::main" parent="Zdcs_Digital::23Digital"/>
+		
+        <add id="Dcs_CustomShippingPrice::parent" title="Digital Shipping Method" module="Dcs_CustomShippingPrice" sortOrder="13" resource="Dcs_CustomShippingPrice::parent"  parent="Zdcs_Digital::23Digital" />
+		<add id="Dcs_CustomShippingPrice::customshippingprice" title="Manage Digital Shipping Method" module="Dcs_CustomShippingPrice" sortOrder="60" parent="Dcs_CustomShippingPrice::parent" action="customshippingprice/index" resource="Dcs_CustomShippingPrice::customshippingprice"/>
+		
+		<add id="Dcs_CustomShippingPrice::customshippingzone" title="Manage Digital Shipping Zone" module="Dcs_CustomShippingPrice" sortOrder="60" parent="Dcs_CustomShippingPrice::parent" action="customshippingprice/zone" resource="Dcs_CustomShippingPrice::customshippingzone"/>
+		
+    </menu>
+</config>

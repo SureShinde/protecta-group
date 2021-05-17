@@ -1,0 +1,39 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/**
+ * @var \Magento\Theme\Block\Html\Header\Logo $block
+ */
+?>
+<?php $storeName = $block->getThemeName() ? $block->getThemeName() : $block->getLogoAlt();?>
+<span data-action="toggle-nav" class="action nav-toggle">
+    <span><?= /* @escapeNotVerified */ __('Toggle Nav') ?></span>
+    <svg x="0px" y="0px" width="20px" height="18px">
+    <path fill="#566067" d="M0.744,3.483h18.511c0.393,0,0.712-0.318,0.712-0.712v-1.78c0-0.394-0.319-0.712-0.712-0.712H0.744
+        c-0.393,0-0.712,0.318-0.712,0.712v1.78C0.032,3.165,0.351,3.483,0.744,3.483z M0.744,10.603h18.511
+        c0.393,0,0.712-0.318,0.712-0.711v-1.78c0-0.394-0.319-0.712-0.712-0.712H0.744c-0.393,0-0.712,0.318-0.712,0.712v1.78
+        C0.032,10.284,0.351,10.603,0.744,10.603z M0.744,17.721h18.511c0.393,0,0.712-0.317,0.712-0.711V15.23
+        c0-0.394-0.319-0.713-0.712-0.713H0.744c-0.393,0-0.712,0.319-0.712,0.713v1.779C0.032,17.403,0.351,17.721,0.744,17.721z"/>
+    </svg>
+</span>
+<?php /*if ($block->isHomePage()):?>
+    <strong class="logo">
+<?php else:*/ ?>
+    <a class="logo" href="<?= $block->getUrl('') ?>" title="<?= /* @escapeNotVerified */ $storeName ?>">
+<?php //endif ?>
+        <img src="<?= /* @escapeNotVerified */ $block->getLogoSrc() ?>"
+             title="<?= /* @escapeNotVerified */ $block->getLogoAlt() ?>"
+             alt="<?= /* @escapeNotVerified */ $block->getLogoAlt() ?>"
+             <?= $block->getLogoWidth() ? 'width="' . $block->getLogoWidth() . '"' : '' ?>
+             <?= $block->getLogoHeight() ? 'height="' . $block->getLogoHeight() . '"' : '' ?>
+        />
+<?php /*if ($block->isHomePage()):?>
+    </strong>
+<?php else: */?>
+    </a>
+<?php //endif?>

@@ -1,0 +1,82 @@
+<?php
+if($this->isEnabled()){
+
+$helper = $this->helper('Digital\Homebanner\Helper\Data');
+?>
+<div class="digital-homebanner-main">
+
+	<img src="<?php echo $block->getViewFileUrl('images/loader-1.gif'); ?>" class="slider-loader" alt="loader" />
+	<?php if($helper->checkDevice()==1){ /// For Mobile ?>
+    <img src="<?php echo $block->getViewFileUrl('images/slider-placeholder-mobile.png'); ?>" alt="mobile-placeholder" class="slider-placeholder-mobile" width="767" height="493" />
+	<?php }else{ ?>
+    <img src="<?php echo $block->getViewFileUrl('images/slider-placeholder.png'); ?>" alt="desktop-placeholder" class="slider-placeholder desktop" width="2000" height="350" />
+	<?php } ?>
+    <div class="owl-digital-banner owl-carousel">
+		<?php foreach ($this->getLoadedBannerCollection()  as $k => $value) {
+			if(@GetImageSize($this->getImageUrl($value->getImage()))){ ?>
+			<div class="item">
+				<a title="<?php echo $value->getName(); ?>" href="<?php echo $value->getBannerUrl()? $value->getBannerUrl(): "javascript:void(0)";?>" >
+				<img <?php if($helper->checkDevice()==1){ ?>width="767" height="493"<?php }else{ ?>width="2000" height="350"<?php } ?> src="<?php echo $this->getImageUrl($value->getImage()); ?>" alt="<?php echo $value->getName(); ?>"/>
+				</a>
+				<?php if($value->getBannerSlogan()){?>
+				<div class="container">
+					<div class="slogan-wrapper">
+						<span class="slogan">
+							<?php echo $value->getBannerSlogan(); ?>
+						</span>
+					</div>
+				</div>
+				<?php } ?>
+
+			</div>
+		<?php }
+		} ?>
+	</div>
+</div>
+
+<script type="text/javascript">// <![CDATA[
+require([
+        'jquery',
+        'digital/homebanner',
+    ], function ($) {
+        jQuery(document).ready(function () {
+			var totalItems = <?php echo count($this->getLoadedBannerCollection()); ?>;
+			if (totalItems == 1) {
+				var isLooped = false;
+				var isNav = false;
+				var isAutopay=false;
+				var Isdot=false;
+			} else {
+				var isLooped = true;
+				var isNav = false;
+				var isAutopay=true;
+				var Isdot=true;
+			}
+			jQuery(".digital-homebanner-main .owl-digital-banner").owlCarousel({
+				navigation: true,
+				pagination: false,
+				autoplay:isAutopay,
+				items:1,
+				smartSpeed:1000,
+				lazyLoad:true,
+				autoplayHoverPause:!0,
+				autoplayTimeout:4000,
+				transitionStyle : "fade",
+				animateIn: 'fadeIn',
+				animateOut: 'fadeOut',
+				loop:isLooped,
+				nav:isNav,
+				margin:0,
+				responsiveClass:!0,
+				responsive:
+				{
+					0:{items:1,dots:Isdot,navigation: false},
+					767:{items:1,dots:Isdot,navigation: false},
+					1e3:{items:1,dots:Isdot,navigation: false}
+				}
+			});
+    });
+});
+// ]]></script>
+
+<?php } ?>

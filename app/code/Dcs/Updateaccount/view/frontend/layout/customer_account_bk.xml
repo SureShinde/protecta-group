@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left"  xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+		<move element="page.main.title" destination="content" before="-"/>
+		<referenceBlock name="customer_account_navigation">
+			<block class="Magento\Framework\View\Element\Html\Link\Current" name="customer-account-navigation-updateaccount-link" after="customer-account-navigation-wish-list-link">
+					<arguments>
+						<argument name="path" xsi:type="string">updateaccount/index/index</argument>
+						<argument name="label" xsi:type="string" translate="true">Update Account Information</argument>
+					</arguments>
+			</block>
+		</referenceBlock>
+	</body>
+</page>

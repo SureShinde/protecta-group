@@ -1,0 +1,150 @@
+<?php if ($block->isEnabledModule()) { ?>
+<?php
+	$helper = $this->getHelper();
+	$sitekey = $helper->Sitekey();
+	$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+	
+?>
+<script src='https://www.google.com/recaptcha/api.js'></script>
+<div class="contact-top">
+    <div class="contact-left">
+        <div class="contact_box">
+            <h2 class="page_title"><?php echo __('Contact Details'); ?></h2>   
+            <div class="contact-top-address">
+                <?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('contactus_page_top_content')->toHtml();?>
+            </div>
+        </div>
+    </div>
+    <div class="contact-right">
+        <div class="contact_box">
+            <div class="contact-form-wrap">
+              <div class="container">    
+                  <h3 class="section-title"><?php echo __('Need More Help?'); ?></h3>
+                <form class="form contact_us"
+                  action="<?php echo $this->getBaseUrl().'contact-us/index/post';?>"
+                  id="contact-form"
+                  method="post"
+                  data-mage-init='{"validation":{}}'>
+                  <fieldset class="fieldset">
+                    <div class="contact-box">
+                      <div class="field name required">
+                        <div class="field-inner">
+                          <?php /*?><label class="label" for="name"><span><?= $block->escapeHtml(__('First Name')) ?><sup>*</sup></span></label><?php */?>
+                          <div class="control">
+                            <input name="name" id="name" title="<?= $block->escapeHtmlAttr(__('NAME')) ?>" value="<?= $block->getFullname(); ?>" class="input-text effect-2" type="text" data-validate="{required:true}" maxlength="100" placeholder="NAME*"/>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="field email required">
+                        <div class="field-inner">
+                          <?php /*?><label class="label" for="email"><span><?= $block->escapeHtml(__('Email')) ?><sup>*</sup></span></label><?php */?>
+                          <div class="control">
+                            <input name="email" id="email" title="<?= $block->escapeHtmlAttr(__('EMAIL')) ?>" value="<?= $block->getEmailaddress(); ?>" class="input-text effect-2" type="email" data-validate="{required:true, 'validate-email':true}" maxlength="75" placeholder="EMAIL*"/>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="field phone">
+                        <div class="field-inner">
+                          <?php /*?><label class="label" for="phone"><span><?= $block->escapeHtml(__('Contact No.')) ?></span></label><?php */?>
+                          <div class="control">
+                            <input name="phone" id="phone" title="<?= $block->escapeHtmlAttr(__('PHONE NO.')) ?>" value="" class="input-text effect-2" type="text" maxlength="20" placeholder="PHONE NO."/>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="field company">
+                        <div class="field-inner">
+                          <?php /*?><label class="label" for="company"><span><?= $block->escapeHtml(__('Occasion')) ?></span></label><?php */?>
+                          <div class="control">
+                            <input name="company" id="company" title="<?= $block->escapeHtmlAttr(__('COMPANY')) ?>" value="" class="input-text effect-2" type="text" maxlength="100" placeholder="COMPANY"/>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="field comment required">
+                        <div class="field-inner">
+                          <?php /*?><label class="label" for="message"><span><?= $block->escapeHtml(__('Comment')) ?></span></label><?php */?>
+                          <div class="control">
+                            <textarea name="message" id="message" title="<?= $block->escapeHtmlAttr(__('MESSAGE')) ?>" class="input-text" cols="5" rows="3" maxlength="1000" placeholder="MESSAGE"></textarea>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="field captcha">
+                        <div class="gcaptcha_wrap">
+                          <div class="g-recaptcha" data-sitekey="<?php echo $sitekey; ?>"></div>
+                          <div class="recaptcha-error-message validation-advice" style="display:none;" >
+                            <?php /* @escapeNotVerified */ echo __('Please verify that you are not a robot.') ?>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="field required">
+                        <div class="field-inner">
+                          <div class="primary">                
+                            <input type="hidden" name="hideit" id="hideit" value="" />
+                            <button type="submit" title="<?= $block->escapeHtmlAttr(__('Send Enquiry')) ?>" class="action submit primary submit_contact"> <span>
+                            <?= $block->escapeHtml(__('Send Enquiry')) ?>
+                            </span> </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </fieldset>
+                </form>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="contact-bottom-address">
+<?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('contactus_page_bottom_content')->toHtml();?>
+</div>
+	
+<script type="text/javascript">
+ require([
+		'jquery',
+	], function($) {
+	 
+	  jQuery(document).delegate('form', 'submit', function(event) {
+		    var form = jQuery(this);
+		    var formId = form.attr('id');				   
+			if(jQuery(form).valid()){
+				window.submitButtonHtml = jQuery('#'+formId).find( "button[type=submit]" ).html();
+				window.submitButton = jQuery('#'+formId).find( "button[type=submit]" );
+				window.submitButton.html('<span>Please wait...</span>');
+				window.submitButton.attr("disabled", "disabled");
+				setTimeout(function(){ 
+					window.submitButton.html(submitButtonHtml);
+					window.submitButton.removeAttr("disabled");
+				}, 10000);
+			}
+	    }); 
+	 
+	 
+		$(document).ready(function() {
+			jQuery("#contact-form").submit(function(event) {
+				var response = grecaptcha.getResponse();
+				if (response.length == 0) {
+					jQuery('.recaptcha-error-message').show();
+					return false;
+				} else {
+					jQuery('.recaptcha-error-message').hide();
+					
+				}
+			});
+			var onSuccess = function(response) {
+				var errorDivs = document.getElementsByClassName("recaptcha-error");
+				if (errorDivs.length) {
+					errorDivs[0].className = "";
+				}
+				var errorMsgs = document.getElementsByClassName("recaptcha-error-message");
+				if (errorMsgs.length) {
+					errorMsgs[0].parentNode.removeChild(errorMsgs[0]);
+				}
+			};
+		});
+	});
+</script>
+<?php } ?>

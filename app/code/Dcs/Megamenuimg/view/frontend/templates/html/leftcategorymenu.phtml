@@ -1,0 +1,42 @@
+
+<?php
+	$columnsLimit = $block->getColumnsLimit() ?: 0;
+	$_menu = $block->getHtml('level-top', 'submenu', $columnsLimit);
+	$_helper = $this->helper('\Dcs\Megamenuimg\Helper\Data');
+	$i = 1;
+?>
+
+<div class="navigation category-left-sidebar">
+	<span class="category-title left-side-shopbycat-menu"><?php echo __("Shop By Category");?></span>
+	<ul data-mage-init='{"menu":{"responsive":true, "expanded":true, "position":{"my":"left top","at":"left bottom"}}}' class="cat_left_side_content sidebar-menu cf">				
+				<?php foreach($this->getApplicationsCategory() as $_category0) { ?>
+					<?php
+						$_category0 = $_helper->getCategoryUrl($_category0->getId());
+						$_subcategories0 = $_category0->getChildrenCategories(); 
+					?>
+						
+					<li class="level0 level-top <?php echo 'menu-bg-color-'.$i; if(count($_subcategories0) > 0){ echo " parent";} ?> ">
+						<?php $cat_url = $_category0->getUrl(); ?>
+						<a href="<?php echo $cat_url; ?>" class="" title="<?php echo $_category0->getName(); ?>">
+							<span class="submenu-cols-cat-name"><?php echo $_category0->getName(); ?></span>
+					
+						</a>
+						<?php if(count($_subcategories0) > 0) { ?>
+							<ul class="level1 submenu category-inner">
+								<?php 
+									foreach($_subcategories0 as $_category1) {
+										$_category1 = $_helper->getCategoryUrl($_category1->getId());
+										$_subcategories1 = $_category1->getChildrenCategories(); ?>						
+										<li class="submenu-cols level1">
+											<a href="<?php echo $this->getCategoryUrl($_category1);?>" title="<?php echo $_category1->getName(); ?>">
+												<span class="submenu-cat-name"><?php echo $_category1->getName(); ?></span>
+											</a>																					 
+										</li>															
+								<?php } ?>				
+							</ul>
+						<?php } ?>
+					</li>			
+				<?php $i++; } ?>		
+		<?php echo $block->getChildHtml(); ?>
+    </ul>
+</div>

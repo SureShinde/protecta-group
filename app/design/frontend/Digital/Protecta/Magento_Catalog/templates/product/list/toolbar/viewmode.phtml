@@ -1,0 +1,116 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/**
+ * Product list toolbar
+ *
+ * @var $block \Magento\Catalog\Block\Product\ProductList\Toolbar
+ */
+use Magento\Catalog\Model\Product\ProductList\Toolbar;
+?>
+<?php if ($block->isEnabledViewSwitcher()): ?>
+<div class="modes">
+    <?php $_modes = $block->getModes(); ?>
+    <?php if ($_modes && count($_modes) > 1): ?>
+    <strong class="modes-label" id="modes-label"><?= /* @escapeNotVerified */ __('View as') ?></strong>
+    <?php foreach ($block->getModes() as $_code => $_label): ?>
+        <?php if ($block->isModeActive($_code)): ?>
+            <strong title="<?= /* @escapeNotVerified */ $_label ?>"
+                class="modes-mode active mode-<?= /* @escapeNotVerified */ strtolower($_code) ?>"
+                data-value="<?= /* @escapeNotVerified */ strtolower($_code) ?>">
+                <?php /* <span><?= /* @escapeNotVerified */ /* $_label ?></span> */ ?>
+                <span class="grid_icon">
+                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                             width="20px" height="20px" viewBox="0 0 20 20" enable-background="new 0 0 20 20" xml:space="preserve">
+                        <g>
+                            <g>
+                                <g>
+                                    <rect class="grid" x="7.5" y="7.5" width="5" height="5"/>
+                                    <rect class="grid" width="5" height="5"/>
+                                    <rect class="grid" x="7.5" y="15" width="5" height="5"/>
+                                    <rect class="grid" y="7.5" width="5" height="5"/>
+                                    <rect class="grid" y="15" width="5" height="5"/>
+                                    <rect class="grid" x="15" width="5" height="5"/>
+                                    <rect class="grid" x="7.5" width="5" height="5"/>
+                                    <rect class="grid" x="15" y="7.5" width="5" height="5"/>
+                                    <rect class="grid" x="15" y="15" width="5" height="5"/>
+                                </g>
+                            </g>
+                        </g>
+                        </svg>
+                </span>
+                <span class="list_icon">
+                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                             width="20px" height="20px" viewBox="0 0 20 20" enable-background="new 0 0 20 20" xml:space="preserve">
+                        <g>
+                            <path d="M19.021,17.735H5.634c-0.552,0-0.999-0.447-0.999-0.999s0.447-0.998,0.999-0.998h13.388c0.552,0,0.999,0.446,0.999,0.998
+                                S19.573,17.735,19.021,17.735z"/>
+                            <path d="M19.021,11.465H5.634c-0.552,0-0.999-0.448-0.999-1c0-0.551,0.447-0.998,0.999-0.998h13.388
+                                c0.552,0,0.999,0.447,0.999,0.998C20.021,11.017,19.573,11.465,19.021,11.465z"/>
+                            <path d="M19.021,5.194H5.634c-0.552,0-0.999-0.448-0.999-1s0.447-0.999,0.999-0.999h13.388c0.552,0,0.999,0.447,0.999,0.999
+                                S19.573,5.194,19.021,5.194z"/>
+                            <circle class="grid" cx="1.341" cy="4.272" r="1.342"/>
+                            <circle class="grid" cx="1.341" cy="10.466" r="1.342"/>
+                            <circle class="grid" cx="1.341" cy="16.659" r="1.341"/>
+                        </g>
+                        </svg>
+                </span>
+            </strong>
+        <?php else: ?>
+            <a class="modes-mode mode-<?= /* @escapeNotVerified */ strtolower($_code) ?>"
+               title="<?= /* @escapeNotVerified */ $_label ?>"
+               href="#"
+               data-role="mode-switcher"
+               data-value="<?= /* @escapeNotVerified */ strtolower($_code) ?>"
+               id="mode-<?= /* @escapeNotVerified */ strtolower($_code) ?>"
+               aria-labelledby="modes-label mode-<?= /* @escapeNotVerified */ strtolower($_code) ?>">
+                <?php /* <span><?= /* @escapeNotVerified */ /* $_label ?></span> */ ?>
+                <span class="list_icon">
+                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                             width="20px" height="20px" viewBox="0 0 20 20" enable-background="new 0 0 20 20" xml:space="preserve">
+                        <g>
+                            <path d="M19.021,17.735H5.634c-0.552,0-0.999-0.447-0.999-0.999s0.447-0.998,0.999-0.998h13.388c0.552,0,0.999,0.446,0.999,0.998
+                                S19.573,17.735,19.021,17.735z"/>
+                            <path d="M19.021,11.465H5.634c-0.552,0-0.999-0.448-0.999-1c0-0.551,0.447-0.998,0.999-0.998h13.388
+                                c0.552,0,0.999,0.447,0.999,0.998C20.021,11.017,19.573,11.465,19.021,11.465z"/>
+                            <path d="M19.021,5.194H5.634c-0.552,0-0.999-0.448-0.999-1s0.447-0.999,0.999-0.999h13.388c0.552,0,0.999,0.447,0.999,0.999
+                                S19.573,5.194,19.021,5.194z"/>
+                            <circle class="grid" cx="1.341" cy="4.272" r="1.342"/>
+                            <circle class="grid" cx="1.341" cy="10.466" r="1.342"/>
+                            <circle class="grid" cx="1.341" cy="16.659" r="1.341"/>
+                        </g>
+                        </svg>
+                </span>
+                <span class="grid_icon">
+                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                             width="20px" height="20px" viewBox="0 0 20 20" enable-background="new 0 0 20 20" xml:space="preserve">
+                        <g>
+                            <g>
+                                <g>
+                                    <rect class="grid" x="7.5" y="7.5" width="5" height="5"/>
+                                    <rect class="grid" width="5" height="5"/>
+                                    <rect class="grid" x="7.5" y="15" width="5" height="5"/>
+                                    <rect class="grid" y="7.5" width="5" height="5"/>
+                                    <rect class="grid" y="15" width="5" height="5"/>
+                                    <rect class="grid" x="15" width="5" height="5"/>
+                                    <rect class="grid" x="7.5" width="5" height="5"/>
+                                    <rect class="grid" x="15" y="7.5" width="5" height="5"/>
+                                    <rect class="grid" x="15" y="15" width="5" height="5"/>
+                                </g>
+                            </g>
+                        </g>
+                        </svg>
+                </span>
+            </a>
+            <?php endif; ?>
+        <?php endforeach; ?>
+    <?php endif; ?>
+</div>
+<?php endif; ?>

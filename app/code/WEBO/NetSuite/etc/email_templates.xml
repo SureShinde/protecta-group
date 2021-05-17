@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+	<template id="netsuite_sync_fail_template" label="NetSuite Sync Failed" file="netsuite_sync_fail.html" type="html" module="WEBO_NetSuite" area="frontend"/>
+</config>

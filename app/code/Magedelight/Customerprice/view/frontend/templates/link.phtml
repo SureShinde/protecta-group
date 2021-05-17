@@ -1,0 +1,21 @@
+<?php
+/**
+* Magedelight
+* Copyright (C) 2017 Magedelight <info@magedelight.com>
+*
+* @category Magedelight
+* @package Magedelight_Customerprice
+* @copyright Copyright (c) 2017 Mage Delight (http://www.magedelight.com/)
+* @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+* @author Magedelight <info@magedelight.com>
+*/
+$customHelper = $this->helper('Magedelight\Customerprice\Helper\Data');
+$customerPriceIsEnabled = $customHelper->getConfig('customerprice/general/enable');
+if($customerPriceIsEnabled == 1){
+?>
+<li>  
+   <a <?php echo $block->getLinkAttributes() ?>><?php echo $block->escapeHtml($block->getLabel())?>  
+     <?php echo($block->getCounter()) ? '<span class="counter qty">' . $block->escapeHtml($block->getCounter()) . '</span>' : ''; ?>  
+   </a>  
+ </li>  
+<?php } ?>

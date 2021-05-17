@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        
+		<add id="Dcs_Updateaccount::main" title="Account Update Requests" module="Dcs_Updateaccount" sortOrder="15" resource="Dcs_Updateaccount::main" parent="Zdcs_Digital::23Digital"/>
+		
+        <add id="Dcs_Updateaccount::parent" title="Account Update Requests" module="Dcs_Updateaccount" sortOrder="13" resource="Dcs_Updateaccount::parent"  parent="Zdcs_Digital::23Digital" />
+		<add id="Dcs_Updateaccount::updateaccount" title="Manage Account Update Requests" module="Dcs_Updateaccount" sortOrder="60" parent="Dcs_Updateaccount::parent" action="updateaccount/index" resource="Dcs_Updateaccount::updateaccount"/>
+		<add id="Dcs_Updateaccount::settings" title="Settings" module="Dcs_Updateaccount" sortOrder="60" parent="Dcs_Updateaccount::parent" resource="Dcs_Updateaccount::settings" action="adminhtml/system_config/edit/section/updateaccount" />
+		
+    </menu>
+</config>

@@ -1,0 +1,60 @@
+<!--
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<!--@subject {{trans "New Warehouse "}}{{config path="general/store_information/name"}} @-->
+<!--@vars {
+"var comment":"Comment",
+"var email":"Customer Email",
+"var name":"Customer Name",
+"var subject":"Subject"
+} @-->
+
+{{template config_path="design/email/header_template"}}
+                    
+
+  <table cellpadding="0" cellspacing="0" border="0" class="warehouse_form_detail" style="width:100%">
+  	<tr><td><p class="name">Hello Admin,</p><p>New warehouse enquiry has been received as below:</p></td></tr>
+    <tr><td><h3 class="title mt-20" style="text-align:center;">{{trans 'Warehouse  Information'}}</h3></td></tr>
+    <tr>
+        <td>
+			<table class="inq-table" border="1" style="width:100%" cellpadding="10" cellspacing="10">	
+				<tr>
+					<td style="width:60px;"><b>Name</b></td>
+					<td style="width:250px;">{{trans " %name" name=$data.name}}</td>
+				</tr>				
+										
+				
+				<tr>
+					<td style="width:60px;"><b>Email</b></td>
+					<td style="width:250px;">{{trans " %email" email=$data.email}}</td>
+				</tr>				
+
+				{{if data.phone}}
+				<tr>
+					<td style="width:60px;"><b>Phone No.</b></td>
+					<td style="width:250px;">{{trans " %phone" phone=$data.phone}}</td>
+				</tr>
+				{{/if}}
+
+				{{if data.company}}
+				<tr>
+					<td style="width:60px;"><b>Company</b></td>
+					<td style="width:250px;">{{trans " %company" company=$data.company}}</td>
+				</tr>
+				{{/if}}
+				
+				{{if data.message}}
+				<tr>
+					<td style="width:60px;"><b>Message</b></td>
+					<td style="width:250px;">{{trans " %message" message=$data.message}}</td>
+				</tr>
+				{{/if}}				
+			</table>
+        </td>
+    </tr>
+</table>
+
+{{template config_path="design/email/footer_template"}}

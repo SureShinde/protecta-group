@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Api/etc/extension_attributes.xsd">
+    <extension_attributes for="Magento\Sales\Api\Data\OrderInterface">
+        <attribute code="ship_po_number" type="string" />
+		<attribute code="ship_due_date" type="string" />
+		<attribute code="pg_delivery_phone" type="string" />
+		<attribute code="pg_delivery_contact" type="string" />
+    </extension_attributes>
+
+    <extension_attributes for="Magento\Quote\Api\Data\AddressInterface">
+        <attribute code="pg_delivery_contact" type="string"/>
+        <attribute code="pg_delivery_phone" type="string"/>
+    </extension_attributes>
+
+    <extension_attributes for="Magento\Sales\Api\Data\OrderItemInterface">
+        <attribute code="item_delivery_location" type="string"></attribute>
+    </extension_attributes>
+
+</config>

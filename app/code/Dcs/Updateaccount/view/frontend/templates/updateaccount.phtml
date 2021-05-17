@@ -1,0 +1,111 @@
+<?php $objectManager = \Magento\Framework\App\ObjectManager::getInstance(); 
+		$customerSession = $objectManager->get('Magento\Customer\Model\Session');
+if($customerSession) {
+
+$helper = $this->helper('Digital\Contactus\Helper\Data');
+$key = $helper->Sitekey();				  
+?>
+	
+	<script src='https://www.google.com/recaptcha/api.js'></script>
+	
+<form class="form contact cf"
+		  action="<?php echo $this->getBaseUrl().'updateaccount/index/post';?>"
+		  id="updateaccount-form"
+		  method="post"
+		  enctype="multipart/form-data"
+		  data-hasrequired="<?php /* @escapeNotVerified */ echo __('* Required Fields') ?>"
+		  data-mage-init='{"validation":{}}'>
+		  
+
+        <div class="field-wrapper">
+            <div class="field required"> 
+				<label class="label" for="request_type"><span><?php /* @escapeNotVerified */ echo __('Enquiry Type') ?><sup>*</sup></span></label>
+				<div class="control">
+					<select name="request_type" data-validate="{required:true}">
+						<option value="Account Information"><?php echo __('Account Information'); ?></option>
+						<option value="Billing Address"><?php echo __('Billing Address'); ?></option>
+					</select>
+					
+				</div> 
+			</div> 
+            
+            <div class="field required">
+				<label class="label" for="request_content"><span><?php /* @escapeNotVerified */ echo __('New Information') ?><sup>*</sup></span></label>
+				<div class="control">
+					<textarea maxlength="1000" name="request_content" id="request_content" title="<?php /* @escapeNotVerified */ echo __('New Information') ?>" class="input-text" cols="5" rows="3" data-validate="{required:true}"></textarea>
+				</div>
+			</div>
+			
+			<div class="field field-gcaptcha cf">
+				<div class="gcaptcha_wrap">						
+					<div class="g-recaptcha" data-sitekey="<?php echo $key;  ?>"></div>
+					<div class="recaptcha-error-message validation-advice" style="display:none;" ><?php /* @escapeNotVerified */ echo __('Please verify that you are not a robot.') ?></div>
+				</div>
+			</div>
+        </div>
+			<div class="actions-toolbar cf">
+            	<?php /* <p class="required"><?php /* @escapeNotVerified * / echo __('(*) Required Field') ?></p> */?>
+				<div class="primary">
+					<input type="hidden" name="hideit" id="hideit" value="" />					
+					
+					<button type="submit" title="<?php /* @escapeNotVerified */ echo __('Submit') ?>" class="action submit btn-green">
+						<span><?php /* @escapeNotVerified */ echo __('Submit') ?></span>
+					</button>
+				</div>
+			</div>
+		
+</form>
+<?php } ?>
+<script type="text/javascript">	
+require(['jquery'],function($) {
+	
+	jQuery(document).delegate('form', 'submit', function(event) {
+		    var form = jQuery(this);
+		    var formId = form.attr('id');				   
+			if(jQuery(form).valid()){
+				window.submitButtonHtml = jQuery('#'+formId).find( "button[type=submit]" ).html();
+				window.submitButton = jQuery('#'+formId).find( "button[type=submit]" );
+				window.submitButton.html('<span>Please wait...</span>');
+				window.submitButton.attr("disabled", "disabled");
+				setTimeout(function(){ 
+					window.submitButton.html(submitButtonHtml);
+					window.submitButton.removeAttr("disabled");
+				}, 10000);
+			}
+	    }); 
+	
+		jQuery(function () {
+		var url = window.location.href,
+			urlRegExp = new RegExp(url.replace(/\/$/, '') + "$");
+			jQuery('.content.block-collapsible-nav-content ul li a').each(function () {
+				if (urlRegExp.test(this.href.replace(/\/$/, ''))) {
+					jQuery(this).parents('li').addClass('current');
+				}
+			});
+		});	
+	jQuery("#updateaccount-form").submit(function( event ) {
+		var response = grecaptcha.getResponse();
+							if(response.length==0  )
+							{
+								jQuery('.recaptcha-error-message').show();
+								return false;
+							}
+							else
+							{
+								 jQuery('.recaptcha-error-message').hide();
+							}
+
+		});
+	var onSuccess = function(response) {
+				var errorDivs = document.getElementsByClassName("recaptcha-error");
+				if (errorDivs.length) {
+				 errorDivs[0].className = "";
+				}
+				var errorMsgs = document.getElementsByClassName("recaptcha-error-message");
+				if (errorMsgs.length) {
+				 errorMsgs[0].parentNode.removeChild(errorMsgs[0]);
+				}
+			};
+		
+		});
+</script>

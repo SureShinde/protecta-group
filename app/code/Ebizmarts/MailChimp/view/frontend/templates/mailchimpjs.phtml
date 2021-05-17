@@ -1,0 +1,9 @@
+<?php
+/**
+ * @var $block \Ebizmarts\Mailchimp\Block\Mailchimpjs
+ */
+$url = $block->getJsUrl();
+$render = $block->getRender();
+// This script removes the class from body tag, so commented
+// echo $render->renderTag('script',['type'=>'text/javascript','src'=>$url],'',false);
+?>

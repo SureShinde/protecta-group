@@ -1,0 +1,29 @@
+<!--
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<!--@subject {{trans "Newsletter subscription success at "}}{{config path="general/store_information/name"}} @-->
+<!--@vars {
+"template config_path=\"design\/email\/footer_template\"":"Email Footer Template",
+"template config_path=\"design\/email\/header_template\"":"Email Header Template"
+} @-->
+
+
+{{template config_path="design/email/header_template"}}
+
+            <table border="0" width="100%" cellpadding="20" cellspacing="0">
+                <tr>
+                    <td style="width: 200px; vertical-align: middle;">
+                        <div class="news_subscribe" style="text-align: center;"><img src="{{view url='Magento_Email/images/subscribe.png'}}" width="160" height="160" alt="Subscribe" /></div>
+                    </td>
+                    <td class="right-sec" style="width: 500px; vertical-align: middle;">
+                        <div class="news_unsubscribe-text" style="font-size: 16px; color: #3d3d3d;">
+                        <p style="font-size: 16px; color: #3d3d3d; font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif; font-weight: 500;">{{trans "Thank-you for subscribing to the "}}{{config path="general/store_information/name"}}{{trans " Online Newsletter, we hope you enjoy reading it."}}</p>
+                            <p style="font-size: 16px; color: #3d3d3d; font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif; font-weight: 500;">{{trans "To unsubscribe at any time, please "}}<b><u><a href="{{var subscriber.getUnsubscriptionLink()}}">{{trans "Click here."}}</a></u></b></p>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+{{template config_path="design/email/footer_template"}}

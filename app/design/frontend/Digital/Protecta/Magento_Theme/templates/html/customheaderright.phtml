@@ -1,0 +1,112 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php 
+
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$customerSession = $objectManager->create('Magento\Customer\Model\Session');
+$customername=$customerSession->getCustomer()->getName(); 
+$storeManager = $objectManager->get('\Magento\Store\Model\StoreManagerInterface');
+$url=$storeManager->getStore()->getBaseUrl();
+$home_helper = $this->helper('Digital\Homebanner\Helper\Data');
+?>
+<div class="top-right">
+<div class="header-top-right-inner">
+	 <?php /*if($home_helper->checkDevice()==0){ */ /// For DeskTop ?>
+	<ul class="top-right-links">
+	<li class="custom_top_right_link about_menu_sub_click"><a href="<?php echo $url."about-protecta-group"; ?>" title="About Us"><?php /* @escapeNotVerified */ echo __('About Us') ?></a>
+		<?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('about_us_sub_menu')->toHtml(); ?>	
+	</li>
+
+	<li class="custom_top_right_link"><a href="<?php echo $url."news.html"; ?>" title="News"><?php /* @escapeNotVerified */ echo __('News') ?></a></li>
+	<li class="custom_top_right_link resources_menu_sub_click"><a href="<?php echo $url."resources"; ?>" title="Resources"><?php /* @escapeNotVerified */ echo __('Resources') ?></a>
+        <?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('resources_sub_menu')->toHtml(); ?>
+    </li>	
+	<li class="custom_top_right_link"><a href="<?php echo $url."contact-us"; ?>" title="Contact Us"><?php /* @escapeNotVerified */ echo __('Contact Us') ?></a></li>
+		
+		<li class="logout-popup">	
+            <?php if($customerSession->isLoggedIn()) {?>
+            <a class="login-toggle" href="JavaScript:void(0);"><?php /* @escapeNotVerified */ echo __('My Account') ?></a>
+            <?php  } else { ?>
+            <a id="login-popup" class="login-toggle1" href="JavaScript:void(0);"><?php /* @escapeNotVerified */ echo __('Login / Register') ?></a>
+			
+			<?php echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template")->setTemplate("Magento_Theme::form/login.phtml")->toHtml();?>
+			
+            <?php } ?>
+                <div class="login-toggle-box">
+                    <ul>
+                        <?php if($customerSession->isLoggedIn()) {?> 							
+                        <li><a href="<?php echo $url."customer/account"; ?>" title="My Account"><?php /* @escapeNotVerified */ echo __('My Account') ?></a></li>
+                        <li><a href="<?php echo $url."customer/account/logout"; ?>" title="Logout"><?php /* @escapeNotVerified */ echo __('Logout') ?></a></li>
+                        <?php  } /*else { ?>
+                        <li><a href="JavaScript:void(0);" title="Login"><?php / * @escapeNotVerified * / echo __('Login') ?></a></li>
+                        <li><a href="<?php echo $url."customer/account/create"; ?>" title="Register"><?php / * @escapeNotVerified * / echo __('Register') ?></a></li>
+                        <?php } */ ?>
+                    </ul>	
+            </div>
+		</li>	
+		<li class="custom_top_right_link top_head_project_list">
+            <a href="<?php echo $url."wishlist"; ?>" title="Project List">
+                <span class="inq-cart">
+                    <svg x="0px" y="0px" width="46px" height="50px" viewBox="0 0 46 50">
+                        <g>
+                            <g>
+                                <g>
+                                    <path fill="#010101" d="M31.841,21.495c0-1.079-0.875-1.954-1.954-1.954H9.76c-1.079,0-1.955,0.875-1.955,1.954
+                                        c0,1.079,0.875,1.955,1.955,1.955h20.127C30.966,23.449,31.841,22.574,31.841,21.495z"/>
+                                    <path fill="#010101" d="M9.76,27.357c-1.079,0-1.955,0.874-1.955,1.954c0,1.079,0.875,1.954,1.955,1.954h12.224
+                                        c1.08,0,1.955-0.875,1.955-1.954c0-1.08-0.875-1.954-1.955-1.954H9.76z"/>
+                                    <path fill="#010101" d="M14.351,46.116H7.816c-2.154,0-3.908-1.754-3.908-3.908V7.816c0-2.154,1.753-3.908,3.908-3.908h24.025
+                                        c2.154,0,3.907,1.753,3.907,3.908v12.018c0,1.079,0.875,1.954,1.955,1.954c1.079,0,1.954-0.875,1.954-1.954V7.816
+                                        c0-4.31-3.506-7.816-7.816-7.816H7.816C3.506,0,0,3.506,0,7.816v34.392c0,4.31,3.506,7.816,7.816,7.816h6.535
+                                        c1.08,0,1.955-0.875,1.955-1.954C16.306,46.99,15.431,46.116,14.351,46.116z"/>
+                                    <path fill="#010101" d="M43.118,28.293c-2.286-2.286-6.005-2.286-8.288-0.003L24.102,38.996
+                                        c-0.228,0.228-0.396,0.505-0.491,0.814l-2.335,7.692c-0.207,0.683-0.026,1.422,0.472,1.933c0.373,0.381,0.879,0.589,1.397,0.589
+                                        c0.176,0,0.35-0.023,0.523-0.071l7.888-2.185c0.324-0.09,0.62-0.263,0.857-0.499l10.706-10.687
+                                        C45.404,34.297,45.404,30.579,43.118,28.293z M30.016,44.14l-3.969,1.1l1.161-3.824l7.238-7.222l2.766,2.763L30.016,44.14z
+                                         M40.355,33.817l-0.378,0.379l-2.764-2.765l0.379-0.377c0.76-0.761,2-0.761,2.763,0C41.118,31.817,41.118,33.059,40.355,33.817z"
+                                        />
+                                    <path fill="#010101" d="M29.887,11.724H9.76c-1.079,0-1.955,0.875-1.955,1.955s0.875,1.954,1.955,1.954h20.127
+                                        c1.079,0,1.954-0.875,1.954-1.954S30.966,11.724,29.887,11.724z"/>
+                                </g>
+                            </g>
+                        </g>
+                        </svg>
+                </span>
+                <span class="text"><?php /* @escapeNotVerified */ echo __('Project List') ?></span>
+            </a>
+        </li>
+	</ul>
+	<?php /* } */ ?>
+	
+</div>	
+<?php
+	$helper_prod_enquiry = $this->helper('Dcs\Productenquiry\Helper\Data');
+	$enquiry_count = $helper_prod_enquiry->getCountTotalEnquiryQty();	
+	if($enquiry_count <=0)
+	{
+		$enquiry_count = '0';
+	}
+?>	
+<div class="header-right-enq-cart">
+<span class="inq-box">
+    <a title="<?php echo __('Enquiry Cart') ?>" href="<?php echo   $url."productenquiry/index/index"; ?>" >
+        <span class="enq-icon">
+              <svg x="0px" y="0px" width="24px" height="26px" viewBox="0 0 24 26">
+                <g>
+                    <path fill="#ffffff" d="M11.671,1.5C15.868,1.5,20,3.333,20,7.715c0,4.041-4.885,5.595-5.935,7.056
+                        c-0.788,1.086-0.524,2.611-2.688,2.611c-1.411,0-2.099-1.088-2.099-2.082c0-3.7,5.736-4.538,5.736-7.585
+                        c0-1.677-1.178-2.672-3.146-2.672c-4.196,0-2.558,4.101-5.736,4.101C4.985,9.145,4,8.492,4,7.25C4,4.202,7.67,1.5,11.671,1.5z
+                         M11.508,19.4c1.474,0,2.689,1.15,2.689,2.551c0,1.398-1.214,2.549-2.689,2.549c-1.474,0-2.689-1.148-2.689-2.549
+                        S10.034,19.4,11.508,19.4z"></path>
+                </g>
+                </svg>
+          </span>
+        <span class="inq-count" id="top_mini_enquiry_count"><?php echo $enquiry_count; ?></span>
+    </a>
+</span>
+</div>	
+</div>

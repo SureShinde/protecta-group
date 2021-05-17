@@ -1,0 +1,28 @@
+<?php 
+	$_downloadcatalogue = $this->getCollection();
+	$helper = $this->helper('Dcs\Downloadcatalogue\Helper\Data');
+	$mediaUrl = $helper->getMediaUrl();
+?>
+
+<?php if ($_downloadcatalogue->getSize()) { ?>
+	<div class="catalogues_list downloadcatalogue_view">		
+		<ul class="cf">
+			<?php foreach ($_downloadcatalogue as $downloadcatalogueItem): ?>				
+				<?php if($downloadcatalogueItem->getCatalogueFile()) { ?>
+				<li>
+					<a title="<?php echo $downloadcatalogueItem->getName(); ?>" href="<?php echo $mediaUrl.$downloadcatalogueItem->getCatalogueFile(); ?>" target="_blank">
+						<?php if ($downloadcatalogueItem->getImage()) { ?>
+							<div class="catalog-img-wrapper">
+								<img src="<?php echo $mediaUrl.$downloadcatalogueItem->getImage(); ?>" alt="<?php echo $this->escapeHtml($downloadcatalogueItem->getName()); ?>" />
+							</div>
+						<?php } ?>
+						<p class="catalogues_name"><?php echo $downloadcatalogueItem->getName(); ?></p>
+					</a>					
+				</li>
+				<?php } ?>
+			<?php endforeach; ?>
+		</ul>
+	</div>
+<?php } else {
+	echo "We can't find downloads matching the selection.";
+} ?>

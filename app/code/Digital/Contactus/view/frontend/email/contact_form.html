@@ -1,0 +1,86 @@
+<!--
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<!--@subject {{trans "Your Enquiry at "}}{{config path="general/store_information/name"}} @-->
+<!--@vars {
+"var comment":"Comment",
+"var email":"Customer Email",
+"var name":"Customer Name",
+"var subject":"Subject"
+} @-->
+
+{{template config_path="design/email/header_template"}} 
+<table border="0" width="100%" cellpadding="20" cellspacing="0">
+    <tr>
+        <td>
+            <div class="top-info-sec">
+                <h5 style="font-size: 30px; margin: 0 0 25px; color: #606a71; font-weight: bold; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;" class="greeting">Hello {{var data.name}},</h5>
+                <div class="order-box">
+                    <table border="0" width="100%" style="margin: 20px 0;">
+                        <tr>
+                            <td style="250px; text-align: center; vertical-align: middle;">
+                                <div class="Contact Enquiry" style="padding: 0; text-align: center;"><img src="{{view url='Magento_Email/images/call-center-operator.png'}}" width="120" height="120" alt="Contact Enquiry" /></div>
+                            </td>
+                            <td style="vertical-align: middle; width: 450px; padding-left: 20px;">
+                                <p style="font-size: 16px; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #3d3d3d; margin-bottom:0;">
+                                    {{trans "Thank you for your enquiry at %store_name. A member of our team will be in touch shortly." store_name=$store.getFrontendName()}}
+                                    {{trans "If you wish to contact us directly, you can reach us at "}}<b><u><a href='tel:{{config path="general/store_information/phone"}}'>{{config path="general/store_information/phone"}}</a></u></b>.
+                                </p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+<table border="0" width="100%" cellpadding="20" cellspacing="0" style="background: #f9f9f9; border-bottom: dashed 2px #eee; border-top: dashed 2px #eee;">
+    <tr>
+        <td>
+            <div class="order-summry">
+                <div class="top-head">
+                    <h6 style="margin: 0 0 20px; text-align: center; padding: 0; font-size: 24px; font-weight: bold; color: #606a71; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+                        {{trans "The details of your enquiry are below:"}}
+                    </h6>
+                    <table class="inq-table" border="1" style="width:100%; text-align: left; border: solid 1px #ddd; background: #fff;" cellpadding="10" cellspacing="10">	
+                        <tr>
+                            <td style="width:60px;"><b>Name</b></td>
+                            <td style="width:250px;">{{trans " %name" name=$data.name}}</td>
+                        </tr>				
+                        
+
+                        <tr>
+                            <td style="width:60px;"><b>Email</b></td>
+                            <td style="width:250px;">{{trans " %email" email=$data.email}}</td>
+                        </tr>				
+                        
+                        {{if data.phone}}
+                        <tr>
+                            <td style="width:60px;"><b>Phone No.</b></td>
+                            <td style="width:250px;">{{trans " %phone" phone=$data.phone}}</td>
+                        </tr>
+                        {{/if}}
+                        
+                        {{if data.company}}
+                        <tr>
+                            <td style="width:60px;"><b>Company</b></td>
+                            <td style="width:250px;">{{trans " %company" company=$data.company}}</td>
+                        </tr>
+                        {{/if}}
+                        
+                        {{if data.message}}
+                        <tr>
+                            <td style="width:60px;"><b>Message</b></td>
+                            <td style="width:250px;">{{trans " %message" message=$data.message}}</td>
+                        </tr>
+                        {{/if}}				
+                    </table>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+{{template config_path="design/email/footer_template"}}
