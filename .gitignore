@@ -10,10 +10,6 @@ atlassian*
 /.idea
 /.gitattributes
 
-# Magento specific configuration
-/app/etc/vendor_path.php
-/app/etc/NonComposerComponentRegistration.php
-
 # Files re-generated through composer
 /CHANGELOG.md
 /CONTRIBUTING.md
