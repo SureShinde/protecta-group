@@ -9,6 +9,7 @@ atlassian*
 /sitemap
 /.idea
 /.gitattributes
+/logs
 
 # Files re-generated through composer
 /CHANGELOG.md

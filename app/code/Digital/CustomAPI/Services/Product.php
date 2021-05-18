@@ -10,8 +10,8 @@ class Product {
        return $this->insertOrUpdateProduct($data);
     }
 
-    public function updateProduct( $product, $data ) {
-        return $this->insertOrUpdateProduct($product, $data);
+    public function updateProduct( $data, $product ) {
+        return $this->insertOrUpdateProduct($data, $product);
     }
 
     public function insertOrUpdateProduct($data, $product = null) {
@@ -101,13 +101,13 @@ class Product {
     {
         try {
             $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-
             $productRepository = $objectManager->get('\Magento\Catalog\Model\ProductRepository');
 
-            $productObj = $productRepository->get($sku);
+            // $productObj = $productRepository->get($sku);
             // load product by sku in edit mode from global store and force relod
             $productObj = $productRepository->get($sku, true, 0, true);
-            // return $productObj;
+
+            return $productObj;
         } catch (\Throwable $th) {
 
             return false;
